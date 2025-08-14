@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoliosis Screening Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .step-card {
+            display: none;
+        }
+        .step-card.active {
+            display: block;
+        }
+        #camera-view, #captured-image-canvas {
+            transform: scaleX(1);
+        }
+        .guide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-2">Scoliosis Screening Assistant</h1>
+        <p class="text-center text-gray-500 text-sm mb-6">Based on the Adams Forward Bend Test</p>
+
+        <!-- Step 1: Disclaimer -->
+        <div id="step-1" class="step-card active">
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg mb-6">
+                <h2 class="font-bold mb-2">Important Disclaimer</h2>
+                <p class="text-sm">This is a screening tool, not a diagnostic tool. It helps identify potential signs that warrant a professional medical evaluation. It does not replace a consultation with a doctor. Always consult a healthcare professional for any medical concerns.</p>
+            </div>
+            <button onclick="nextStep()" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">I Understand, Continue</button>
+        </div>
+
+        <!-- Step 2: Instructions -->
+        <div id="step-2" class="step-card">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Instructions</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-semibold text-gray-700">For the person being screened:</h3>
+                    <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1 text-sm">
+                        <li>Remove shirt to make the back visible.</li>
+                        <li>Stand with feet together and knees straight.</li>
+                        <li>Bend forward at the waist, as if touching your toes.</li>
+                        <li>Let your back become parallel with the floor.</li>
+                        <li>Let your arms hang freely.</li>
+                    </ul>
+                </div>
+                 <div class="flex justify-center">
+                    <svg class="w-32 h-32 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14v7m-7-7c0-4.97 4.03-9 9-9s9 4.03 9 9"></path><path d="M5.5 14.5s2.5-2 6.5-2 6.5 2 6.5 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" stroke-dasharray="2 2"></path></svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-700">For the person taking the picture:</h3>
+                    <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1 text-sm">
+                        <li>Stand directly behind the person.</li>
+                        <li>Ensure the area is well-lit.</li>
+                        <li>Frame the photo to include the entire back, from the waist to the head.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex justify-between mt-8">
+                <button onclick="prevStep()" class="bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors">Back</button>
+                <button onclick="startCamera()" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Start Camera</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Camera -->
+        <div id="step-3" class="step-card">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Take Picture</h2>
+            <div class="relative w-full aspect-[3/4] bg-gray-900 rounded-lg overflow-hidden mb-4">
+                <video id="camera-view" class="w-full h-full object-cover" autoplay playsinline></video>
+                <div class="guide-overlay">
+                     <svg width="100%" height="100%" viewBox="0 0 100 133" preserveAspectRatio="none">
+                        <path d="M50 10 V 123" stroke="rgba(255, 255, 255, 0.5)" stroke-width="1" stroke-dasharray="4 4"/>
+                        <path d="M20 30 H 80" stroke="rgba(255, 255, 255, 0.5)" stroke-width="1" stroke-dasharray="4 4"/>
+                    </svg>
+                </div>
+                 <div id="camera-error" class="hidden absolute inset-0 bg-black bg-opacity-75 text-white p-4 flex flex-col items-center justify-center text-center">
+                    <h3 class="font-bold text-lg mb-2">Camera Error</h3>
+                    <p class="text-sm">Could not access the camera. Please ensure you have given permission in your browser settings. You can upload a photo instead.</p>
+                    <input type="file" id="image-upload" accept="image/*" class="mt-4 text-sm">
+                </div>
+            </div>
+            <p class="text-xs text-center text-gray-500 mb-4">Align the spine with the vertical line and shoulders with the horizontal line.</p>
+            <div class="flex justify-between">
+                <button onclick="prevStep(); stopCamera();" class="bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors">Back</button>
+                <button onclick="captureImage()" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition-colors">Capture</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Analysis -->
+        <div id="step-4" class="step-card">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Analyze the Image</h2>
+            <div class="relative w-full aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden mb-4">
+                <canvas id="captured-image-canvas" class="w-full h-full"></canvas>
+            </div>
+            <p class="text-sm text-center text-gray-600 mb-6">Review the image and answer the questions below.</p>
+            <div id="analysis-questions" class="space-y-4">
+                <!-- Questions will be injected here by JS -->
+            </div>
+            <div class="flex justify-between mt-8">
+                <button onclick="prevStep()" class="bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors">Retake</button>
+                <button onclick="showResults()" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">See Results</button>
+            </div>
+        </div>
+        
+        <!-- Step 5: Results -->
+        <div id="step-5" class="step-card">
+            <div id="results-content">
+                <!-- Results will be injected here by JS -->
+            </div>
+            <button onclick="restart()" class="mt-8 w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">Start Over</button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let videoStream;
+        const totalSteps = 5;
+
+        const questions = [
+            { id: 'q1', text: 'Is one side of the rib cage higher than the other (a "hump")?' },
+            { id: 'q2', text: 'Is one shoulder or shoulder blade higher or more prominent?' },
+            { id: 'q3', text: 'Does the spine appear to have a curve?' },
+            { id: 'q4', text: 'Is there an uneven gap between the arms and the body?' }
+        ];
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            const stepToShow = document.getElementById(`step-${stepNumber}`);
+            if (stepToShow) {
+                stepToShow.classList.add('active');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+        
+        function restart() {
+            stopCamera();
+            currentStep = 1;
+            showStep(currentStep);
+        }
+        
+        async function startCamera() {
+            nextStep(); // Move to camera step
+            const video = document.getElementById('camera-view');
+            const errorDiv = document.getElementById('camera-error');
+            const uploadInput = document.getElementById('image-upload');
+            
+            try {
+                // Prefer the rear camera
+                const constraints = { video: { facingMode: 'environment' } };
+                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = videoStream;
+                errorDiv.classList.add('hidden');
+            } catch (err) {
+                console.error("Error accessing camera: ", err);
+                errorDiv.classList.remove('hidden');
+                // Fallback for file upload
+                uploadInput.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            drawImageOnCanvas(e.target.result);
+                            stopCamera();
+                            nextStep(); // Move to analysis
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        }
+
+        function stopCamera() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+        }
+        
+        function drawImageOnCanvas(source) {
+            const canvas = document.getElementById('captured-image-canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            };
+            img.src = source;
+        }
+
+        function captureImage() {
+            const video = document.getElementById('camera-view');
+            const canvas = document.getElementById('captured-image-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            stopCamera();
+            populateQuestions();
+            nextStep();
+        }
+        
+        function populateQuestions() {
+            const container = document.getElementById('analysis-questions');
+            container.innerHTML = '';
+            questions.forEach(q => {
+                const questionHTML = `
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <p class="font-medium text-gray-800 mb-3">${q.text}</p>
+                        <div class="flex justify-center space-x-4">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="${q.id}" value="yes" class="form-radio h-5 w-5 text-red-600">
+                                <span class="text-red-600 font-medium">Yes</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="${q.id}" value="no" class="form-radio h-5 w-5 text-green-600" checked>
+                                <span class="text-green-600 font-medium">No</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        function showResults() {
+            let potentialIssues = 0;
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+                if (selected && selected.value === 'yes') {
+                    potentialIssues++;
+                }
+            });
+
+            const resultsContainer = document.getElementById('results-content');
+            if (potentialIssues > 0) {
+                resultsContainer.innerHTML = `
+                    <div class="text-center">
+                        <svg class="w-16 h-16 text-yellow-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <h2 class="text-xl font-bold text-gray-800">Potential Asymmetry Detected</h2>
+                        <p class="text-gray-600 mt-2">This screening noted one or more potential signs of spinal asymmetry.</p>
+                        <div class="mt-4 text-left bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg">
+                            <p class="font-bold">This is NOT a diagnosis.</p>
+                            <p class="text-sm mt-1">It is strongly recommended to consult a pediatrician, family doctor, or an orthopedic specialist for a professional evaluation.</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultsContainer.innerHTML = `
+                    <div class="text-center">
+                        <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h2 class="text-xl font-bold text-gray-800">No Major Asymmetries Detected</h2>
+                        <p class="text-gray-600 mt-2">Based on your observations, no significant signs of asymmetry were noted.</p>
+                         <div class="mt-4 text-left bg-gray-100 p-4 rounded-lg">
+                            <p class="font-bold">Reminder:</p>
+                            <p class="text-sm mt-1">This is a screening tool. Continue with regular pediatric check-ups. If you have any concerns about your child's health, always consult a healthcare professional.</p>
+                        </div>
+                    </div>
+                `;
+            }
+            nextStep();
+        }
+
+        // Initialize the app
+        showStep(currentStep);
+    </script>
+</body>
+</html>
