@@ -12,7 +12,7 @@
             font-family: 'Inter', sans-serif;
         }
         .active-nav {
-            background-color: #6366f1;
+            background-color: #15803d; /* Green-700 */
             color: white;
         }
         .page {
@@ -28,10 +28,10 @@
             max-width: 80%;
         }
         .sp-bubble.user {
-            background-color: #e0e7ff; /* Indigo 100 */
+            background-color: #bbf7d0; /* Green-200 */
         }
         .sp-bubble.spiney {
-            background-color: #f3f4f6; /* Gray 100 */
+            background-color: #f3f4f6; /* Gray-100 */
         }
         .sp-typing-indicator span {
             animation: bounce 1s infinite;
@@ -52,7 +52,7 @@
 
     <div id="app" class="max-w-7xl mx-auto min-h-screen bg-white shadow-lg flex flex-col">
         <!-- Header -->
-        <header class="bg-indigo-600 text-white p-4 flex justify-between items-center sticky top-0 z-10">
+        <header class="bg-green-700 text-white p-4 flex justify-between items-center sticky top-0 z-10">
             <h1 class="text-2xl font-bold">Beyond the Curve</h1>
             <nav class="hidden md:flex space-x-2">
                 <button data-page="home" class="nav-link active-nav px-4 py-2 rounded-lg font-semibold">Home</button>
@@ -67,7 +67,7 @@
         </header>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-indigo-500 text-white">
+        <div id="mobile-menu" class="hidden md:hidden bg-green-600 text-white">
             <nav class="flex flex-col items-center">
                 <button data-page="home" class="nav-link w-full text-center py-3">Home</button>
                 <button data-page="tracker" class="nav-link w-full text-center py-3">Brace Tracker</button>
@@ -80,38 +80,37 @@
         <main class="p-4 md:p-8 flex-grow">
             <!-- Home Page -->
             <div id="home-page" class="page active">
-                <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-6 rounded-lg shadow-md">
+                <div class="bg-green-100 border-l-4 border-green-600 text-green-800 p-6 rounded-lg shadow-md">
                     <h2 class="text-3xl font-bold mb-2">Welcome to Your Journey Companion</h2>
                     <p class="text-lg">You're not alone. We're here to empower you with tools, community, and resources to build confidence and resilience. Let's navigate this journey together.</p>
                 </div>
 
                 <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-indigo-100 transition-shadow">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Daily Brace Tracker</h3>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-green-200 transition-shadow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Daily Brace Tracker</h3>
                         <p>Log your brace hours, watch your progress, and earn rewards for your consistency. You've got this!</p>
-                        <button data-page="tracker" class="nav-link mt-4 bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-colors">Go to Tracker</button>
+                        <button data-page="tracker" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">Go to Tracker</button>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-indigo-100 transition-shadow">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Reflection Journal</h3>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-green-200 transition-shadow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Reflection Journal</h3>
                         <p>A private space to write about your feelings, plus get AI-powered encouragement.</p>
-                        <button data-page="journal" class="nav-link mt-4 bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-colors">Open Journal</button>
+                        <button data-page="journal" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">Open Journal</button>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-indigo-100 transition-shadow">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Chat with Spiney ✨</h3>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-green-200 transition-shadow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Chat with Spiney ✨</h3>
                         <p>Your AI companion is here to answer questions and offer support 24/7.</p>
-                        <button data-page="spiney" class="nav-link mt-4 bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-colors">Talk to Spiney</button>
+                        <button data-page="spiney" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">Talk to Spiney</button>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-indigo-100 transition-shadow">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Vetted Resources</h3>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-green-200 transition-shadow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Vetted Resources</h3>
                         <p>Find surgeons, brace-friendly apparel, support groups, and helpful videos all in one place.</p>
-                        <button data-page="resources" class="nav-link mt-4 bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-colors">Explore Resources</button>
+                        <button data-page="resources" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">Explore Resources</button>
                     </div>
                 </div>
             </div>
 
             <!-- Brace Tracker Page -->
             <div id="tracker-page" class="page">
-                <!-- ... existing tracker code ... -->
                 <h2 class="text-3xl font-bold mb-6 text-center">My Brace Tracker</h2>
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
@@ -129,14 +128,14 @@
                                 <label for="daily-goal" class="block font-semibold">Daily Goal (hours)</label>
                                 <input type="number" id="daily-goal" min="1" max="24" step="1" class="w-full p-2 border border-gray-300 rounded-lg mt-1" value="18">
                             </div>
-                            <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">Log Hours</button>
+                            <button type="submit" class="w-full bg-green-700 text-white py-2 rounded-lg font-semibold hover:bg-green-800 transition-colors">Log Hours</button>
                         </form>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-4">Today's Progress</h3>
                         <div id="progress-container">
                             <div class="w-full bg-gray-200 rounded-full h-8">
-                                <div id="progress-bar" class="progress-bar-fill bg-green-500 h-8 text-white text-center font-bold leading-8 rounded-full" style="width: 0%;">0%</div>
+                                <div id="progress-bar" class="progress-bar-fill bg-green-600 h-8 text-white text-center font-bold leading-8 rounded-full" style="width: 0%;">0%</div>
                             </div>
                             <p id="progress-text" class="text-center mt-2 font-semibold">Log your hours to see your progress!</p>
                         </div>
@@ -164,7 +163,7 @@
                         <p class="text-gray-600 mb-4">How are you feeling today? This is your private space.</p>
                         <textarea id="journal-entry" class="w-full p-3 border border-gray-300 rounded-lg" rows="8" placeholder="Write about your day, your thoughts, or anything on your mind..."></textarea>
                         <div class="flex justify-end mt-4">
-                            <button type="submit" class="bg-indigo-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">Save Entry</button>
+                            <button type="submit" class="bg-green-700 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-800 transition-colors">Save Entry</button>
                         </div>
                     </form>
                 </div>
@@ -187,7 +186,7 @@
                 </div>
                 <form id="spiney-form" class="mt-4 flex gap-2">
                     <input type="text" id="spiney-input" class="flex-grow w-full p-3 border border-gray-300 rounded-lg" placeholder="Type your message to Spiney..." autocomplete="off">
-                    <button type="submit" class="bg-indigo-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:bg-indigo-300">Send</button>
+                    <button type="submit" class="bg-green-700 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-800 transition-colors disabled:bg-green-300">Send</button>
                 </form>
                  <p class="text-xs text-gray-500 mt-2 text-center">Spiney is an AI assistant and may not be 100% accurate. It is not a substitute for medical advice. Please consult a doctor for health concerns.</p>
             </div>
@@ -195,24 +194,25 @@
 
             <!-- Resources Page -->
             <div id="resources-page" class="page">
-                <!-- ... existing resources code ... -->
                  <h2 class="text-3xl font-bold mb-6">Vetted Resources</h2>
                 <div class="space-y-8">
-                    <!-- Surgeon Finder -->
+                    <!-- Scoliosis Specialists -->
                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                        <h3 class="text-2xl font-bold mb-4 text-indigo-700">Surgeon Finder</h3>
-                        <input type="text" id="surgeon-search" class="w-full p-3 border border-gray-300 rounded-lg mb-4" placeholder="Search by name, hospital, or zip code...">
-                        <div id="surgeon-list" class="space-y-4 max-h-96 overflow-y-auto pr-2">
-                            <!-- Surgeon items will be dynamically added here -->
-                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">Scoliosis Specialists</h3>
+                        <p class="mb-4 text-gray-600">
+                            For the most comprehensive and up-to-date directory of specialists, we strongly recommend using the official Scoliosis Research Society (SRS) physician locator. It is the best resource for finding a qualified professional in your area.
+                        </p>
+                        <a href="https://www.srs.org/Patients/Find-a-Specialist#" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                            Visit SRS Find a Specialist &rarr;
+                        </a>
                     </div>
 
                     <!-- Other Resources -->
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Video Library -->
                         <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                            <h3 class="text-xl font-bold mb-4 text-indigo-700">Video Library</h3>
-                            <ul class="space-y-3 list-disc list-inside text-indigo-600">
+                            <h3 class="text-xl font-bold mb-4 text-green-800">Video Library</h3>
+                            <ul class="space-y-3 list-disc list-inside text-green-700">
                                 <li><a href="#" class="hover:underline">Understanding Scoliosis</a></li>
                                 <li><a href="#" class="hover:underline">Physical Therapy Exercises</a></li>
                                 <li><a href="#" class="hover:underline">Inspiring Patient Stories</a></li>
@@ -221,8 +221,8 @@
                         </div>
                         <!-- Brace-Friendly Apparel -->
                         <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                            <h3 class="text-xl font-bold mb-4 text-indigo-700">Brace-Friendly Apparel</h3>
-                             <ul class="space-y-3 list-disc list-inside text-indigo-600">
+                            <h3 class="text-xl font-bold mb-4 text-green-800">Brace-Friendly Apparel</h3>
+                             <ul class="space-y-3 list-disc list-inside text-green-700">
                                 <li><a href="#" class="hover:underline">Hope's Closet</a></li>
                                 <li><a href="#" class="hover:underline">Brace-Tee</a></li>
                                 <li><a href="#" class="hover:underline">Embraced in Comfort</a></li>
@@ -230,11 +230,12 @@
                         </div>
                         <!-- Support Groups -->
                         <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                            <h3 class="text-xl font-bold mb-4 text-indigo-700">Support Groups</h3>
-                             <ul class="space-y-3 list-disc list-inside text-indigo-600">
+                            <h3 class="text-xl font-bold mb-4 text-green-800">Support Groups</h3>
+                             <ul class="space-y-3 list-disc list-inside text-green-700">
                                 <li><a href="#" class="hover:underline">Curvy Girls International</a></li>
                                 <li><a href="#" class="hover:underline">ScoliBoys Support</a></li>
                                 <li><a href="#" class="hover:underline">Higgy Bears</a></li>
+                                <li><a href="https://www.bracingforscoliosus.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Bracing for Scoliosis</a></li>
                                  <li><a href="#" class="hover:underline">Parents of Scoliosis Facebook Group</a></li>
                             </ul>
                         </div>
@@ -278,16 +279,8 @@
                 spineyChatHistory: [],
 
                 // Resources
-                surgeonSearch: document.getElementById('surgeon-search'),
-                surgeonList: document.getElementById('surgeon-list'),
-                surgeons: [
-                    { name: 'Dr. Emily Carter', hospital: 'Children\'s Health Center', zip: '90210', city: 'Beverly Hills' },
-                    { name: 'Dr. Benjamin Hayes', hospital: 'Spinal Care Institute', zip: '10001', city: 'New York' },
-                    { name: 'Dr. Olivia Rodriguez', hospital: 'Midwest Orthopedics', zip: '60612', city: 'Chicago' },
-                    { name: 'Dr. Samuel Chen', hospital: 'Pacific Spine Specialists', zip: '94115', city: 'San Francisco' },
-                    { name: 'Dr. Anya Sharma', hospital: 'Texas Children\'s Hospital', zip: '77030', city: 'Houston' },
-                ],
-                
+                // Surgeon search removed
+
                 // METHODS
                 init() {
                     this.setupEventListeners();
@@ -295,7 +288,7 @@
                     this.braceDate.valueAsDate = new Date();
                     this.loadBraceData();
                     this.loadJournalData();
-                    this.renderSurgeons();
+                    // this.renderSurgeons(); // Removed
                     this.renderSpineyChat();
                 },
 
@@ -312,7 +305,7 @@
                     this.braceForm.addEventListener('submit', (e) => this.handleBraceSubmit(e));
                     this.journalForm.addEventListener('submit', (e) => this.handleJournalSubmit(e));
                     this.spineyForm.addEventListener('submit', (e) => this.handleSpineySubmit(e));
-                    this.surgeonSearch.addEventListener('input', () => this.renderSurgeons());
+                    // this.surgeonSearch.addEventListener('input', () => this.renderSurgeons()); // Removed
                 },
 
                 navigateTo(pageId) {
@@ -379,7 +372,7 @@
                 handleBraceSubmit(e) { e.preventDefault(); const date = this.braceDate.value; const hours = parseFloat(this.braceHours.value); const goal = parseFloat(this.dailyGoal.value); if (!date || isNaN(hours) || isNaN(goal)) { return; } this.braceData[date] = { hours, goal }; localStorage.setItem('braceData', JSON.stringify(this.braceData)); this.updateProgressUI(date); this.updateChart(); this.updateRewards(); this.braceForm.reset(); this.braceDate.valueAsDate = new Date(); },
                 loadBraceData() { const today = new Date().toISOString().split('T')[0]; this.updateProgressUI(today); this.updateChart(); this.updateRewards(); },
                 updateProgressUI(date) { const data = this.braceData[date]; if (data) { const percentage = Math.min(100, Math.round((data.hours / data.goal) * 100)); this.progressBar.style.width = `${percentage}%`; this.progressBar.textContent = `${percentage}%`; this.progressText.textContent = `You've logged ${data.hours} of ${data.goal} hours today. Keep it up!`; } else { this.progressBar.style.width = '0%'; this.progressBar.textContent = '0%'; this.progressText.textContent = 'Log your hours to see your progress!'; } },
-                updateChart() { const ctx = document.getElementById('brace-chart').getContext('2d'); const labels = []; const hoursData = []; const goalData = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateString = d.toISOString().split('T')[0]; labels.push(d.toLocaleDateString('en-US', { weekday: 'short' })); const data = this.braceData[dateString]; hoursData.push(data ? data.hours : 0); goalData.push(data ? data.goal : parseFloat(this.dailyGoal.value)); } if (this.braceChart) { this.braceChart.destroy(); } this.braceChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Hours Worn', data: hoursData, backgroundColor: 'rgba(75, 192, 192, 0.6)' }, { label: 'Goal', data: goalData, type: 'line', fill: false, borderColor: 'rgba(255, 99, 132, 1)' }] }, options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Hours' } } } } }); },
+                updateChart() { const ctx = document.getElementById('brace-chart').getContext('2d'); const labels = []; const hoursData = []; const goalData = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateString = d.toISOString().split('T')[0]; labels.push(d.toLocaleDateString('en-US', { weekday: 'short' })); const data = this.braceData[dateString]; hoursData.push(data ? data.hours : 0); goalData.push(data ? data.goal : parseFloat(this.dailyGoal.value)); } if (this.braceChart) { this.braceChart.destroy(); } this.braceChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Hours Worn', data: hoursData, backgroundColor: 'rgba(22, 163, 74, 0.6)' }, { label: 'Goal', data: goalData, type: 'line', fill: false, borderColor: 'rgba(239, 68, 68, 1)' }] }, options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Hours' } } } } }); },
                 updateRewards() { const totalDaysLogged = Object.keys(this.braceData).length; const consistentWeeks = this.calculateConsistentWeeks(); const rewards = [ { name: 'First Step', threshold: 1, icon: '🌟', description: 'Logged your first day!' }, { name: 'Consistent Week', threshold: 7, icon: '📅', description: 'Logged 7 days in a row!' }, { name: '30-Day Warrior', threshold: 30, icon: '🛡️', description: 'Logged for 30 days!' }, { name: 'Perfect Week', threshold: 1, icon: '🏆', check: consistentWeeks, description: 'Met your goal 7 days in a row!'} ]; this.rewardsContainer.innerHTML = ''; let earnedCount = 0; rewards.forEach(reward => { const checkValue = reward.check !== undefined ? reward.check : totalDaysLogged; const isEarned = checkValue >= reward.threshold; if(isEarned) earnedCount++; const rewardEl = document.createElement('div'); rewardEl.className = `text-center p-2 rounded-lg ${isEarned ? 'bg-green-100' : 'bg-gray-100'}`; rewardEl.innerHTML = `<div class="text-4xl ${isEarned ? '' : 'opacity-30'}">${reward.icon}</div><div class="font-semibold text-sm ${isEarned ? 'text-green-800' : 'text-gray-500'}">${reward.name}</div><div class="text-xs text-gray-500">${reward.description}</div>`; this.rewardsContainer.appendChild(rewardEl); }); if(earnedCount === 0){ this.rewardsContainer.innerHTML = '<p class="text-gray-500">Start logging to earn badges!</p>'; } },
                 calculateConsistentWeeks() { const dates = Object.keys(this.braceData).sort(); if(dates.length < 7) return 0; let consecutiveDays = 0; let maxConsecutive = 0; for (let i = 0; i < dates.length; i++) { const data = this.braceData[dates[i]]; if (data.hours >= data.goal) { if (i > 0) { const prevDate = new Date(dates[i-1]); const diffTime = Math.abs(new Date(dates[i]) - prevDate); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); if (diffDays === 1) consecutiveDays++; else consecutiveDays = 1; } else { consecutiveDays = 1; } } else { consecutiveDays = 0; } if (consecutiveDays > maxConsecutive) maxConsecutive = consecutiveDays; } return Math.floor(maxConsecutive / 7); },
 
@@ -403,7 +396,7 @@
                             </div>
                             <p class="text-gray-800 whitespace-pre-wrap">${entry.text}</p>
                             <div class="mt-4">
-                                <button data-id="${entry.id}" class="get-reflection-btn bg-purple-500 text-white py-1 px-3 rounded-lg font-semibold text-sm hover:bg-purple-600 transition-colors">✨ Get Reflection</button>
+                                <button data-id="${entry.id}" class="get-reflection-btn bg-teal-500 text-white py-1 px-3 rounded-lg font-semibold text-sm hover:bg-teal-600 transition-colors">✨ Get Reflection</button>
                                 <div class="reflection-container mt-2 text-sm" id="reflection-${entry.id}"></div>
                             </div>
                         `;
@@ -428,7 +421,7 @@
                     if (!entry || !container) return;
                     
                     button.disabled = true;
-                    container.innerHTML = `<p class="text-purple-700">Thinking...</p>`;
+                    container.innerHTML = `<p class="text-teal-700">Thinking...</p>`;
 
                     const systemPrompt = "You are a caring and supportive friend. Read the following journal entry from a young person dealing with scoliosis. Summarize their feelings in one sentence and then provide a short, encouraging, and empathetic response in a new paragraph. Do not give medical advice. Keep your response under 75 words.";
                     const payload = {
@@ -437,7 +430,7 @@
                     };
                     const result = await this.callGemini(payload);
 
-                    container.innerHTML = `<div class="bg-purple-50 p-3 rounded-md border border-purple-200">${result.text.replace(/\n/g, '<br>')}</div>`;
+                    container.innerHTML = `<div class="bg-teal-50 p-3 rounded-md border border-teal-200">${result.text.replace(/\n/g, '<br>')}</div>`;
                     button.disabled = false;
                 },
                 
@@ -482,7 +475,7 @@
                         if (msg.sources && msg.sources.length > 0) {
                             html += '<div class="mt-2 pt-2 border-t border-gray-300"><p class="font-semibold text-xs mb-1">Sources:</p><ol class="list-decimal list-inside text-xs">';
                             msg.sources.forEach(source => {
-                                html += `<li><a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline">${source.title}</a></li>`;
+                                html += `<li><a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="text-green-700 hover:underline">${source.title}</a></li>`;
                             });
                             html += '</ol></div>';
                         }
@@ -505,7 +498,7 @@
                 },
                 
                 // --- Resources Methods ---
-                renderSurgeons() { const searchTerm = this.surgeonSearch.value.toLowerCase(); const filteredSurgeons = this.surgeons.filter(s => s.name.toLowerCase().includes(searchTerm) || s.hospital.toLowerCase().includes(searchTerm) || s.zip.includes(searchTerm) || s.city.toLowerCase().includes(searchTerm) ); this.surgeonList.innerHTML = ''; if(filteredSurgeons.length === 0) { this.surgeonList.innerHTML = '<p class="text-gray-500">No surgeons found.</p>'; return; } filteredSurgeons.forEach(surgeon => { const surgeonEl = document.createElement('div'); surgeonEl.className = 'p-4 border rounded-lg bg-gray-50'; surgeonEl.innerHTML = `<h4 class="font-bold text-lg">${surgeon.name}</h4><p class="text-gray-600">${surgeon.hospital}</p><p class="text-gray-500 text-sm">${surgeon.city}, ${surgeon.zip}</p>`; this.surgeonList.appendChild(surgeonEl); }); }
+                // renderSurgeons method removed
             };
             
             app.init();
