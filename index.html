@@ -393,7 +393,7 @@
         <script>
         const app = {
             // STATE
-            geminiApiKey: "", // Injected by environment
+            geminiApiKey: "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE", // Injected by environment
             googleApiReady: false,
             googleGisReady: false,
             tokenClient: null,
@@ -582,10 +582,10 @@
 
             // --- Google Auth & Drive Methods ---
             handleAuthClick() {
-                if (gapi.client.getToken() === null) {
+                // If there's no token, request one.
+                if (!this.accessToken) {
+                    // The 'consent' prompt will show the Google login and permission screen.
                     this.tokenClient.requestAccessToken({ prompt: 'consent' });
-                } else {
-                    this.tokenClient.requestAccessToken({ prompt: '' });
                 }
             },
 
@@ -631,8 +631,9 @@
                         await this.loadDataFromDrive();
                     } else {
                         const fileMetadata = {
-                            'name': 'beyond-the-curve-data.json',
-                            'parents': ['appDataFolder']
+                            'name': 'beyond-the-curve-data.json'
+                            // CORRECT: When using the 'drive.appdata' scope, you do NOT specify a parent.
+                            // The file is automatically placed in the hidden appDataFolder.
                         };
                          const createResponse = await fetch("https://www.googleapis.com/drive/v3/files", {
                             method: 'POST',
