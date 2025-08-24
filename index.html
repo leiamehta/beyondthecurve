@@ -552,23 +552,21 @@
             },
 
             navigateTo(pageId) {
-                this.pages.forEach(page => {
-                    // Special handling for home page which now contains resources
-                    if (page.id === 'home-page' && (pageId === 'home' || pageId === 'resources' || pageId === 'specialists')) {
-                        page.classList.add('active');
-                    } else {
-                        page.classList.remove('active');
-                    }
-                });
+                // Hide all pages
+                this.pages.forEach(page => page.classList.remove('active'));
 
-                document.getElementById(`${pageId}-page`)?.classList.add('active');
+                // Show the correct page
+                const targetPage = document.getElementById(`${pageId}-page`);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
 
-
+                // Update active state for nav links
                 this.navLinks.forEach(link => {
                     link.classList.remove('active-nav');
-                     if (link.dataset.page === pageId) {
-                         link.classList.add('active-nav');
-                     }
+                    if (link.dataset.page === pageId) {
+                        link.classList.add('active-nav');
+                    }
                 });
             },
 
