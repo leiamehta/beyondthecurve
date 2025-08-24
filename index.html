@@ -68,6 +68,7 @@
             <div id="auth-container" class="flex items-center gap-4">
                  <nav class="hidden md:flex items-center space-x-2">
                     <button data-page="home" class="nav-link active-nav px-4 py-2 rounded-lg font-semibold">Home</button>
+                    <button data-page="resources" class="nav-link px-4 py-2 rounded-lg font-semibold">Vetted Resources</button>
                     <button data-page="tracker" class="nav-link px-4 py-2 rounded-lg font-semibold">Brace Tracker</button>
                     <button data-page="physio" class="nav-link px-4 py-2 rounded-lg font-semibold">Physiotherapy</button>
                     <button data-page="journal" class="nav-link px-4 py-2 rounded-lg font-semibold">Journal</button>
@@ -88,6 +89,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-green-600 text-white">
             <nav class="flex flex-col items-center">
                 <button data-page="home" class="nav-link w-full text-center py-3">Home</button>
+                <button data-page="resources" class="nav-link w-full text-center py-3">Vetted Resources</button>
                 <button data-page="tracker" class="nav-link w-full text-center py-3">Brace Tracker</button>
                 <button data-page="physio" class="nav-link w-full text-center py-3">Physiotherapy</button>
                 <button data-page="journal" class="nav-link w-full text-center py-3">Journal</button>
@@ -196,6 +198,55 @@
                         </div>
                         <p class="mt-4 flex-grow">Your AI companion is here to answer questions and offer support 24/7.</p>
                         <button data-page="spiney" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors self-start">Talk to Spiney</button>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Vetted Resources Page -->
+            <div id="resources-page" class="page">
+                <div class="space-y-8">
+                    <div class="flex items-center justify-center gap-3">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 4h5m-5 4h5"></path></svg>
+                        <h2 class="text-3xl font-bold">Vetted Resources</h2>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                            <h3 class="text-xl font-bold mb-4 text-green-800">Video Library</h3>
+                            <ul class="space-y-3 list-disc list-inside text-green-700">
+                                <li><a href="#" class="hover:underline">Understanding Scoliosis</a></li>
+                                <li><a href="#" class="hover:underline">Physical Therapy Exercises</a></li>
+                                <li><a href="#" class="hover:underline">Inspiring Patient Stories</a></li>
+                                <li><a href="#" class="hover:underline">Bracing: Tips & Tricks</a></li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                            <h3 class="text-xl font-bold mb-4 text-green-800">Brace-Friendly Apparel</h3>
+                             <ul class="space-y-3 list-disc list-inside text-green-700">
+                                <li><a href="#" class="hover:underline">Hope's Closet</a></li>
+                                <li><a href="#" class="hover:underline">Brace-Tee</a></li>
+                                <li><a href="#" class="hover:underline">Embraced in Comfort</a></li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                            <h3 class="text-xl font-bold mb-4 text-green-800">Support Groups</h3>
+                             <ul class="space-y-3 list-disc list-inside text-green-700">
+                                <li><a href="#" class="hover:underline">Curvy Girls International</a></li>
+                                <li><a href="#" class="hover:underline">ScoliBoys Support</a></li>
+                                <li><a href="#" class="hover:underline">Higgy Bears</a></li>
+                                <li><a href="https://www.bracingforscoliosus.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Bracing for Scoliosis</a></li>
+                                 <li><a href="#" class="hover:underline">Parents of Scoliosis Facebook Group</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 max-w-4xl mx-auto text-center">
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">Scoliosis Specialists</h3>
+                        <p class="mb-4 text-gray-600 text-lg">
+                            For the most comprehensive and up-to-date directory of specialists, we strongly recommend using the official Scoliosis Research Society (SRS) physician locator. It is the best resource for finding a qualified professional in your area.
+                        </p>
+                        <a href="https://www.srs.org/Patients/Find-a-Specialist#" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                            Visit SRS Find a Specialist &rarr;
+                        </a>
                     </div>
                 </div>
             </div>
