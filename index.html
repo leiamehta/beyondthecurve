@@ -494,8 +494,16 @@
                     scope: SCOPES,
                     callback: async (resp) => {
                         if (resp.error !== undefined) {
-                            throw (resp);
+                           // This can happen on silent sign-in failure, so we handle it gracefully
+                           console.log("Silent auth failed, user is logged out.");
+                           this.isLoggedIn = false;
+                           this.updateUiForAuthState();
+                           return;
                         }
+                        // This is the critical line that was missing.
+                        // It connects the auth token to the API client.
+                        gapi.client.setToken(resp);
+
                         this.isLoggedIn = true;
                         await this.fetchUserInfo();
                         await this.findOrCreateDataFile();
@@ -503,13 +511,8 @@
                     },
                 });
 
-                // Check for existing session token on load. This is the main fix for persistence.
-                if (gapi.client.getToken() !== null) {
-                    this.isLoggedIn = true;
-                    await this.fetchUserInfo();
-                    await this.findOrCreateDataFile();
-                    this.updateUiForAuthState();
-                }
+                // Attempt silent sign-in on page load.
+                this.tokenClient.requestAccessToken({ prompt: 'none' });
             },
 
             setupEventListeners() {
