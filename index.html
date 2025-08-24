@@ -854,6 +854,7 @@
         function gapiLoaded() {
             gapi.load('client:auth2', async () => {
                 const GOOGLE_API_KEY = "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE";
+                app.geminiApiKey = GOOGLE_API_KEY; // <-- This is the fix
                 await gapi.client.init({
                     apiKey: GOOGLE_API_KEY,
                     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
@@ -870,4 +871,6 @@
     </script>
 </body>
 </html>
+
+
 
