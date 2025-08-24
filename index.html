@@ -495,7 +495,8 @@
                     },
                 });
 
-                // Attempt silent sign-in on page load has been removed.
+                // Attempt silent sign-in on page load. This restores the session.
+                this.tokenClient.requestAccessToken({ prompt: 'none' });
             },
 
             setupEventListeners() {
