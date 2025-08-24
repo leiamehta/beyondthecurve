@@ -390,8 +390,7 @@
             <p class="text-sm text-gray-500">Visitor Count: <span id="visitor-counter">0</span></p>
         </footer>
     </div>
-
-    <script>
+        <script>
         const app = {
             // STATE
             geminiApiKey: "", // Injected by environment
@@ -400,6 +399,7 @@
             tokenClient: null,
             fileId: null,
             isLoggedIn: false,
+            userInfo: null, // To store user profile info
             
             // UI ELEMENTS
             pages: null, navLinks: null, mobileMenuButton: null, mobileMenu: null,
@@ -425,14 +425,14 @@
             spineyChatHistory: [],
             
             // --- INITIALIZATION ---
-            init() {
+            async init() {
                 // Defer setup until both Google APIs are loaded
                 if (this.googleApiReady && this.googleGisReady) {
-                    this.setupApp();
+                    await this.setupApp();
                 }
             },
 
-            setupApp() {
+            async setupApp() {
                 // Query selectors
                 this.appContainer = document.getElementById('app');
                 this.pages = document.querySelectorAll('.page');
@@ -497,10 +497,19 @@
                             throw (resp);
                         }
                         this.isLoggedIn = true;
+                        await this.fetchUserInfo();
                         await this.findOrCreateDataFile();
                         this.updateUiForAuthState();
                     },
                 });
+
+                // Check for existing session token on load. This is the main fix for persistence.
+                if (gapi.client.getToken() !== null) {
+                    this.isLoggedIn = true;
+                    await this.fetchUserInfo();
+                    await this.findOrCreateDataFile();
+                    this.updateUiForAuthState();
+                }
             },
 
             setupEventListeners() {
@@ -535,13 +544,12 @@
             },
 
             updateUiForAuthState() {
-                if (this.isLoggedIn) {
+                if (this.isLoggedIn && this.userInfo) {
                     this.appContainer.classList.add('logged-in');
                     this.loginButton.classList.add('hidden');
                     this.userProfile.classList.remove('hidden');
                     this.userProfile.classList.add('flex');
-                    const user = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
-                    this.userAvatar.src = user.getImageUrl();
+                    this.userAvatar.src = this.userInfo.picture;
                 } else {
                     this.appContainer.classList.remove('logged-in');
                     this.loginButton.classList.remove('hidden');
@@ -589,6 +597,25 @@
                 }
             },
             
+            async fetchUserInfo() {
+                try {
+                    const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                        headers: {
+                            'Authorization': `Bearer ${gapi.client.getToken().access_token}`
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to fetch user info');
+                    const userInfo = await response.json();
+                    this.userInfo = {
+                        name: userInfo.name,
+                        picture: userInfo.picture,
+                    };
+                } catch (error) {
+                    console.error("Error fetching user info:", error);
+                    this.userInfo = null; // Reset on error
+                }
+            },
+
             async findOrCreateDataFile() {
                 try {
                     const response = await gapi.client.drive.files.list({
@@ -852,15 +879,15 @@
 
         // --- Global Functions to Bridge Google API Loading ---
         function gapiLoaded() {
-            gapi.load('client:auth2', async () => {
+            gapi.load('client', async () => {
                 const GOOGLE_API_KEY = "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE";
-                app.geminiApiKey = GOOGLE_API_KEY; // <-- This is the fix
+                app.geminiApiKey = GOOGLE_API_KEY; 
                 await gapi.client.init({
                     apiKey: GOOGLE_API_KEY,
                     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
                 });
                 app.googleApiReady = true;
-                app.init();
+                await app.init();
             });
         }
 
