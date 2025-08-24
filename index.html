@@ -671,7 +671,26 @@
             },
 
             // --- Gemini API Call ---
-            async callGemini(payload) { /* ... same as before ... */ },
+            async callGemini(payload) {
+                // In a real application, the API key is handled securely by the environment.
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${this.geminiApiKey}`;
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) {
+                        const errorBody = await response.json();
+                        throw new Error(`API call failed with status: ${response.status} - ${errorBody.error.message}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error("Gemini API call error:", error);
+                    return { error: `Failed to get a response from the AI. ${error.message}` };
+                }
+            },
 
             // --- Brace Tracker Methods ---
             async handleBraceSubmit(e) { e.preventDefault(); const date = this.braceDate.value; const hours = parseFloat(this.braceHours.value); const goal = parseFloat(this.dailyGoal.value); if (!date || isNaN(hours) || isNaN(goal)) { return; } this.braceData[date] = { hours, goal }; await this.saveDataToDrive(); this.updateProgressUI(date); this.updateChart(); this.updateRewards(); this.braceForm.reset(); this.braceDate.valueAsDate = new Date(); },
@@ -726,12 +745,109 @@
                 await this.saveDataToDrive();
                 this.renderJournalEntries();
             },
-            async getJournalReflection(e) { /* ... same as before ... */ },
+            async getJournalReflection(e) { 
+                const button = e.target;
+                const entryId = parseInt(button.dataset.id, 10);
+                const entry = this.journalData.find(e => e.id === entryId);
+                const container = document.getElementById(`reflection-${entryId}`);
+                if (!entry || !container) return;
+
+                button.disabled = true;
+                container.innerHTML = `<p class="text-teal-700">✨ Thinking...</p>`;
+
+                const systemPrompt = "You are an empathetic and encouraging companion. Read the following journal entry from a young person dealing with scoliosis. Your task is to provide a short (1-2 sentences), supportive, and validating reflection on their feelings. Do not give advice. Focus on encouragement and acknowledging their experience.";
+
+                const payload = {
+                    contents: [{ parts: [{ text: entry.text }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const result = await this.callGemini(payload);
+
+                if (result && result.candidates && result.candidates[0].content.parts[0].text) {
+                    const reflectionText = result.candidates[0].content.parts[0].text;
+                    container.innerHTML = `<p class="bg-teal-50 p-3 rounded-lg text-teal-800 border border-teal-200">${reflectionText}</p>`;
+                } else {
+                    container.innerHTML = `<p class="text-red-600">Sorry, I couldn't generate a reflection right now.</p>`;
+                    button.disabled = false;
+                }
+            },
             
             // --- Spiney Methods ---
-            async handleSpineySubmit(e) { /* ... same as before ... */ },
-            renderSpineyChat() { /* ... same as before ... */ },
-            addTypingIndicator() { /* ... same as before ... */ },
+            async handleSpineySubmit(e) { 
+                e.preventDefault();
+                const userInput = this.spineyInput.value.trim();
+                if (userInput === '') return;
+
+                this.spineyInput.value = '';
+                this.spineyChatHistory.push({ role: 'user', text: userInput });
+                this.renderSpineyChat();
+                this.addTypingIndicator();
+
+                const systemPrompt = "You are Spiney, a friendly, supportive, and empathetic cactus mascot for the 'Beyond the Curve' app. Your purpose is to be a companion for children and teens navigating scoliosis. Answer their general, non-medical questions in a simple, encouraging, and easy-to-understand way. Do not provide medical advice. If asked a medical question, gently refuse and suggest they talk to a doctor or their parents. Keep your answers concise (2-4 sentences).";
+                
+                const payload = {
+                    contents: [{ parts: [{ text: userInput }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    tools: [{ "google_search": {} }],
+                };
+
+                const result = await this.callGemini(payload);
+                let spineyResponse = "Sorry, I'm having a little trouble thinking right now. Please try again in a moment.";
+                let sources = [];
+                
+                if (result && result.candidates && result.candidates[0].content.parts[0].text) {
+                    spineyResponse = result.candidates[0].content.parts[0].text;
+                    const metadata = result.candidates[0].groundingMetadata;
+                    if (metadata && metadata.groundingAttributions) {
+                        sources = metadata.groundingAttributions
+                            .map(attr => ({ uri: attr.web?.uri, title: attr.web?.title }))
+                            .filter(s => s.uri && s.title);
+                    }
+                } else if (result && result.error) {
+                    spineyResponse = result.error;
+                }
+
+                this.spineyChatHistory.push({ role: 'spiney', text: spineyResponse, sources: sources });
+                this.renderSpineyChat();
+            },
+            renderSpineyChat() { 
+                this.spineyChatWindow.innerHTML = '';
+                if (this.spineyChatHistory.length === 0) {
+                    this.spineyChatHistory.push({ role: 'spiney', text: "Hi there! I'm Spiney. How can I help you today?" });
+                }
+
+                this.spineyChatHistory.forEach(msg => {
+                    const bubble = document.createElement('div');
+                    bubble.className = `sp-bubble p-3 rounded-lg ${msg.role === 'user' ? 'user self-end' : 'spiney self-start'}`;
+                    bubble.textContent = msg.text;
+
+                    if (msg.sources && msg.sources.length > 0) {
+                        const sourcesContainer = document.createElement('div');
+                        sourcesContainer.className = 'mt-2 text-xs border-t border-gray-300 pt-2';
+                        sourcesContainer.innerHTML = `<h4 class="font-bold mb-1">Sources:</h4>`;
+                        const sourceList = document.createElement('ul');
+                        sourceList.className = 'list-disc list-inside';
+                        msg.sources.forEach((source, index) => {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">${source.title}</a>`;
+                            sourceList.appendChild(li);
+                        });
+                        sourcesContainer.appendChild(sourceList);
+                        bubble.appendChild(sourcesContainer);
+                    }
+                    this.spineyChatWindow.appendChild(bubble);
+                });
+                this.spineyChatWindow.scrollTop = this.spineyChatWindow.scrollHeight;
+            },
+            addTypingIndicator() { 
+                const indicator = document.createElement('div');
+                indicator.id = 'typing-indicator';
+                indicator.className = 'sp-bubble spiney self-start sp-typing-indicator flex items-center gap-1 p-3';
+                indicator.innerHTML = `<span class="w-2 h-2 bg-gray-400 rounded-full"></span><span class="w-2 h-2 bg-gray-400 rounded-full"></span><span class="w-2 h-2 bg-gray-400 rounded-full"></span>`;
+                this.spineyChatWindow.appendChild(indicator);
+                this.spineyChatWindow.scrollTop = this.spineyChatWindow.scrollHeight;
+            },
         };
 
         // --- Global Functions to Bridge Google API Loading ---
