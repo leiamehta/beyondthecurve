@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
     <style>
         body {
@@ -379,7 +378,6 @@
         const app = {
             // STATE
             geminiApiKey: "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE", // Injected by environment
-            googleApiReady: false,
             googleGisReady: false,
             tokenClient: null,
             accessToken: null, // Store the access token directly
@@ -412,8 +410,8 @@
             
             // --- INITIALIZATION ---
             async init() {
-                // Defer setup until both Google APIs are loaded
-                if (this.googleApiReady && this.googleGisReady) {
+                // Defer setup until the Google GIS library is loaded
+                if (this.googleGisReady) {
                     await this.setupApp();
                 }
             },
@@ -875,13 +873,6 @@
         };
 
         // --- Global Functions to Bridge Google API Loading ---
-        function gapiLoaded() {
-            // This function is still needed to ensure the gapi object is loaded for the auth library to use,
-            // but we no longer need to initialize the client library.
-            app.googleApiReady = true;
-            app.init();
-        }
-
         function gisLoaded() {
             app.googleGisReady = true;
             app.init();
@@ -889,3 +880,4 @@
     </script>
 </body>
 </html>
+
