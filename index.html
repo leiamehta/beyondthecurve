@@ -397,6 +397,7 @@
             googleApiReady: false,
             googleGisReady: false,
             tokenClient: null,
+            accessToken: null, // Store the access token directly
             fileId: null,
             isLoggedIn: false,
             userInfo: null, // To store user profile info
@@ -494,16 +495,14 @@
                     scope: SCOPES,
                     callback: async (resp) => {
                         if (resp.error !== undefined) {
-                           // This can happen on silent sign-in failure, so we handle it gracefully
                            console.log("Silent auth failed, user is logged out.");
                            this.isLoggedIn = false;
                            this.updateUiForAuthState();
                            return;
                         }
-                        // This is the critical line that was missing.
-                        // It connects the auth token to the API client.
-                        gapi.client.setToken(resp);
-
+                        // Store the access token directly
+                        this.accessToken = resp.access_token;
+                        
                         this.isLoggedIn = true;
                         await this.fetchUserInfo();
                         await this.findOrCreateDataFile();
@@ -591,20 +590,20 @@
             },
 
             handleSignoutClick() {
-                const token = gapi.client.getToken();
-                if (token !== null) {
-                    google.accounts.oauth2.revoke(token.access_token);
-                    gapi.client.setToken('');
+                if (this.accessToken) {
+                    google.accounts.oauth2.revoke(this.accessToken);
+                    this.accessToken = null;
                     this.isLoggedIn = false;
                     this.updateUiForAuthState();
                 }
             },
             
             async fetchUserInfo() {
+                if (!this.accessToken) return;
                 try {
                     const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
                         headers: {
-                            'Authorization': `Bearer ${gapi.client.getToken().access_token}`
+                            'Authorization': `Bearer ${this.accessToken}`
                         }
                     });
                     if (!response.ok) throw new Error('Failed to fetch user info');
@@ -620,25 +619,31 @@
             },
 
             async findOrCreateDataFile() {
+                if (!this.accessToken) return;
                 try {
-                    const response = await gapi.client.drive.files.list({
-                        q: "name='beyond-the-curve-data.json'",
-                        spaces: 'appDataFolder',
-                        fields: 'files(id, name)',
+                    const response = await fetch("https://www.googleapis.com/drive/v3/files?q=name='beyond-the-curve-data.json'&spaces=appDataFolder&fields=files(id,name)", {
+                        headers: { 'Authorization': `Bearer ${this.accessToken}` }
                     });
-                    if (response.result.files.length > 0) {
-                        this.fileId = response.result.files[0].id;
+                    const data = await response.json();
+
+                    if (data.files && data.files.length > 0) {
+                        this.fileId = data.files[0].id;
                         await this.loadDataFromDrive();
                     } else {
                         const fileMetadata = {
-                            'name': 'beyond-the-curve-data.json'
-                            // The 'parents' property is removed to correctly use the appDataFolder
+                            'name': 'beyond-the-curve-data.json',
+                            'parents': ['appDataFolder']
                         };
-                        const createResponse = await gapi.client.drive.files.create({
-                            resource: fileMetadata,
-                            fields: 'id'
+                         const createResponse = await fetch("https://www.googleapis.com/drive/v3/files", {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${this.accessToken}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(fileMetadata)
                         });
-                        this.fileId = createResponse.result.id;
+                        const newFile = await createResponse.json();
+                        this.fileId = newFile.id;
                         await this.saveDataToDrive(); 
                     }
                 } catch (err) {
@@ -647,16 +652,23 @@
             },
 
             async loadDataFromDrive() {
-                if (!this.fileId) return;
+                if (!this.fileId || !this.accessToken) return;
                 try {
-                    const response = await gapi.client.drive.files.get({
-                        fileId: this.fileId,
-                        alt: 'media'
+                    const response = await fetch(`https://www.googleapis.com/drive/v3/files/${this.fileId}?alt=media`, {
+                         headers: { 'Authorization': `Bearer ${this.accessToken}` }
                     });
-                    const data = response.result ? response.result : { braceData: {}, journalData: [], physioData: {} };
-                    this.braceData = data.braceData || {};
-                    this.journalData = data.journalData || [];
-                    this.physioData = data.physioData || {};
+
+                    if (response.status === 200) {
+                        const data = await response.json();
+                        this.braceData = data.braceData || {};
+                        this.journalData = data.journalData || [];
+                        this.physioData = data.physioData || {};
+                    } else {
+                        // Handle empty file case
+                        this.braceData = {};
+                        this.journalData = [];
+                        this.physioData = {};
+                    }
                 } catch (e) {
                     console.error("Error loading data from Drive", e);
                     this.braceData = {};
@@ -670,30 +682,20 @@
             },
             
             async saveDataToDrive() {
-                if (!this.fileId) return;
+                if (!this.fileId || !this.accessToken) return;
                 const dataToSave = {
                     braceData: this.braceData,
                     journalData: this.journalData,
                     physioData: this.physioData
                 };
                 try {
-                    const boundary = '-------314159265358979323846';
-                    const delimiter = "\r\n--" + boundary + "\r\n";
-                    const close_delim = "\r\n--" + boundary + "--";
-
-                    const metadata = { 'mimeType': 'application/json' };
-
-                    const multipartRequestBody =
-                        delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) +
-                        delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(dataToSave) +
-                        close_delim;
-                    
-                    await gapi.client.request({
-                        'path': '/upload/drive/v3/files/' + this.fileId,
-                        'method': 'PATCH',
-                        'params': { 'uploadType': 'multipart' },
-                        'headers': { 'Content-Type': 'multipart/related; boundary="' + boundary + '"' },
-                        'body': multipartRequestBody
+                    await fetch(`https://content.googleapis.com/upload/drive/v3/files/${this.fileId}?uploadType=media`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Authorization': `Bearer ${this.accessToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSave)
                     });
                 } catch (err) {
                     console.error("Error saving data to drive", err);
@@ -882,16 +884,10 @@
 
         // --- Global Functions to Bridge Google API Loading ---
         function gapiLoaded() {
-            gapi.load('client', async () => {
-                const GOOGLE_API_KEY = "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE";
-                app.geminiApiKey = GOOGLE_API_KEY; 
-                await gapi.client.init({
-                    apiKey: GOOGLE_API_KEY,
-                    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-                });
-                app.googleApiReady = true;
-                await app.init();
-            });
+            // This function is still needed to ensure the gapi object is loaded for the auth library to use,
+            // but we no longer need to initialize the client library.
+            app.googleApiReady = true;
+            app.init();
         }
 
         function gisLoaded() {
