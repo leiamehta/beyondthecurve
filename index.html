@@ -473,7 +473,7 @@
 
                 // Initialize Google Auth Client
                 const GOOGLE_CLIENT_ID = "704532323173-lks375tr64fg63iok7bm1sn0slao6nge.apps.googleusercontent.com";
-                const SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
+                const SCOPES = 'https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/userinfo.profile';
                 
                 this.tokenClient = google.accounts.oauth2.initTokenClient({
                     client_id: GOOGLE_CLIENT_ID,
@@ -889,3 +889,5 @@
     </script>
 </body>
 </html>
+```
+
