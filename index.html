@@ -70,6 +70,7 @@
                  <nav class="hidden md:flex space-x-2">
                     <button data-page="home" class="nav-link active-nav px-4 py-2 rounded-lg font-semibold">Home</button>
                     <button data-page="tracker" class="nav-link px-4 py-2 rounded-lg font-semibold">Brace Tracker</button>
+                    <button data-page="physio" class="nav-link px-4 py-2 rounded-lg font-semibold">Physiotherapy</button>
                     <button data-page="journal" class="nav-link px-4 py-2 rounded-lg font-semibold">Journal</button>
                     <button data-page="spiney" class="nav-link px-4 py-2 rounded-lg font-semibold">Spiney ✨</button>
                     <button data-page="resources" class="nav-link px-4 py-2 rounded-lg font-semibold">Resources</button>
@@ -90,6 +91,7 @@
             <nav class="flex flex-col items-center">
                 <button data-page="home" class="nav-link w-full text-center py-3">Home</button>
                 <button data-page="tracker" class="nav-link w-full text-center py-3">Brace Tracker</button>
+                <button data-page="physio" class="nav-link w-full text-center py-3">Physiotherapy</button>
                 <button data-page="journal" class="nav-link w-full text-center py-3">Journal</button>
                 <button data-page="spiney" class="nav-link w-full text-center py-3">Spiney ✨</button>
                 <button data-page="resources" class="nav-link w-full text-center py-3">Resources</button>
@@ -110,7 +112,7 @@
                     </svg>
                 </div>
 
-                <div class="mt-8 grid md:grid-cols-2 gap-6">
+                <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-green-200 transition-shadow flex flex-col">
                         <div class="flex items-center gap-4">
                             <div class="bg-green-100 p-3 rounded-full">
@@ -120,6 +122,16 @@
                         </div>
                         <p class="mt-4 flex-grow">Log your brace hours, watch your progress, and earn rewards. Your data is saved securely to your Google Drive.</p>
                         <button data-page="tracker" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors self-start">Go to Tracker</button>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-green-200 transition-shadow flex flex-col">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-green-700">Physiotherapy Tracker</h3>
+                        </div>
+                        <p class="mt-4 flex-grow">Track your daily PT sessions and stay consistent with your exercises. Data is saved securely to your Google Drive.</p>
+                        <button data-page="physio" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors self-start">Go to PT Tracker</button>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-green-200 transition-shadow flex flex-col">
                          <div class="flex items-center gap-4">
@@ -204,6 +216,60 @@
                     <div class="mt-8 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
                          <h3 class="text-xl font-bold mb-4">Weekly Progress</h3>
                          <canvas id="brace-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physiotherapy Tracker Page -->
+            <div id="physio-page" class="page">
+                <div class="login-prompt text-center p-8 bg-gray-100 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-4">Login to Track Your Physiotherapy</h3>
+                    <p class="mb-6">Please log in with your Google account to use the PT Tracker. Your data will be stored safely in your own Google Drive.</p>
+                    <button id="login-button-physio" class="bg-green-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-800 transition-colors">Login with Google</button>
+                </div>
+                <div class="protected-content">
+                    <div class="flex items-center justify-center gap-3 mb-6">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
+                        <h2 class="text-3xl font-bold text-center">My Physiotherapy Tracker</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                            <h3 class="text-xl font-bold mb-4">Log Today's Session</h3>
+                            <form id="physio-form" class="space-y-4">
+                                <div>
+                                    <label for="physio-date" class="block font-semibold">Date</label>
+                                    <input type="date" id="physio-date" class="w-full p-2 border border-gray-300 rounded-lg mt-1" required>
+                                </div>
+                                <div>
+                                    <label for="physio-minutes" class="block font-semibold">Minutes of PT</label>
+                                    <input type="number" id="physio-minutes" min="0" max="240" step="1" class="w-full p-2 border border-gray-300 rounded-lg mt-1" placeholder="e.g., 45" required>
+                                </div>
+                                <div>
+                                    <label for="physio-daily-goal" class="block font-semibold">Daily Goal (minutes)</label>
+                                    <input type="number" id="physio-daily-goal" min="1" max="240" step="1" class="w-full p-2 border border-gray-300 rounded-lg mt-1" value="30">
+                                </div>
+                                <button type="submit" class="w-full bg-green-700 text-white py-2 rounded-lg font-semibold hover:bg-green-800 transition-colors">Log Session</button>
+                            </form>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                            <h3 class="text-xl font-bold mb-4">Today's Progress</h3>
+                            <div id="physio-progress-container">
+                                <div class="w-full bg-gray-200 rounded-full h-8">
+                                    <div id="physio-progress-bar" class="progress-bar-fill bg-green-600 h-8 text-white text-center font-bold leading-8 rounded-full" style="width: 0%;">0%</div>
+                                </div>
+                                <p id="physio-progress-text" class="text-center mt-2 font-semibold">Log your session to see your progress!</p>
+                            </div>
+                            <div class="mt-6">
+                                <h3 class="text-xl font-bold mb-4">My PT Rewards</h3>
+                                <div id="physio-rewards-container" class="flex flex-wrap gap-4">
+                                    <p class="text-gray-500">Start logging to earn badges!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                         <h3 class="text-xl font-bold mb-4">Weekly PT Progress</h3>
+                         <canvas id="physio-chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -337,13 +403,18 @@
             
             // UI ELEMENTS
             pages: null, navLinks: null, mobileMenuButton: null, mobileMenu: null,
-            loginButton: null, loginButtonTracker: null, loginButtonJournal: null,
+            loginButton: null, loginButtonTracker: null, loginButtonJournal: null, loginButtonPhysio: null,
             logoutButton: null, userProfile: null, userAvatar: null, appContainer: null,
 
             // Brace Tracker
             braceForm: null, braceDate: null, braceHours: null, dailyGoal: null,
             progressBar: null, progressText: null, rewardsContainer: null, braceChart: null,
             braceData: {},
+            
+            // Physio Tracker
+            physioForm: null, physioDate: null, physioMinutes: null, physioDailyGoal: null,
+            physioProgressBar: null, physioProgressText: null, physioRewardsContainer: null, physioChart: null,
+            physioData: {},
 
             // Journal
             journalForm: null, journalEntry: null, journalEntriesContainer: null,
@@ -371,9 +442,12 @@
                 this.loginButton = document.getElementById('login-button');
                 this.loginButtonTracker = document.getElementById('login-button-tracker');
                 this.loginButtonJournal = document.getElementById('login-button-journal');
+                this.loginButtonPhysio = document.getElementById('login-button-physio');
                 this.logoutButton = document.getElementById('logout-button');
                 this.userProfile = document.getElementById('user-profile');
                 this.userAvatar = document.getElementById('user-avatar');
+                
+                // Brace Tracker elements
                 this.braceForm = document.getElementById('brace-form');
                 this.braceDate = document.getElementById('brace-date');
                 this.braceHours = document.getElementById('brace-hours');
@@ -381,9 +455,22 @@
                 this.progressBar = document.getElementById('progress-bar');
                 this.progressText = document.getElementById('progress-text');
                 this.rewardsContainer = document.getElementById('rewards-container');
+                
+                // Physio Tracker elements
+                this.physioForm = document.getElementById('physio-form');
+                this.physioDate = document.getElementById('physio-date');
+                this.physioMinutes = document.getElementById('physio-minutes');
+                this.physioDailyGoal = document.getElementById('physio-daily-goal');
+                this.physioProgressBar = document.getElementById('physio-progress-bar');
+                this.physioProgressText = document.getElementById('physio-progress-text');
+                this.physioRewardsContainer = document.getElementById('physio-rewards-container');
+
+                // Journal elements
                 this.journalForm = document.getElementById('journal-form');
                 this.journalEntry = document.getElementById('journal-entry');
                 this.journalEntriesContainer = document.getElementById('journal-entries-container');
+                
+                // Spiney elements
                 this.spineyForm = document.getElementById('spiney-form');
                 this.spineyInput = document.getElementById('spiney-input');
                 this.spineyChatWindow = document.getElementById('spiney-chat-window');
@@ -394,11 +481,12 @@
                 // Initial UI State
                 this.navigateTo('home');
                 this.braceDate.valueAsDate = new Date();
+                this.physioDate.valueAsDate = new Date();
                 this.renderSpineyChat();
                 this.handleVisitorCounter();
 
                 // Initialize Google Auth Client
-                const GOOGLE_CLIENT_ID = "704532323173-lks375tr64fg63iok7bm1sn0slao6nge.apps.googleusercontent.com"; // Placeholder
+                const GOOGLE_CLIENT_ID = "704532323173-lks375tr64fg63iok7bm1sn0slao6nge.apps.googleusercontent.com";
                 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
                 
                 this.tokenClient = google.accounts.oauth2.initTokenClient({
@@ -427,9 +515,11 @@
                 this.loginButton.addEventListener('click', () => this.handleAuthClick());
                 this.loginButtonTracker.addEventListener('click', () => this.handleAuthClick());
                 this.loginButtonJournal.addEventListener('click', () => this.handleAuthClick());
+                this.loginButtonPhysio.addEventListener('click', () => this.handleAuthClick());
                 this.logoutButton.addEventListener('click', () => this.handleSignoutClick());
                 
                 this.braceForm.addEventListener('submit', (e) => this.handleBraceSubmit(e));
+                this.physioForm.addEventListener('submit', (e) => this.handlePhysioSubmit(e));
                 this.journalForm.addEventListener('submit', (e) => this.handleJournalSubmit(e));
                 this.spineyForm.addEventListener('submit', (e) => this.handleSpineySubmit(e));
             },
@@ -459,8 +549,10 @@
                     this.fileId = null;
                     this.braceData = {};
                     this.journalData = [];
+                    this.physioData = {};
                     this.loadBraceData();
                     this.loadJournalData();
+                    this.loadPhysioData();
                 }
             },
 
@@ -501,7 +593,7 @@
                 try {
                     const response = await gapi.client.drive.files.list({
                         q: "name='beyond-the-curve-data.json'",
-                        spaces: 'drive',
+                        spaces: 'appDataFolder',
                         fields: 'files(id, name)',
                     });
                     if (response.result.files.length > 0) {
@@ -517,7 +609,6 @@
                             fields: 'id'
                         });
                         this.fileId = createResponse.result.id;
-                        // New file, so save initial empty state
                         await this.saveDataToDrive(); 
                     }
                 } catch (err) {
@@ -532,17 +623,19 @@
                         fileId: this.fileId,
                         alt: 'media'
                     });
-                    const data = response.result ? response.result : { braceData: {}, journalData: [] };
+                    const data = response.result ? response.result : { braceData: {}, journalData: [], physioData: {} };
                     this.braceData = data.braceData || {};
                     this.journalData = data.journalData || [];
+                    this.physioData = data.physioData || {};
                 } catch (e) {
                     console.error("Error loading data from Drive", e);
-                    // Could be an empty file on first creation
                     this.braceData = {};
                     this.journalData = [];
+                    this.physioData = {};
                 } finally {
                     this.loadBraceData();
                     this.loadJournalData();
+                    this.loadPhysioData();
                 }
             },
             
@@ -550,35 +643,26 @@
                 if (!this.fileId) return;
                 const dataToSave = {
                     braceData: this.braceData,
-                    journalData: this.journalData
+                    journalData: this.journalData,
+                    physioData: this.physioData
                 };
                 try {
                     const boundary = '-------314159265358979323846';
                     const delimiter = "\r\n--" + boundary + "\r\n";
                     const close_delim = "\r\n--" + boundary + "--";
 
-                    const metadata = {
-                        'mimeType': 'application/json'
-                    };
+                    const metadata = { 'mimeType': 'application/json' };
 
                     const multipartRequestBody =
-                        delimiter +
-                        'Content-Type: application/json\r\n\r\n' +
-                        JSON.stringify(metadata) +
-                        delimiter +
-                        'Content-Type: application/json\r\n\r\n' +
-                        JSON.stringify(dataToSave) +
+                        delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) +
+                        delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(dataToSave) +
                         close_delim;
                     
                     await gapi.client.request({
                         'path': '/upload/drive/v3/files/' + this.fileId,
                         'method': 'PATCH',
-                        'params': {
-                            'uploadType': 'multipart'
-                        },
-                        'headers': {
-                            'Content-Type': 'multipart/related; boundary="' + boundary + '"'
-                        },
+                        'params': { 'uploadType': 'multipart' },
+                        'headers': { 'Content-Type': 'multipart/related; boundary="' + boundary + '"' },
                         'body': multipartRequestBody
                     });
                 } catch (err) {
@@ -587,18 +671,23 @@
             },
 
             // --- Gemini API Call ---
-            async callGemini(payload) {
-                // ... (Gemini logic remains the same)
-            },
+            async callGemini(payload) { /* ... same as before ... */ },
 
             // --- Brace Tracker Methods ---
             async handleBraceSubmit(e) { e.preventDefault(); const date = this.braceDate.value; const hours = parseFloat(this.braceHours.value); const goal = parseFloat(this.dailyGoal.value); if (!date || isNaN(hours) || isNaN(goal)) { return; } this.braceData[date] = { hours, goal }; await this.saveDataToDrive(); this.updateProgressUI(date); this.updateChart(); this.updateRewards(); this.braceForm.reset(); this.braceDate.valueAsDate = new Date(); },
             loadBraceData() { const today = new Date().toISOString().split('T')[0]; this.updateProgressUI(today); this.updateChart(); this.updateRewards(); },
-            // ... (rest of brace tracker methods are the same, they just read from app.braceData)
             updateProgressUI(date) { const data = this.braceData[date]; if (data) { const percentage = Math.min(100, Math.round((data.hours / data.goal) * 100)); this.progressBar.style.width = `${percentage}%`; this.progressBar.textContent = `${percentage}%`; this.progressText.textContent = `You've logged ${data.hours} of ${data.goal} hours today. Keep it up!`; } else { this.progressBar.style.width = '0%'; this.progressBar.textContent = '0%'; this.progressText.textContent = 'Log your hours to see your progress!'; } },
             updateChart() { const ctx = document.getElementById('brace-chart').getContext('2d'); const labels = []; const hoursData = []; const goalData = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateString = d.toISOString().split('T')[0]; labels.push(d.toLocaleDateString('en-US', { weekday: 'short' })); const data = this.braceData[dateString]; hoursData.push(data ? data.hours : 0); goalData.push(data ? data.goal : parseFloat(this.dailyGoal.value)); } if (this.braceChart) { this.braceChart.destroy(); } this.braceChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Hours Worn', data: hoursData, backgroundColor: 'rgba(22, 163, 74, 0.6)' }, { label: 'Goal', data: goalData, type: 'line', fill: false, borderColor: 'rgba(239, 68, 68, 1)' }] }, options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Hours' } } } } }); },
             updateRewards() { const totalDaysLogged = Object.keys(this.braceData).length; const consistentWeeks = this.calculateConsistentWeeks(); const rewards = [ { name: 'First Step', threshold: 1, icon: '🌟', description: 'Logged your first day!' }, { name: 'Consistent Week', threshold: 7, icon: '📅', description: 'Logged 7 days in a row!' }, { name: '30-Day Warrior', threshold: 30, icon: '🛡️', description: 'Logged for 30 days!' }, { name: 'Perfect Week', threshold: 1, icon: '🏆', check: consistentWeeks, description: 'Met your goal 7 days in a row!'} ]; this.rewardsContainer.innerHTML = ''; let earnedCount = 0; rewards.forEach(reward => { const checkValue = reward.check !== undefined ? reward.check : totalDaysLogged; const isEarned = checkValue >= reward.threshold; if(isEarned) earnedCount++; const rewardEl = document.createElement('div'); rewardEl.className = `text-center p-2 rounded-lg ${isEarned ? 'bg-green-100' : 'bg-gray-100'}`; rewardEl.innerHTML = `<div class="text-4xl ${isEarned ? '' : 'opacity-30'}">${reward.icon}</div><div class="font-semibold text-sm ${isEarned ? 'text-green-800' : 'text-gray-500'}">${reward.name}</div><div class="text-xs text-gray-500">${reward.description}</div>`; this.rewardsContainer.appendChild(rewardEl); }); if(earnedCount === 0){ this.rewardsContainer.innerHTML = '<p class="text-gray-500">Start logging to earn badges!</p>'; } },
             calculateConsistentWeeks() { const dates = Object.keys(this.braceData).sort(); if(dates.length < 7) return 0; let consecutiveDays = 0; let maxConsecutive = 0; for (let i = 0; i < dates.length; i++) { const data = this.braceData[dates[i]]; if (data.hours >= data.goal) { if (i > 0) { const prevDate = new Date(dates[i-1]); const diffTime = Math.abs(new Date(dates[i]) - prevDate); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); if (diffDays === 1) consecutiveDays++; else consecutiveDays = 1; } else { consecutiveDays = 1; } } else { consecutiveDays = 0; } if (consecutiveDays > maxConsecutive) maxConsecutive = consecutiveDays; } return Math.floor(maxConsecutive / 7); },
+            
+            // --- Physiotherapy Tracker Methods ---
+            async handlePhysioSubmit(e) { e.preventDefault(); const date = this.physioDate.value; const minutes = parseFloat(this.physioMinutes.value); const goal = parseFloat(this.physioDailyGoal.value); if (!date || isNaN(minutes) || isNaN(goal)) { return; } this.physioData[date] = { minutes, goal }; await this.saveDataToDrive(); this.updatePhysioProgressUI(date); this.updatePhysioChart(); this.updatePhysioRewards(); this.physioForm.reset(); this.physioDate.valueAsDate = new Date(); },
+            loadPhysioData() { const today = new Date().toISOString().split('T')[0]; this.updatePhysioProgressUI(today); this.updatePhysioChart(); this.updatePhysioRewards(); },
+            updatePhysioProgressUI(date) { const data = this.physioData[date]; if (data) { const percentage = Math.min(100, Math.round((data.minutes / data.goal) * 100)); this.physioProgressBar.style.width = `${percentage}%`; this.physioProgressBar.textContent = `${percentage}%`; this.physioProgressText.textContent = `You've logged ${data.minutes} of ${data.goal} minutes today. Great job!`; } else { this.physioProgressBar.style.width = '0%'; this.physioProgressBar.textContent = '0%'; this.physioProgressText.textContent = 'Log your session to see your progress!'; } },
+            updatePhysioChart() { const ctx = document.getElementById('physio-chart').getContext('2d'); const labels = []; const minutesData = []; const goalData = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateString = d.toISOString().split('T')[0]; labels.push(d.toLocaleDateString('en-US', { weekday: 'short' })); const data = this.physioData[dateString]; minutesData.push(data ? data.minutes : 0); goalData.push(data ? data.goal : parseFloat(this.physioDailyGoal.value)); } if (this.physioChart) { this.physioChart.destroy(); } this.physioChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Minutes of PT', data: minutesData, backgroundColor: 'rgba(22, 163, 74, 0.6)' }, { label: 'Goal', data: goalData, type: 'line', fill: false, borderColor: 'rgba(239, 68, 68, 1)' }] }, options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' } } } } }); },
+            updatePhysioRewards() { const totalDaysLogged = Object.keys(this.physioData).length; const consistentWeeks = this.calculateConsistentPTWeeks(); const rewards = [ { name: 'First Session', threshold: 1, icon: '💪', description: 'Logged your first PT session!' }, { name: 'PT Week', threshold: 7, icon: '🗓️', description: 'Logged PT 7 days in a row!' }, { name: 'Month of Motion', threshold: 30, icon: '🤸', description: 'Logged PT for 30 days!' }, { name: 'Perfect PT Week', threshold: 1, icon: '🏅', check: consistentWeeks, description: 'Met your PT goal 7 days in a row!'} ]; this.physioRewardsContainer.innerHTML = ''; let earnedCount = 0; rewards.forEach(reward => { const checkValue = reward.check !== undefined ? reward.check : totalDaysLogged; const isEarned = checkValue >= reward.threshold; if(isEarned) earnedCount++; const rewardEl = document.createElement('div'); rewardEl.className = `text-center p-2 rounded-lg ${isEarned ? 'bg-green-100' : 'bg-gray-100'}`; rewardEl.innerHTML = `<div class="text-4xl ${isEarned ? '' : 'opacity-30'}">${reward.icon}</div><div class="font-semibold text-sm ${isEarned ? 'text-green-800' : 'text-gray-500'}">${reward.name}</div><div class="text-xs text-gray-500">${reward.description}</div>`; this.physioRewardsContainer.appendChild(rewardEl); }); if(earnedCount === 0){ this.physioRewardsContainer.innerHTML = '<p class="text-gray-500">Start logging to earn badges!</p>'; } },
+            calculateConsistentPTWeeks() { const dates = Object.keys(this.physioData).sort(); if(dates.length < 7) return 0; let consecutiveDays = 0; let maxConsecutive = 0; for (let i = 0; i < dates.length; i++) { const data = this.physioData[dates[i]]; if (data.minutes >= data.goal) { if (i > 0) { const prevDate = new Date(dates[i-1]); const diffTime = Math.abs(new Date(dates[i]) - prevDate); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); if (diffDays === 1) consecutiveDays++; else consecutiveDays = 1; } else { consecutiveDays = 1; } } else { consecutiveDays = 0; } if (consecutiveDays > maxConsecutive) maxConsecutive = consecutiveDays; } return Math.floor(maxConsecutive / 7); },
 
 
             // --- Journal Methods ---
@@ -648,7 +737,7 @@
         // --- Global Functions to Bridge Google API Loading ---
         function gapiLoaded() {
             gapi.load('client:auth2', async () => {
-                const GOOGLE_API_KEY = "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE"; // Placeholder for API Key
+                const GOOGLE_API_KEY = "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE";
                 await gapi.client.init({
                     apiKey: GOOGLE_API_KEY,
                     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
@@ -665,5 +754,4 @@
     </script>
 </body>
 </html>
-
 
