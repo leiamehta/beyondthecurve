@@ -398,7 +398,7 @@
                 this.handleVisitorCounter();
 
                 // Initialize Google Auth Client
-                const GOOGLE_CLIENT_ID = "YOUR_CLIENT_ID.apps.googleusercontent.com"; // Placeholder
+                const GOOGLE_CLIENT_ID = "704532323173-lks375tr64fg63iok7bm1sn0slao6nge.apps.googleusercontent.com"; // Placeholder
                 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
                 
                 this.tokenClient = google.accounts.oauth2.initTokenClient({
@@ -648,7 +648,7 @@
         // --- Global Functions to Bridge Google API Loading ---
         function gapiLoaded() {
             gapi.load('client:auth2', async () => {
-                const GOOGLE_API_KEY = ""; // Placeholder for API Key
+                const GOOGLE_API_KEY = "AIzaSyAkrSD-tH4a2wTwh3J1Y1uPdOKXnpvlqKE"; // Placeholder for API Key
                 await gapi.client.init({
                     apiKey: GOOGLE_API_KEY,
                     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
