@@ -601,8 +601,8 @@
                         await this.loadDataFromDrive();
                     } else {
                         const fileMetadata = {
-                            'name': 'beyond-the-curve-data.json',
-                            'parents': ['appDataFolder']
+                            'name': 'beyond-the-curve-data.json'
+                            // The 'parents' property is removed to correctly use the appDataFolder
                         };
                         const createResponse = await gapi.client.drive.files.create({
                             resource: fileMetadata,
