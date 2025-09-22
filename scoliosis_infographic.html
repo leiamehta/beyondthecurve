@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Scoliosis: A Patient's Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Narrative Plan: Introduction (Big Number, Definition), Section 2 (Data: Idiopathic Composition, Gender Risk via Doughnut/Bar Charts), Section 3 (Process Flow: Diagnosis Steps via HTML/CSS), Section 4 (Categorical Comparison: Treatment Tiers via Styled Cards) -->
+    <!-- Visualization Choices: 
+        1. Prevalence: Inform -> Single Big Number (Text/Tailwind) -> Justification: High impact metric. NO SVG.
+        2. Etiology: Compare Composition -> Doughnut Chart (Chart.js/Canvas) -> Justification: Clear breakdown of 80% Idiopathic. NO SVG.
+        3. Gender Risk: Compare Categories -> Bar Chart (Chart.js/Canvas) -> Justification: Visual comparison of 8:1 risk ratio. NO SVG.
+        4. Diagnosis: Organize -> Flow Chart (Structured HTML/CSS/Tailwind) -> Justification: Shows sequential process clearly. NO SVG, NO MERMAID.
+        5. Treatment: Organize/Compare -> Styled Cards (Structured HTML/CSS/Tailwind) -> Justification: Clear categorization by Cobb Angle. NO SVG.
+        6. Label Wrapping & Tooltips: Implemented required Chart.js logic. -->
+    <!-- Color Palette Used: Energetic & Playful (Dark Green: #376a45, Light Green: #8acb88, Vibrant Yellow: #f9c80e, Orange: #f86624) -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3fffa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+    <header class="bg-[#376a45] text-white text-center py-8 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold">Understanding Scoliosis</h1>
+        <p class="mt-2 text-lg md:text-xl text-gray-200">A Clear Guide for Patients and Families</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="what-is" class="text-center mb-12 md:mb-16">
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8 max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-[#376a45] mb-4">What is Scoliosis?</h2>
+                <p class="text-lg mb-6">Scoliosis is a medical condition where the spine has a sideways curve, often in an "S" or "C" shape. While it can affect anyone, it's most commonly diagnosed in adolescents. It's not caused by poor posture or carrying heavy bags, and for most, the cause is unknown.</p>
+                <div class="bg-[#f9c80e] rounded-lg p-6">
+                    <p class="text-2xl font-semibold text-gray-800">In the United States, Scoliosis affects an estimated</p>
+                    <p class="text-6xl md:text-7xl font-bold text-gray-800 my-2">6 to 9 Million</p>
+                    <p class="text-2xl font-semibold text-gray-800">people.</p>
+                </div>
+                <p class="mt-6 text-base text-gray-600">This highlights the importance of awareness and early detection, which can significantly improve outcomes and quality of life.</p>
+            </div>
+        </section>
+
+        <section id="who-is-affected" class="mb-12 md:mb-16">
+            <h2 class="text-3xl font-bold text-[#376a45] text-center mb-8">Who is Affected?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">The Vast Majority of Cases are Idiopathic</h3>
+                    <p class="text-center mb-4">"Idiopathic" means the exact cause is not known. About 80% of scoliosis cases fall into this category, making it the most common type by far.</p>
+                    <div class="chart-container">
+                        <canvas id="typesChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Progression Risk by Gender</h3>
+                    <p class="text-center mb-4">While scoliosis occurs in both boys and girls, females are significantly more likely to have curves that progress to a point where treatment is needed.</p>
+                    <div class="chart-container">
+                        <canvas id="genderRiskChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="diagnosis-path" class="mb-12 md:mb-16">
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8 max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-[#376a45] text-center mb-8">The Path to Diagnosis</h2>
+                <p class="text-lg text-center mb-10 max-w-3xl mx-auto">The diagnostic process for scoliosis is a clear, step-by-step journey. Early detection is key, and it often begins with routine screenings at school or during a regular check-up with a pediatrician.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-0">
+                    <div class="flex-1 text-center p-4 bg-gray-50 rounded-lg">
+                        <div class="text-4xl text-[#f86624] mb-2">①</div>
+                        <h4 class="text-xl font-semibold text-gray-800">Screening</h4>
+                        <p class="mt-1">Initial check, often using the Adam's Forward Bend Test to look for asymmetry in the back.</p>
+                    </div>
+                    <div class="text-2xl text-[#8acb88] mx-4 self-center font-bold hidden md:block">→</div>
+                    <div class="text-2xl text-[#8acb88] my-2 self-center font-bold md:hidden">↓</div>
+                    <div class="flex-1 text-center p-4 bg-gray-50 rounded-lg">
+                         <div class="text-4xl text-[#f86624] mb-2">②</div>
+                        <h4 class="text-xl font-semibold text-gray-800">Physical Examination</h4>
+                        <p class="mt-1">A doctor confirms physical signs and may use a scoliometer to measure trunk rotation.</p>
+                    </div>
+                    <div class="text-2xl text-[#8acb88] mx-4 self-center font-bold hidden md:block">→</div>
+                    <div class="text-2xl text-[#8acb88] my-2 self-center font-bold md:hidden">↓</div>
+                    <div class="flex-1 text-center p-4 bg-gray-50 rounded-lg">
+                         <div class="text-4xl text-[#f86624] mb-2">③</div>
+                        <h4 class="text-xl font-semibold text-gray-800">X-Ray Confirmation</h4>
+                        <p class="mt-1">An X-ray is taken to get a precise measurement of the curve, known as the Cobb Angle.</p>
+                    </div>
+                    <div class="text-2xl text-[#8acb88] mx-4 self-center font-bold hidden md:block">→</div>
+                    <div class="text-2xl text-[#8acb88] my-2 self-center font-bold md:hidden">↓</div>
+                    <div class="flex-1 text-center p-4 bg-gray-50 rounded-lg">
+                         <div class="text-4xl text-[#f86624] mb-2">④</div>
+                        <h4 class="text-xl font-semibold text-gray-800">Treatment Plan</h4>
+                        <p class="mt-1">Based on the curve's severity and the patient's age, a personalized plan is created.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="treatment-tiers" class="mb-12 md:mb-16">
+             <div class="bg-white rounded-lg shadow-md p-6 md:p-8 max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-[#376a45] text-center mb-4">Understanding the Curve: Treatment Tiers</h2>
+                <p class="text-lg text-center mb-8 max-w-3xl mx-auto">Treatment is determined by the severity of the spinal curve, measured in degrees by the Cobb Angle on an X-ray. The approach depends on whether the patient is still growing and how significant the curve is.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="border-2 border-[#8acb88] rounded-lg p-6 text-center">
+                        <h3 class="text-2xl font-bold text-[#376a45]">Mild Curve</h3>
+                        <p class="text-4xl font-bold text-gray-800 my-3">&lt; 25°</p>
+                        <span class="inline-block bg-[#8acb88] text-gray-800 text-sm font-semibold px-3 py-1 rounded-full">Observation</span>
+                        <p class="mt-4">For small curves, doctors typically use a "watch and wait" approach, with regular check-ups every 4-6 months to monitor for any changes, especially during growth spurts.</p>
+                    </div>
+                    <div class="border-2 border-[#f9c80e] rounded-lg p-6 text-center">
+                        <h3 class="text-2xl font-bold text-[#376a45]">Moderate Curve</h3>
+                        <p class="text-4xl font-bold text-gray-800 my-3">25° - 45°</p>
+                        <span class="inline-block bg-[#f9c80e] text-gray-800 text-sm font-semibold px-3 py-1 rounded-full">Bracing</span>
+                        <p class="mt-4">If the child is still growing, a custom-molded brace is the most common treatment. The goal of bracing is not to correct the curve, but to prevent it from getting worse.</p>
+                    </div>
+                    <div class="border-2 border-[#376a45] rounded-lg p-6 text-center">
+                        <h3 class="text-2xl font-bold text-[#376a45]">Severe Curve</h3>
+                        <p class="text-4xl font-bold text-gray-800 my-3">&gt; 45°</p>
+                        <span class="inline-block bg-[#376a45] text-white text-sm font-semibold px-3 py-1 rounded-full">Surgery</span>
+                        <p class="mt-4">For large curves, or when bracing isn't effective, surgery may be recommended. Spinal fusion is the most common surgical procedure to correct the curve and stabilize the spine.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-[#376a45] text-white text-center py-6 px-4 mt-8">
+        <p class="font-semibold">Early detection and proper management are vital.</p>
+        <p class="text-sm text-gray-300 mt-1">This infographic is for educational purposes. Always consult with a qualified healthcare provider for diagnosis and treatment.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const energeticPlayful = ['#376a45', '#8acb88', '#f9c80e', '#f86624'];
+            const energeticPlayfulDark = ['#376a45', '#8acb88'];
+            
+            const processLabel = (label) => {
+                const maxLength = 16;
+                if (typeof label !== 'string' || label.length <= maxLength) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            };
+            
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#111827',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            };
+
+            var typesCtx = document.getElementById('typesChart').getContext('2d');
+            new Chart(typesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [processLabel('Idiopathic (Unknown Cause)'), processLabel('Congenital & Neuromuscular')],
+                    datasets: [{
+                        label: 'Types of Scoliosis',
+                        data: [80, 20],
+                        backgroundColor: energeticPlayful,
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    cutout: '60%',
+                }
+            });
+
+            var genderRiskCtx = document.getElementById('genderRiskChart').getContext('2d');
+            new Chart(genderRiskCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Females', 'Males'],
+                    datasets: [{
+                        label: 'Likelihood of Curve Progression Requiring Treatment',
+                        data: [8, 1],
+                        backgroundColor: energeticPlayfulDark,
+                        borderColor: '#ffffff',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Relative Likelihood (Ratio)',
+                                color: '#6B7280'
+                            },
+                            ticks: {
+                                color: '#111827'
+                            }
+                        },
+                        x: {
+                           ticks: {
+                                color: '#111827'
+                            }
+                        }
+                    },
+                    plugins: {
+                       ...commonOptions.plugins,
+                       legend: {
+                           display: false
+                       }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
