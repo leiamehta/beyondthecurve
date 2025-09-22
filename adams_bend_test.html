@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoliosis Screener: Adam's Bend Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Tailwind dark mode configuration
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        green: {
+                            100: '#f0fdf4',
+                            200: '#dcfce7',
+                            300: '#bbf7d0',
+                            400: '#86efac',
+                            500: '#4ade80',
+                            600: '#22c55e',
+                            700: '#16a34a',
+                            800: '#15803d',
+                            900: '#166534'
+                        },
+                        gold: {
+                            500: '#eab308',
+                            600: '#ca8a04'
+                        },
+                        yellow: {
+                            100: '#fef9c3',
+                            200: '#fef08a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Detect parent theme */
+        :root {
+            color-scheme: light;
+        }
+        html.dark {
+            color-scheme: dark;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 md:p-8">
+    
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-green-700 dark:text-green-400">Adam's Bend Test Guide</h1>
+            <p class="text-lg mt-2 text-gray-600 dark:text-gray-300">A simple guide to screen for potential signs of scoliosis at home.</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 space-y-6">
+            
+            <div>
+                <h2 class="text-2xl font-semibold text-green-800 dark:text-green-300 mb-2">What is the Adam's Bend Test?</h2>
+                <p>The Adam's forward bend test is a simple screening method used to check for asymmetry in the spine, which can be a sign of scoliosis. It involves bending forward at the waist and observing the back for any unevenness.</p>
+                <div class="mt-4 bg-yellow-100 border-l-4 border-gold-500 text-yellow-800 dark:bg-gray-700 dark:text-yellow-100 p-4 rounded-lg">
+                    <p class="font-bold">Important Disclaimer:</p>
+                    <p>This is <strong class="font-bold">not a diagnostic tool</strong>. It is a simple observation guide. Only a medical professional can diagnose scoliosis, typically with an X-ray. Please consult a doctor if you have any concerns.</p>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-semibold text-green-800 dark:text-green-300 mb-3">How to Perform the Test</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 bg-green-700 text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Stand Up Straight</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Have the person being screened stand with their feet together, knees straight, and arms hanging freely at their sides.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 bg-green-700 text-white rounded-full flex items-center justify-center font-bold text-lg">2</div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Bend Forward Slowly</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Ask them to bend forward slowly, as if diving into a pool, with their palms together and arms pointing towards the floor. Their head should be down, and they should stop when their back is parallel to the floor.</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 bg-green-700 text-white rounded-full flex items-center justify-center font-bold text-lg">3</div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Observe from Behind</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Stand behind the person and look along their back from one end to the other. You are looking for any asymmetry (unevenness).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simple SVG Illustration -->
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center">
+                        <svg class="w-full h-48" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                            <title>Illustration of Adam's Bend Test</title>
+                            <!-- Stand 1: Straight Back -->
+                            <g transform="translate(30, 10)">
+                                <circle cx="25" cy="15" r="10" fill="#22c55e" opacity="0.3"/>
+                                <line x1="25" y1="25" x2="25" y2="85" stroke="#22c55e" stroke-width="6" opacity="0.3"/>
+                                <line x1="25" y1="85" x2="15" y2="130" stroke="#22c55e" stroke-width="6" opacity="0.3"/>
+                                <line x1="25" y1="85" x2="35" y2="130" stroke="#22c55e" stroke-width="6" opacity="0.3"/>
+                                <text x="0" y="145" font-size="10" fill="currentColor">1. Stand</text>
+                            </g>
+                            
+                            <!-- Stand 2: Bending -->
+                             <g transform="translate(80, 10)">
+                                <circle cx="45" cy="45" r="10" fill="#22c55e" opacity="0.6"/>
+                                <path d="M 30 25 Q 45 30 60 40" stroke="#22c55e" stroke-width="6" fill="none" opacity="0.6"/>
+                                <line x1="30" y1="25" x2="20" y2="70" stroke="#22c55e" stroke-width="6" opacity="0.6"/>
+                                <line x1="30" y1="25" x2="40" y2="70" stroke="#22c55e" stroke-width="6" opacity="0.6"/>
+                                <text x="25" y="145" font-size="10" fill="currentColor">2. Bend</text>
+                            </g>
+
+                            <!-- Stand 3: Observe (Symmetric) -->
+                             <g transform="translate(140, 50)">
+                                <path d="M 10 30 C 20 40, 40 40, 50 30" stroke="#22c55e" stroke-width="6" fill="none" />
+                                <text x="10" y="60" font-size="10" fill="currentColor">Symmetric</text>
+                            </g>
+                            
+                             <!-- Stand 4: Observe (Asymmetric) -->
+                            <g transform="translate(140, 90)">
+                                <path d="M 10 30 C 20 45, 40 40, 50 30" stroke="#eab308" stroke-width="6" fill="none" />
+                                <text x="5" y="60" font-size="10" fill="#eab308">Asymmetric</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-semibold text-green-800 dark:text-green-300 mb-3">What to Look For</h2>
+                <p class="mb-4">When looking at the back, check for any of the following signs:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
+                    <li>One shoulder blade is higher or more prominent than the other.</li>
+                    <li>One side of the rib cage appears higher than the other (a "rib hump").</li>
+                    <li>The lower back appears uneven.</li>
+                    <li>The hips appear to be at different heights.</li>
+                    <li>The space between the arms and the body is different from one side to the other.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-semibold text-green-800 dark:text-green-300 mb-3">Next Steps</h2>
+                <p>If you notice any asymmetry, it is recommended to schedule an appointment with a pediatrician or an orthopedic specialist. They can perform a more thorough examination and, if necessary, order an X-ray to confirm a diagnosis and determine the severity (Cobb angle) of the curve.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Apply dark mode based on parent window
+        try {
+            if (window.top.document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        } catch (e) {
+            console.warn('Could not detect parent theme, defaulting to system preference.');
+            // Fallback to system preference if in a cross-origin iframe
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+    </script>
+</body>
+</html>
