@@ -149,6 +149,14 @@
                     </svg>
                     Journal
                 </button>
+                <button data-page="screener" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <!-- ICON: Screener -->
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/>
+                        <path d="M20.9 21.5C20.9 17.9 16.9 15 12 15s-8.9 2.9-8.9 6.5"/>
+                    </svg>
+                    Screener
+                </button>
                  <button data-page="community" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
                     <!-- ICON: Community -->
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
@@ -304,6 +312,19 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Reflection Journal</h3>
                             </div>
                             <p class="mt-4 flex-grow">A private space to write, with data saved securely to your Google Drive.</p>
+                        </div>
+                        <div data-page="screener" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
+                                    <!-- ICON: Screener Card -->
+                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/>
+                                        <path d="M20.9 21.5C20.9 17.9 16.9 15 12 15s-8.9 2.9-8.9 6.5"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Scoliosis Screener</h3>
+                            </div>
+                            <p class="mt-4 flex-grow">Use this guided tool to check for asymmetry. (Not a diagnosis)</p>
                         </div>
                         <div data-page="resources" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
@@ -661,6 +682,89 @@
                     </div>
                 </div>
 
+                <!-- Screener Page -->
+                <div id="screener-page" class="page">
+                    <div class="login-prompt text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4">Login to Use the Screener</h3>
+                        <p class="mb-6">Please log in with your Google account to use the Scoliosis Screener. Your observation logs will be stored safely and privately in your own Google Drive.</p>
+                        <button id="login-button-screener" class="bg-green-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-800 transition-colors">Login with Google</button>
+                    </div>
+                    <div class="protected-content">
+                        <div class="flex items-center justify-center gap-3 mb-6">
+                            <!-- ICON: Screener Header -->
+                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/>
+                                <path d="M20.9 21.5C20.9 17.9 16.9 15 12 15s-8.9 2.9-8.9 6.5"/>
+                            </svg>
+                            <h2 class="text-3xl font-bold">Scoliosis Screener</h2>
+                        </div>
+
+                        <div class="bg-yellow-100 border-l-4 border-gold-500 text-yellow-800 dark:bg-gray-800 dark:text-yellow-100 dark:border-gold-500 p-4 rounded-lg shadow-md">
+                            <h3 class="font-bold text-lg">Medical Disclaimer</h3>
+                            <p class="mt-1">This tool is for informational purposes only and is **not a substitute for a medical diagnosis**. It is designed to help you log observations. Please consult a qualified healthcare professional for any health concerns or before making any decisions based on this tool.</p>
+                        </div>
+
+                        <div class="mt-8 grid md:grid-cols-2 gap-8">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                <h3 class="text-xl font-bold mb-4">How to Perform the Test</h3>
+                                <ol class="list-decimal list-inside space-y-4">
+                                    <li>
+                                        <strong>Stand Up:</strong> Have the person stand with feet together, knees straight, and arms hanging freely at their sides.
+                                    </li>
+                                    <li>
+                                        <strong>Bend Forward:</strong> Ask them to bend forward slowly, as if trying to touch their toes, letting their arms hang down.
+                                    </li>
+                                    <li>
+                                        <strong>Observe from Behind:</strong> Stand behind them and look at their back. Check for any of the asymmetries listed to the right.
+                                    </li>
+                                </ol>
+                                <div class="flex justify-around mt-6">
+                                    <svg class="w-24 h-24 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                        <title>Stand</title>
+                                        <path d="M12 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/>
+                                        <path d="M20.9 21.5C20.9 17.9 16.9 15 12 15s-8.9 2.9-8.9 6.5"/>
+                                    </svg>
+                                    <svg class="w-24 h-24 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                                        <title>Bend</title>
+                                        <path d="M12 7a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/>
+                                        <path d="M15.5 21.8c-1.2 0-2.3-.5-3.1-1.3-.8-.8-1.3-1.9-1.3-3.1v-4.8c0-1 .8-1.8 1.8-1.8h.2c1 0 1.8.8 1.8 1.8v5.5"/>
+                                        <path d="M8.6 12.6c.8.8 1.9 1.3 3.1 1.3 1.2 0 2.3-.5 3.1-1.3"/>
+                                        <path d="M8.5 21.8v-5.5c0-1 .8-1.8 1.8-1.8h.2c1 0 1.8.8 1.8 1.8v4.8c0 1.2-.5 2.3-1.3 3.1-.8.8-1.9 1.3-3.1 1.3"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                <h3 class="text-xl font-bold mb-4">What to Look For</h3>
+                                <ul class="list-disc list-inside space-y-3 text-gray-700 dark:text-gray-300">
+                                    <li>Are the shoulders at different heights?</li>
+                                    <li>Is one shoulder blade more prominent than the other?</li>
+                                    <li>Is one side of the rib cage higher than the other (a "rib hump")?</li>
+                                    <li>Is the waist or hips uneven?</li>
+                                    <li>Does the spine look curved to one side?</li>
+                                </ul>
+                                <h3 class="text-xl font-bold mt-6 mb-4">Log Observation</h3>
+                                <form id="screener-form" class="space-y-4">
+                                    <div>
+                                        <label for="screener-date" class="block font-semibold">Date</label>
+                                        <input type="date" id="screener-date" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg mt-1 bg-gray-50 dark:bg-gray-700" required>
+                                    </div>
+                                    <div>
+                                        <label for="screener-notes" class="block font-semibold">Notes</label>
+                                        <textarea id="screener-notes" rows="3" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg mt-1 bg-gray-50 dark:bg-gray-700" placeholder="e.g., Noticed a slight hump on the right side. Shoulders look even."></textarea>
+                                    </div>
+                                    <button type="submit" class="w-full bg-green-700 text-white py-2 rounded-lg font-semibold hover:bg-green-800 dark:hover:bg-green-600 transition-colors">Save Observation</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                            <h3 class="text-xl font-bold mb-4">Past Observations</h3>
+                            <div id="screener-log-container" class="space-y-4">
+                                <p class="text-gray-500 dark:text-gray-400">Your saved observations will appear here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Community Hub Page (Placeholder) -->
                 <div id="community-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
@@ -744,6 +848,7 @@
                 braceData: {},
                 physioData: {},
                 growthData: {},
+                screenerData: {}, // Added screener data
                 journalData: [],
                 gamification: {
                     streak: 0,
@@ -772,6 +877,9 @@
             // Growth Tracker
             growthForm: null, growthDate: null, growthHeight: null, growthWeight: null, growthChart: null,
 
+            // Screener
+            screenerForm: null, screenerDate: null, screenerNotes: null, screenerLogContainer: null,
+
             // Journal
             journalForm: null, journalEntry: null, journalEntriesContainer: null,
             
@@ -796,6 +904,7 @@
                     document.getElementById('login-button-physio'),
                     document.getElementById('login-button-growth'),
                     document.getElementById('login-button-journal'),
+                    document.getElementById('login-button-screener'), // Added screener login button
                 ];
                 this.logoutButtons = [
                     document.getElementById('logout-button-sidebar'),
@@ -838,6 +947,12 @@
                 this.growthHeight = document.getElementById('growth-height');
                 this.growthWeight = document.getElementById('growth-weight');
 
+                // Screener
+                this.screenerForm = document.getElementById('screener-form');
+                this.screenerDate = document.getElementById('screener-date');
+                this.screenerNotes = document.getElementById('screener-notes');
+                this.screenerLogContainer = document.getElementById('screener-log-container');
+
                 // Journal
                 this.journalForm = document.getElementById('journal-form');
                 this.journalEntry = document.getElementById('journal-entry');
@@ -854,6 +969,7 @@
                 this.braceDate.valueAsDate = new Date();
                 this.physioDate.valueAsDate = new Date();
                 this.growthDate.valueAsDate = new Date();
+                this.screenerDate.valueAsDate = new Date(); // Set screener date
                 
                 this.handleVisitorCounter();
 
@@ -903,6 +1019,7 @@
                 this.physioForm?.addEventListener('submit', (e) => this.handlePhysioSubmit(e));
                 this.growthForm?.addEventListener('submit', (e) => this.handleGrowthSubmit(e));
                 this.journalForm?.addEventListener('submit', (e) => this.handleJournalSubmit(e));
+                this.screenerForm?.addEventListener('submit', (e) => this.handleScreenerSubmit(e)); // Added screener listener
             },
 
             handleVisitorCounter() {
@@ -950,7 +1067,7 @@
                     document.getElementById('user-profile-sidebar').classList.add('hidden');
                     document.getElementById('user-profile-mobile').classList.add('hidden');
                     this.fileId = null;
-                    this.data = { braceData: {}, physioData: {}, growthData: {}, journalData: [], gamification: { streak: 0, lastLogDate: null } };
+                    this.data = { braceData: {}, physioData: {}, growthData: {}, screenerData: {}, journalData: [], gamification: { streak: 0, lastLogDate: null } };
                     this.loadAllData();
                 }
             },
@@ -1049,6 +1166,7 @@
                                 braceData: loadedData.braceData || {},
                                 physioData: loadedData.physioData || {},
                                 growthData: loadedData.growthData || {},
+                                screenerData: loadedData.screenerData || {}, // Added screener
                                 journalData: loadedData.journalData || [],
                                 gamification: loadedData.gamification || { streak: 0, lastLogDate: null }
                             };
@@ -1084,6 +1202,7 @@
                 this.loadPhysioData();
                 this.loadGrowthData();
                 this.loadJournalData();
+                this.loadScreenerData(); // Added screener
                 this.updateStreak();
             },
 
@@ -1130,13 +1249,61 @@
             loadPhysioData() { const today = new Date().toISOString().split('T')[0]; this.updatePhysioProgressUI(today); this.updatePhysioChart(); this.updatePhysioRewards(); },
             updatePhysioProgressUI(date) { const data = this.data.physioData[date]; if (data) { const percentage = Math.min(100, Math.round((data.minutes / data.goal) * 100)); this.physioProgressBar.style.width = `${percentage}%`; this.physioProgressBar.textContent = `${percentage}%`; this.physioProgressText.textContent = `You've logged ${data.minutes} of ${data.goal} minutes today. Great job!`; } else { this.physioProgressBar.style.width = '0%'; this.physioProgressBar.textContent = '0%'; this.physioProgressText.textContent = 'Log your session to see your progress!'; } },
             updatePhysioChart() { const ctx = document.getElementById('physio-chart').getContext('2d'); const labels = []; const minutesData = []; const goalData = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateString = d.toISOString().split('T')[0]; labels.push(d.toLocaleDateString('en-US', { weekday: 'short' })); const data = this.data.physioData[dateString]; minutesData.push(data ? data.minutes : 0); goalData.push(data ? data.goal : parseFloat(this.physioDailyGoal.value)); } if (this.physioChart) { this.physioChart.destroy(); } this.physioChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Minutes of PT', data: minutesData, backgroundColor: 'rgba(22, 163, 74, 0.6)' }, { label: 'Goal', data: goalData, type: 'line', fill: false, borderColor: 'rgba(239, 68, 68, 1)' }] }, options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' } } } } }); },
-            updatePhysioRewards() { const totalDaysLogged = Object.keys(this.data.physioData).length; const rewards = [ { name: 'First Session', threshold: 1, icon: '💪', description: 'Logged your first PT session!' }, { name: 'PT Week', threshold: 7, icon: '🗓️', description: 'Logged PT 7 days in a row!' }, { name: 'Month of Motion', threshold: 30, icon: '🤸', description: 'Logged PT for 30 days!'} ]; this.physioRewardsContainer.innerHTML = ''; let earnedCount = 0; rewards.forEach(reward => { const isEarned = totalDaysLogged >= reward.threshold; if(isEarned) earnedCount++; const rewardEl = document.createElement('div'); rewardEl.className = `text-center p-2 rounded-lg ${isEarned ? 'bg-yellow-100 dark:bg-gray-700' : 'bg-gray-100 dark:bg-gray-900'}`; rewardEl.innerHTML = `<div class="text-4xl ${isEarned ? '' : 'opacity-30'}">${reward.icon}</div><div class="font-semibold text-sm ${isEarned ? 'text-gold-600 dark:text-gold-400' : 'text-gray-500'}">${reward.name}</div><div class="text-xs text-gray-500 dark:text-gray-400">${reward.description}</div>`; this.rewardsContainer.appendChild(rewardEl); }); if(earnedCount === 0){ this.rewardsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start logging to earn badges!</p>'; } },
+            updatePhysioRewards() { const totalDaysLogged = Object.keys(this.data.physioData).length; const rewards = [ { name: 'First Session', threshold: 1, icon: '💪', description: 'Logged your first PT session!' }, { name: 'PT Week', threshold: 7, icon: '🗓️', description: 'Logged PT 7 days in a row!' }, { name: 'Month of Motion', threshold: 30, icon: '🤸', description: 'Logged PT for 30 days!'} ]; this.physioRewardsContainer.innerHTML = ''; let earnedCount = 0; rewards.forEach(reward => { const isEarned = totalDaysLogged >= reward.threshold; if(isEarned) earnedCount++; const rewardEl = document.createElement('div'); rewardEl.className = `text-center p-2 rounded-lg ${isEarned ? 'bg-yellow-100 dark:bg-gray-700' : 'bg-gray-100 dark:bg-gray-900'}`; rewardEl.innerHTML = `<div class="text-4xl ${isEarned ? '' : 'opacity-30'}">${reward.icon}</div><div class="font-semibold text-sm ${isEarned ? 'text-gold-600 dark:text-gold-400' : 'text-gray-500'}">${reward.name}</div><div class="text-xs text-gray-500 dark:text-gray-400">${reward.description}</div>`; this.rewardsContainer.appendChild(rewardEl); }); if(earnedCount === 0){ this.physioRewardsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start logging to earn badges!</p>'; } },
             
             // --- Growth Tracker Methods ---
             async handleGrowthSubmit(e) { e.preventDefault(); const date = this.growthDate.value; const height = parseFloat(this.growthHeight.value); const weight = parseFloat(this.growthWeight.value); if (!date || (isNaN(height) && isNaN(weight))) { return; } this.data.growthData[date] = { height: isNaN(height) ? null : height, weight: isNaN(weight) ? null : weight }; await this.saveDataToDrive(); this.updateGrowthChart(); this.growthForm.reset(); this.growthDate.valueAsDate = new Date(); },
             loadGrowthData() { this.updateGrowthChart(); },
             updateGrowthChart() { const ctx = document.getElementById('growth-chart').getContext('2d'); const sortedDates = Object.keys(this.data.growthData).sort((a, b) => new Date(a) - new Date(b)); const labels = sortedDates.map(date => new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })); const heightData = sortedDates.map(date => this.data.growthData[date].height); const weightData = sortedDates.map(date => this.data.growthData[date].weight); if (this.growthChart) { this.growthChart.destroy(); } this.growthChart = new Chart(ctx, { type: 'line', data: { labels: labels, datasets: [ { label: 'Height (cm)', data: heightData, borderColor: 'rgba(22, 163, 74, 1)', backgroundColor: 'rgba(22, 163, 74, 0.1)', fill: true, yAxisID: 'yHeight', spanGaps: true, }, { label: 'Weight (kg)', data: weightData, borderColor: 'rgba(234, 179, 8, 1)', backgroundColor: 'rgba(234, 179, 8, 0.1)', fill: true, yAxisID: 'yWeight', spanGaps: true, } ] }, options: { scales: { yHeight: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Height (cm)' } }, yWeight: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Weight (kg)' }, grid: { drawOnChartArea: false, } } } } }); },
 
+            // --- Screener Methods ---
+            async handleScreenerSubmit(e) {
+                e.preventDefault();
+                const date = this.screenerDate.value;
+                const notes = this.screenerNotes.value.trim();
+                if (!date) return;
+                this.data.screenerData[date] = { notes: notes };
+                await this.saveDataToDrive();
+                this.renderScreenerLogs();
+                this.screenerForm.reset();
+                this.screenerDate.valueAsDate = new Date();
+            },
+            loadScreenerData() {
+                this.renderScreenerLogs();
+            },
+            renderScreenerLogs() {
+                this.screenerLogContainer.innerHTML = '';
+                const sortedDates = Object.keys(this.data.screenerData).sort((a, b) => new Date(b) - new Date(a)); // Newest first
+                
+                if (sortedDates.length === 0) {
+                    this.screenerLogContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Your saved observations will appear here.</p>';
+                    return;
+                }
+
+                sortedDates.forEach(date => {
+                    const log = this.data.screenerData[date];
+                    const logEl = document.createElement('div');
+                    logEl.className = 'bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-600';
+                    const logDate = new Date(date + 'T00:00:00'); // Ensure date is parsed correctly
+                    
+                    logEl.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="font-semibold text-gray-700 dark:text-gray-300">${logDate.toLocaleDateString()}</p>
+                            <button data-date="${date}" class="delete-screener-log-btn text-red-500 hover:text-red-700 font-bold text-xl px-2">&times;</button>
+                        </div>
+                        <p class="text-gray-800 dark:text-gray-200 whitespace-pre-wrap">${log.notes || 'No notes for this entry.'}</p>
+                    `;
+                    this.screenerLogContainer.appendChild(logEl);
+                });
+
+                document.querySelectorAll('.delete-screener-log-btn').forEach(btn => btn.addEventListener('click', (e) => this.deleteScreenerLog(e)));
+            },
+            async deleteScreenerLog(e) {
+                const date = e.currentTarget.dataset.date;
+                delete this.data.screenerData[date];
+                await this.saveDataToDrive();
+                this.renderScreenerLogs();
+            },
 
             // --- Journal Methods ---
             async handleJournalSubmit(e) { e.preventDefault(); const text = this.journalEntry.value.trim(); if (text === '') return; const newEntry = { id: Date.now(), date: new Date().toISOString(), text: text }; this.data.journalData.unshift(newEntry); await this.saveDataToDrive(); this.renderJournalEntries(); this.journalForm.reset(); },
