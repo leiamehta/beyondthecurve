@@ -83,16 +83,6 @@
         .dark .bottom-nav-link.active {
             color: #fef08a; /* yellow-200 */
         }
-
-        /* Ensure iframe pages take full height */
-        .iframe-page {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .iframe-content {
-            flex-grow: 1;
-        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
@@ -102,10 +92,9 @@
         <!-- Persistent Sidebar (Desktop) -->
         <nav class="hidden md:flex flex-col w-64 bg-white dark:bg-gray-800 shadow-lg fixed h-full z-10">
             <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
-                <!-- ICON: Logo -->
-                <svg class="w-8 h-8 text-green-700 dark:text-green-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C16.9706 2 21 6.02944 21 11C21 15.9706 16.9706 20 12 20C7.02944 20 3 15.9706 3 11C3 6.02944 7.02944 2 12 2Z" fill="currentColor" fill-opacity="0.2"/>
-                    <path d="M15 7C15 7 12 7 12 10C12 13 9 13 9 16C9 19 12 19 12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg class="w-10 h-10 text-green-700 dark:text-green-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="currentColor" fill-opacity="0.2"/>
+                    <path d="M50 15C50 15 50 35 40 40C30 45 30 55 40 60C50 65 50 85 50 85" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <h1 class="text-xl font-bold text-green-800 dark:text-green-400">Beyond the Curve</h1>
             </div>
@@ -113,70 +102,35 @@
             <div class="flex-grow p-4 space-y-2">
                 <!-- Nav Links -->
                 <button data-page="home" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Home -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6-4h.01M12 12h.01M15 12h.01M9 12h.01M9 15h.01M12 15h.01M15 15h.01M9 18h.01M12 18h.01M15 18h.01"></path></svg>
                     Home
                 </button>
                 <button data-page="resources" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Resources -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
                     Resources
                 </button>
                 <button data-page="tracker" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Brace Tracker -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Brace Tracker
                 </button>
                 <button data-page="physio" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Physiotherapy -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 12h3l3 9 4-18 3 9h3"></path>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
                     Physiotherapy
                 </button>
                 <button data-page="growth" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Growth Tracker -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <polyline points="3 17 9 11 13 15 21 7"></polyline>
-                        <polyline points="21 17 21 7 11 7"></polyline>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
                     Growth Tracker
                 </button>
                 <button data-page="journal" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Journal -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
                     Journal
                 </button>
-                <button data-page="infographic" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Infographic -->
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Infographic
-                </button>
-                <button data-page="screener" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Screener -->
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.5a1.5 1.5 0 013 0V12a1.5 1.5 0 01-3 0V9.5zM6.5 6a1.5 1.5 0 00-3 0V7a1.5 1.5 0 003 0V6zM21 9.5a1.5 1.5 0 00-3 0V12a1.5 1.5 0 003 0V9.5zM17.5 6a1.5 1.5 0 013 0V7a1.5 1.5 0 01-3 0V6zM12 14a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-3 0v-1.5A1.5 1.5 0 0112 14zM12 6.5a1.5 1.5 0 00-1.5 1.5v1.5a1.5 1.5 0 003 0V8A1.5 1.5 0 0012 6.5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 19.5a1.5 1.5 0 013 0v1a1.5 1.5 0 01-3 0v-1zM9.5 19.5a1.5 1.5 0 00-3 0v1a1.5 1.5 0 003 0v-1z"></g></svg>
+                 <button data-page="screener" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a4 4 0 014-4h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4v-10zM16 4v4m-8-4v4"></path></svg>
                     Screener
                 </button>
                  <button data-page="community" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <!-- ICON: Community -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-2.121l-3.37.843L11 15.111l2.52-2.52a3 3 0 00-4.14-4.14L7 10.828 3.37 8.307.247 11.677a3 3 0 002.121 5.356h5l2.828-2.828 5.657 5.657z"></path></svg>
                     Community
                 </button>
             </div>
@@ -184,11 +138,7 @@
             <!-- Streak Counter -->
             <div class="p-4 border-t dark:border-gray-700">
                 <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 flex items-center justify-center gap-3">
-                    <!-- ICON: Streak -->
-                    <svg class="w-8 h-8 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C9.5 5 6.5 7 6.5 11.5c0 3.5 3.5 7.5 5.5 7.5s5.5-4 5.5-7.5C17.5 7 14.5 5 12 2z"></path>
-                        <path d="M12 12c0-2-1-3.5-1-3.5C11 8.5 10 9 10 10c0 .5 0 1.5 1 2.5"></path>
-                    </svg>
+                    <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343m11.314 11.314a8 8 0 00-11.314-11.314m11.314 11.314L15 21M6.343 7.343L9 3m-3.293 8.293a1 1 0 011.414 0l.001.001c.19.19.303.44.303.707v3.293a1 1 0 01-.293.707l-.001.001a1 1 0 01-1.414 0l-3.293-3.293a1 1 0 01-.293-.707V12a1 1 0 01.293-.707l.001-.001z"></path></svg>
                     <span id="streak-count" class="text-2xl font-bold text-gray-700 dark:text-gray-200">0</span>
                     <span class="font-semibold text-gray-600 dark:text-gray-300">Day Streak</span>
                 </div>
@@ -197,10 +147,8 @@
             <!-- Login/Profile & Dark Mode Toggle -->
             <div class="p-4 border-t dark:border-gray-700 space-y-3">
                 <button id="dark-mode-toggle" class="w-full flex items-center justify-center gap-2 bg-gray-200 dark:bg-gray-700 p-2 rounded-lg font-semibold">
-                    <!-- ICON: Dark Mode (Moon) -->
-                    <svg class="w-6 h-6 dark:hidden" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5028 21.9613 11.0125 21.8856 10.5319C19.9571 11.8941 17.6143 12.75 15 12.75C9.61522 12.75 5.25 8.38478 5.25 3C5.25 2.00552 5.43085 1.04781 5.76662 0.11438C2.6661 1.9547 0.5 5.25052 0.5 9C0.5 16.1797 6.3203 22 13.5 22C13 22 12.5 22 12 22Z"></path></svg>
-                    <!-- ICON: Light Mode (Sun) -->
-                    <svg class="w-6 h-6 hidden dark:inline" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 4.5C12.4142 4.5 12.75 4.16421 12.75 3.75V2.25C12.75 1.83579 12.4142 1.5 12 1.5C11.5858 1.5 11.25 1.83579 11.25 2.25V3.75C11.25 4.16421 11.5858 4.5 12 4.5ZM4.92893 6.34315C5.22183 6.63604 5.6967 6.63604 5.98959 6.34315L7.05025 5.28249C7.34315 4.98959 7.34315 4.51472 7.05025 4.22183C6.75736 3.92893 6.28249 3.92893 5.98959 4.22183L4.92893 5.28249C4.63604 5.57538 4.63604 6.05025 4.92893 6.34315ZM19.0711 6.34315C19.364 6.05025 19.364 5.57538 19.0711 5.28249L18.0104 4.22183C17.7175 3.92893 17.2426 3.92893 16.9497 4.22183C16.6569 4.51472 16.6569 4.98959 16.9497 5.28249L18.0104 6.34315C18.3033 6.63604 18.7782 6.63604 19.0711 6.34315ZM22.5 12C22.5 12.4142 22.1642 12.75 21.75 12.75H20.25C19.8358 12.75 19.5 12.4142 19.5 12C19.5 11.5858 19.8358 11.25 20.25 11.25H21.75C22.1642 11.25 22.5 11.5858 22.5 12ZM3.75 11.25C4.16421 11.25 4.5 11.5858 4.5 12C4.5 12.4142 4.16421 12.75 3.75 12.75H2.25C1.83579 12.75 1.5 12.4142 1.5 12C1.5 11.5858 1.83579 11.25 2.25 11.25H3.75ZM18.0104 19.0711C17.7175 19.364 17.2426 19.364 16.9497 19.0711C16.6569 18.7782 16.6569 18.3033 16.9497 18.0104L18.0104 16.9497C18.3033 16.6569 18.7782 16.6569 19.0711 16.9497C19.364 17.2426 19.364 17.7175 19.0711 18.0104L18.0104 19.0711ZM7.05025 19.0711C6.75736 19.364 6.28249 19.364 5.98959 19.0711L4.92893 18.0104C4.63604 17.7175 4.63604 17.2426 4.92893 16.9497C5.22183 16.6569 5.6967 16.6569 5.98959 16.9497L7.05025 18.0104C7.34315 18.3033 7.34315 18.7782 7.05025 19.0711ZM12 19.5C11.5858 19.5 11.25 19.8358 11.25 20.25V21.75C11.25 22.1642 11.5858 22.5 12 22.5C12.4142 22.5 12.75 22.1642 12.75 21.75V20.25C12.75 19.8358 12.4142 19.5 12 19.5Z"></path></svg>
+                    <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg class="w-6 h-6 hidden dark:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-15.66l-.707.707M5.05 18.95l-.707.707M3 12h1m16 0h1M5.05 5.05l.707.707M18.95 18.95l.707.707M12 5a7 7 0 100 14 7 7 0 000-14z"></path></svg>
                     Toggle Mode
                 </button>
 
@@ -225,10 +173,9 @@
             <!-- Mobile Header (placeholder for spacing) -->
             <header class="md:hidden bg-green-700 text-white p-4 flex justify-between items-center sticky top-0 z-10">
                 <div class="flex items-center gap-3">
-                    <!-- ICON: Logo (Mobile) -->
-                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C16.9706 2 21 6.02944 21 11C21 15.9706 16.9706 20 12 20C7.02944 20 3 15.9706 3 11C3 6.02944 7.02944 2 12 2Z" fill="white" fill-opacity="0.2"/>
-                        <path d="M15 7C15 7 12 7 12 10C12 13 9 13 9 16C9 19 12 19 12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg class="w-10 h-10 text-white" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="currentColor" fill-opacity="0.2"/>
+                        <path d="M50 15C50 15 50 35 40 40C30 45 30 55 40 60C50 65 50 85 50 85" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <h1 class="text-xl font-bold">Beyond the Curve</h1>
                 </div>
@@ -256,32 +203,23 @@
                         </svg>
                     </div>
 
-                    <!-- Infographic Link -->
-                    <button data-page="infographic" class="nav-link w-full mt-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row items-center gap-4 hover:shadow-lg dark:hover:shadow-green-900 transition-shadow">
-                        <div class="flex-shrink-0">
-                            <!-- ICON: Infographic/Learn -->
-                            <svg class="w-12 h-12 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </div>
-                        <div class="flex-grow text-center md:text-left">
-                            <h3 class="text-xl font-bold text-green-700 dark:text-green-400">New to Scoliosis?</h3>
-                            <p class="mt-1">Check out this helpful infographic for a quick guide to understanding scoliosis.</p>
-                        </div>
-                        <div class="flex-shrink-0 mt-4 md:mt-0">
-                            <div class="inline-block bg-green-600 text-white px-5 py-3 rounded-lg font-semibold transition-colors">
-                                View Infographic
+                    <!-- Infographic Card -->
+                    <div data-page="infographic" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer mt-8">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
+                            <h3 class="text-xl font-bold text-green-700 dark:text-green-400">What is Scoliosis?</h3>
                         </div>
-                    </button>
+                        <p class="mt-4 flex-grow">View a quick infographic to understand the basics of scoliosis.</p>
+                    </div>
+
 
                     <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div data-page="tracker" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <!-- ICON: Brace Tracker Card -->
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>
+                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Daily Brace Tracker</h3>
                             </div>
@@ -290,10 +228,7 @@
                         <div data-page="physio" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <!-- ICON: Physiotherapy Card -->
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3 12h3l3 9 4-18 3 9h3"></path>
-                                    </svg>
+                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Physiotherapy Tracker</h3>
                             </div>
@@ -302,11 +237,7 @@
                         <div data-page="growth" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <!-- ICON: Growth Tracker Card -->
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                        <polyline points="3 17 9 11 13 15 21 7"></polyline>
-                                        <polyline points="21 17 21 7 11 7"></polyline>
-                                    </svg>
+                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Growth Tracker</h3>
                             </div>
@@ -315,11 +246,7 @@
                         <div data-page="journal" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <!-- ICON: Journal Card -->
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                                    </svg>
+                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Reflection Journal</h3>
                             </div>
@@ -328,31 +255,20 @@
                         <div data-page="resources" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <!-- ICON: Resources Card -->
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                    </svg>
+                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Vetted Resources</h3>
                             </div>
                             <p class="mt-4 flex-grow">Find surgeons, apparel, support groups, and helpful videos all in one place.</p>
-
                         </div>
-                         <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition-shadow flex flex-col opacity-70 cursor-not-allowed">
+                         <div data-page="screener" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <!-- ICON: Community Card -->
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>
+                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a4 4 0 014-4h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4v-10zM16 4v4m-8-4v4"></path></svg>
                                 </div>
-                                <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Community Hub</h3>
+                                <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Scoliosis Screener</h3>
                             </div>
-                            <p class="mt-4 flex-grow">Connect with peers in our safe, moderated forums. (Coming Soon)</p>
+                            <p class="mt-4 flex-grow">Use our AI-powered tool to check for spinal asymmetry. (Beta)</p>
                         </div>
                     </div>
                 </div>
@@ -360,11 +276,7 @@
                 <!-- Vetted Resources Page -->
                 <div id="resources-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
-                        <!-- ICON: Resources Header -->
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
+                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
                         <h2 class="text-3xl font-bold">Vetted Resources</h2>
                     </div>
                     <div class="space-y-8">
@@ -382,34 +294,34 @@
                             <h3 class="text-2xl font-bold mb-4 text-green-800 dark:text-green-300">Video Library</h3>
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <h4 class="text-lg font-semibold mb-2">Scoliosis Introduction</h4>
+                                    <h4 class="text-lg font-semibold mb-2">3D Rendered Videos</h4>
                                     <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
                                         <li><a href="https://www.youtube.com/watch?v=JicoSIe2JQI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spine Anatomy in under 1 minute</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=Vqy1VB2CuaE" target="_blank" rel="noopener noreferrer" class="hover:underline">What is Scoliosis (In under 1 Minute)</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=4blk8rrfJPw" target="_blank" rel="noopener noreferrer" class="hover:underline">How to Detect Scoliosis</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=s3iKfogVUyM" target="_blank" rel="noopener noreferrer" class="hover:underline">General info on Scoliosis</a></li>
                                     </ul>
                                 </div>
                                 <div>
                                     <h4 class="text-lg font-semibold mb-2">Physiotherapy</h4>
                                     <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
-                                        <li><a href="https://youtube.com/playlist?list=PLfyUArn76Mvi1yqoyEvJIEkMNf7OTG5eB&si=7hHnIFJ6klQnSDvN" target="_blank" rel="noopener noreferrer" class="hover:underline">Physiotherapy Videos for Scoliosis Playlist</a></li>
+                                        <li><a href="https://youtube.com/playlist?list=PLfyUArn76Mvi1yqoyEvJIEkMNf7OTG5eB&si=7hHnIFJ6klQnSDvN" target="_blank" rel="noopener noreferrer" class="hover:underline">Physiotherapy Videos for Scoliosis</a></li>
                                     </ul>
                                 </div>
                                 <div>
                                     <h4 class="text-lg font-semibold mb-2">Treatment Options</h4>
                                     <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
-                                        <li><a href="https://www.youtube.com/watch?v=_nLXf5jEn5k&t=101s" target="_blank" rel="noopener noreferrer" class="hover:underline">About Bracing</a></li>
+                                        <li><a href="https://www.youtube.com/watch?v=_nLXf5jEn5k&t=101s" target="_blank" rel="noopener noreferrer" class="hover:underline">Bracing as a Scoliosis Treatment Option</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=JCDEc2uYwxA&t=18s" target="_blank" rel="noopener noreferrer" class="hover:underline">Scoliosis Surgery as a treatment option</a></li>
+                                        <li><a href="https://www.youtube.com/watch?v=JCDEc2uYwxA&t=18s" target="_blank" rel="noopener noreferrer" class="hover:underline">Surgeries for Severe Scoliosis</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=OX1vhVSzMiI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion v/s VBT</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=G1ynUYSqLsU" target="_blank" rel="noopener noreferrer" class="hover:underline">Hybrid Fusion</a></li>
+                                        <li><a href="https://www.youtube.com/watch?v=G1ynUYSqLsU" target="_blank" rel="noopener noreferrer" class="hover:underline">Hybrid Fusion (Fusion + VBT)</a></li>
                                     </ul>
                                 </div>
                                 <div>
                                     <h4 class="text-lg font-semibold mb-2">Surgery Experience</h4>
                                     <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
                                         <li><a href="https://www.youtube.com/watch?v=3gKel6MwW98&t=12s" target="_blank" rel="noopener noreferrer" class="hover:underline">What to Expect Before and After Surgery</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=L8kHuCjqXyo" target="_blank" rel="noopener noreferrer" class="hover:underline">Hospital Stay Checklist</a></li>
+                                        <li><a href="https://www.youtube.com/watch?v=L8kHuCjqXyo" target="_blank" rel="noopener noreferrer" class="hover:underline">Hospital Stay Checklist video</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=YHKTELBwreo&t=21s" target="_blank" rel="noopener noreferrer" class="hover:underline">Life Post-Surgery</a></li>
                                     </ul>
                                 </div>
@@ -417,7 +329,13 @@
                                     <h4 class="text-lg font-semibold mb-2">Surgeon Interviews</h4>
                                     <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
                                         <li><a href="https://youtube.com/playlist?list=PLfyUArn76MviC3wiB67PdATXA3EJGfQlc&si=ZSU0NonH0itejvzV" target="_blank" rel="noopener noreferrer" class="hover:underline">Vertebral Body Tethering (VBT)</a></li>
-                                        <li><a href="https://youtu.be/WID1p_UJZIM?si=S-c6FJ525PfS6GU2" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion Details</a></li>
+                                        <li><a href="https://youtu.be/WID1p_UJZIM?si=S-c6FJ525PfS6GU2" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion</a></li>
+                                    </ul>
+                                </div>
+                                 <div>
+                                    <h4 class="text-lg font-semibold mb-2">General Info</h4>
+                                    <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
+                                        <li><a href="https://www.youtube.com/watch?v=s3iKfogVUyM" target="_blank" rel="noopener noreferrer" class="hover:underline">General info on Scoliosis</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -490,11 +408,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <!-- ICON: Brace Tracker Header -->
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
+                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <h2 class="text-3xl font-bold text-center">My Brace Tracker</h2>
                         </div>
                         <div class="grid md:grid-cols-2 gap-8">
@@ -548,10 +462,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <!-- ICON: Physiotherapy Header -->
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 12h3l3 9 4-18 3 9h3"></path>
-                            </svg>
+                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
                             <h2 class="text-3xl font-bold text-center">My Physiotherapy Tracker</h2>
                         </div>
                         <div class="grid md:grid-cols-2 gap-8">
@@ -605,11 +516,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <!-- ICON: Growth Tracker Header -->
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="3 17 9 11 13 15 21 7"></polyline>
-                                <polyline points="21 17 21 7 11 7"></polyline>
-                            </svg>
+                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
                             <h2 class="text-3xl font-bold text-center">My Growth Tracker</h2>
                         </div>
                         <div class="grid md:grid-cols-2 gap-8">
@@ -656,11 +563,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <!-- ICON: Journal Header -->
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                            </svg>
+                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
                             <h2 class="text-3xl font-bold">My Reflection Journal</h2>
                         </div>
                         <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
@@ -669,7 +572,7 @@
                                 <p class="text-gray-600 dark:text-gray-300 mb-4">How are you feeling today? This is your private space.</p>
                                 <textarea id="journal-entry" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700" rows="8" placeholder="Write about your day, your thoughts, or anything on your mind..."></textarea>
                                 <div class="flex justify-end mt-4">
-                                    <button type="submit" class="w-full bg-green-700 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-800 dark:hover:bg-green-600 transition-colors">Save Entry</button>
+                                    <button type="submit" class="bg-green-700 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-800 dark:hover:bg-green-600 transition-colors">Save Entry</button>
                                 </div>
                             </form>
                         </div>
@@ -685,13 +588,7 @@
                 <!-- Community Hub Page (Placeholder) -->
                 <div id="community-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
-                        <!-- ICON: Community Header -->
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
+                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-2.121l-3.37.843L11 15.111l2.52-2.52a3 3 0 00-4.14-4.14L7 10.828 3.37 8.307.247 11.677a3 3 0 002.121 5.356h5l2.828-2.828 5.657 5.657z"></path></svg>
                         <h2 class="text-3xl font-bold">Community Hub</h2>
                     </div>
                     <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center">
@@ -702,85 +599,26 @@
                         <p class="mt-2 text-gray-600 dark:text-gray-300">We're building separate, age-appropriate spaces for you to connect with peers who understand your journey.</p>
                     </div>
                 </div>
-
-                <!-- Scoliosis Screener Page -->
-                <div id="screener-page" class="page">
-                    <div class="flex items-center justify-center gap-3 mb-6">
-                        <!-- ICON: Screener Header -->
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.5a1.5 1.5 0 013 0V12a1.5 1.5 0 01-3 0V9.5zM6.5 6a1.5 1.5 0 00-3 0V7a1.5 1.5 0 003 0V6zM21 9.5a1.5 1.5 0 00-3 0V12a1.5 1.5 0 003 0V9.5zM17.5 6a1.5 1.5 0 013 0V7a1.5 1.5 0 01-3 0V6zM12 14a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-3 0v-1.5A1.5 1.5 0 0112 14zM12 6.5a1.5 1.5 0 00-1.5 1.5v1.5a1.5 1.5 0 003 0V8A1.5 1.5 0 0012 6.5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 19.5a1.5 1.5 0 013 0v1a1.5 1.5 0 01-3 0v-1zM9.5 19.5a1.5 1.5 0 00-3 0v1a1.5 1.5 0 003 0v-1z"></g></svg>
-                        <h2 class="text-3xl font-bold">Scoliosis Screener</h2>
-                    </div>
-                    
-                    <div class="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 text-red-700 dark:text-red-200 p-4 rounded-lg shadow-md mb-6" role="alert">
-                        <strong class="font-bold">Medical Disclaimer:</strong>
-                        <span class="block">This is an informational guide, not a diagnostic tool. This test cannot replace a professional medical evaluation. Please consult a doctor or orthopedist for an accurate diagnosis.</span>
-                    </div>
-
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-2xl font-bold text-green-800 dark:text-green-300 mb-4">How to Perform the Adam's Bend Test</h3>
-                        <p class="mb-6 text-gray-600 dark:text-gray-300">This simple test can help identify potential signs of scoliosis, such as an uneven spine or rib cage. It is best performed by a parent or observer while the person being screened follows the steps.</p>
-                        
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div>
-                                <h4 class="text-xl font-semibold mb-3">Instructions for the Observer (Parent)</h4>
-                                <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
-                                    <li>Stand behind your child in a well-lit room.</li>
-                                    <li>Look at their back while they are standing straight. Check if the shoulders or hips seem uneven.</li>
-                                    <li>Ask your child to bend forward slowly, as if touching their toes, with feet together and knees straight.</li>
-                                    <li>As they bend, keep your eyes at their back level.</li>
-                                    <li>Look for any asymmetry. Check if one side of the rib cage is higher than the other, or if one side of the lower back seems more prominent.</li>
-                                </ol>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-semibold mb-3">Instructions for the Person Being Screened</h4>
-                                <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
-                                    <li>Take off your shirt so your back is visible.</li>
-                                    <li>Stand straight with your feet together and your arms at your sides.</li>
-                                    <li>Slowly bend forward, letting your arms hang down loosely, as if you're going to touch your toes.</li>
-                                    <li>Keep your knees straight and your feet together.</li>
-                                    <li>Hold the bent position for a few seconds while your parent or observer looks at your back.</li>
-                                </ol>
-                            </div>
+                
+                <!-- AI Screener Page (iFrame) -->
+                <div id="screener-page" class="page h-full">
+                    <div class="flex flex-col h-full">
+                        <div class="flex items-center justify-center gap-3 mb-6">
+                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a4 4 0 014-4h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4v-10zM16 4v4m-8-4v4"></path></svg>
+                            <h2 class="text-3xl font-bold">Scoliosis Screener</h2>
                         </div>
-
-                        <div class="mt-8">
-                            <h4 class="text-2xl font-bold text-center mb-4">What to Look For</h4>
-                            <div class="flex flex-col md:flex-row justify-around items-center gap-6">
-                                <div class="text-center">
-                                    <svg class="w-48 h-48 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M40 20C40 14.4772 44.4772 10 50 10C55.5228 10 60 14.4772 60 20V25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                                        <path d="M30 45C30 36.7157 36.7157 30 45 30H55C63.2843 30 70 36.7157 70 45V75C70 83.2843 63.2843 90 55 90H45C36.7157 90 30 83.2843 30 75V45Z" stroke="currentColor" stroke-width="4"/>
-                                        <path d="M50 30V90" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                                        <path d.bind="M30 50H70" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                                    </svg>
-                                    <h5 class="text-lg font-semibold mt-2 text-green-600 dark:text-green-400">Normal Back</h5>
-                                    <p>Back is level and symmetrical.</p>
-                                </div>
-                                <div class="text-center">
-                                    <svg class="w-48 h-48 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M40 20C40 14.4772 44.4772 10 50 10C55.5228 10 60 14.4772 60 20V25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                                        <path d="M30 45C30 36.7157 36.7157 30 45 30H55C63.2843 30 70 36.7157 70 45V75C70 83.2843 63.2843 90 55 90H45C36.7157 90 30 83.2843 30 75V45Z" stroke="currentColor" stroke-width="4"/>
-                                        <path d="M50 30C50 30 48 60 50 90" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                                        <path d="M30 50C35.3333 55 64.6667 45 70 50" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                                    </svg>
-                                    <h5 class="text-lg font-semibold mt-2 text-red-600 dark:text-red-400">Possible Scoliosis</h5>
-                                    <p>One side of the back is higher.</p>
-                                </div>
-                            </div>
-                            <p class="mt-6 text-center font-semibold text-lg">If you notice any unevenness, such as a rib hump or an uneven lower back, please schedule an appointment with a medical professional.</p>
-                        </div>
+                        <iframe class="flex-grow w-full h-full border-none" src="https://leiamehta.github.io/beyondthecurve/adam_bend_test.html"></iframe>
                     </div>
                 </div>
-                
-                <!-- Infographic Page -->
-                <div id="infographic-page" class="page iframe-page">
-                    <div class="flex items-center justify-center gap-3 mb-6">
-                        <!-- ICON: Infographic Header -->
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        <h2 class="text-3xl font-bold">Scoliosis Infographic</h2>
-                    </div>
-                    <div class="iframe-content w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-                        <iframe src="scoliosis_infographic.html" class="w-full h-full" title="Scoliosis Infographic"></iframe>
+
+                <!-- Infographic Page (iFrame) -->
+                <div id="infographic-page" class="page h-full">
+                    <div class="flex flex-col h-full">
+                        <div class="flex items-center justify-center gap-3 mb-6">
+                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <h2 class="text-3xl font-bold">Scoliosis Infographic</h2>
+                        </div>
+                        <iframe class="flex-grow w-full h-full border-none" src="scoliosis_infographic.html"></iframe>
                     </div>
                 </div>
 
@@ -790,42 +628,23 @@
         <!-- Bottom Navigation (Mobile) -->
         <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white dark:bg-gray-800 shadow-inner z-10 flex justify-around items-center border-t dark:border-gray-700">
             <button data-page="home" class="nav-link bottom-nav-link flex flex-col items-center justify-center text-gray-600 dark:text-gray-300">
-                <!-- ICON: Home (Bottom Nav) -->
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"></path></svg>
                 <span class="text-xs font-semibold">Home</span>
             </button>
             <button data-page="resources" class="nav-link bottom-nav-link flex flex-col items-center justify-center text-gray-600 dark:text-gray-300">
-                 <!-- ICON: Resources (Bottom Nav) -->
-                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                </svg>
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
                 <span class="text-xs font-semibold">Resources</span>
             </button>
             <button data-page="tracker" class="nav-link bottom-nav-link flex flex-col items-center justify-center text-gray-600 dark:text-gray-300">
-                <!-- ICON: Brace Tracker (Bottom Nav) -->
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span class="text-xs font-semibold">Brace</span>
             </button>
             <button data-page="physio" class="nav-link bottom-nav-link flex flex-col items-center justify-center text-gray-600 dark:text-gray-300">
-                 <!-- ICON: Physiotherapy (Bottom Nav) -->
-                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 12h3l3 9 4-18 3 9h3"></path>
-                </svg>
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728"></path></svg>
                 <span class="text-xs font-semibold">Physio</span>
             </button>
             <button data-page="journal" class="nav-link bottom-nav-link flex flex-col items-center justify-center text-gray-600 dark:text-gray-300">
-                <!-- ICON: Journal (Bottom Nav) -->
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                </svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749z"></path></svg>
                 <span class="text-xs font-semibold">Journal</span>
             </button>
         </nav>
@@ -1060,9 +879,7 @@
             navigateTo(pageId) {
                 if (!pageId) pageId = 'home';
                 
-                // Fix: Deactivate all pages first
                 this.pages.forEach(page => page.classList.remove('active'));
-                
                 const targetPage = document.getElementById(`${pageId}-page`);
                 if (targetPage) {
                     targetPage.classList.add('active');
@@ -1234,7 +1051,7 @@
             loadPhysioData() { const today = new Date().toISOString().split('T')[0]; this.updatePhysioProgressUI(today); this.updatePhysioChart(); this.updatePhysioRewards(); },
             updatePhysioProgressUI(date) { const data = this.data.physioData[date]; if (data) { const percentage = Math.min(100, Math.round((data.minutes / data.goal) * 100)); this.physioProgressBar.style.width = `${percentage}%`; this.physioProgressBar.textContent = `${percentage}%`; this.physioProgressText.textContent = `You've logged ${data.minutes} of ${data.goal} minutes today. Great job!`; } else { this.physioProgressBar.style.width = '0%'; this.physioProgressBar.textContent = '0%'; this.physioProgressText.textContent = 'Log your session to see your progress!'; } },
             updatePhysioChart() { const ctx = document.getElementById('physio-chart').getContext('2d'); const labels = []; const minutesData = []; const goalData = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateString = d.toISOString().split('T')[0]; labels.push(d.toLocaleDateString('en-US', { weekday: 'short' })); const data = this.data.physioData[dateString]; minutesData.push(data ? data.minutes : 0); goalData.push(data ? data.goal : parseFloat(this.physioDailyGoal.value)); } if (this.physioChart) { this.physioChart.destroy(); } this.physioChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Minutes of PT', data: minutesData, backgroundColor: 'rgba(22, 163, 74, 0.6)' }, { label: 'Goal', data: goalData, type: 'line', fill: false, borderColor: 'rgba(239, 68, 68, 1)' }] }, options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' } } } } }); },
-            updatePhysioRewards() { const totalDaysLogged = Object.keys(this.data.physioData).length; const rewards = [ { name: 'First Session', threshold: 1, icon: '💪', description: 'Logged your first PT session!' }, { name: 'PT Week', threshold: 7, icon: '🗓️', description: 'Logged PT 7 days in a row!' }, { name: 'Month of Motion', threshold: 30, icon: '🤸', description: 'Logged PT for 30 days!'} ]; this.physioRewardsContainer.innerHTML = ''; let earnedCount = 0; rewards.forEach(reward => { const isEarned = totalDaysLogged >= reward.threshold; if(isEarned) earnedCount++; const rewardEl = document.createElement('div'); rewardEl.className = `text-center p-2 rounded-lg ${isEarned ? 'bg-yellow-100 dark:bg-gray-700' : 'bg-gray-100 dark:bg-gray-900'}`; rewardEl.innerHTML = `<div class="text-4xl ${isEarned ? '' : 'opacity-30'}">${reward.icon}</div><div class="font-semibold text-sm ${isEarned ? 'text-gold-600 dark:text-gold-400' : 'text-gray-500'}">${reward.name}</div><div class="text-xs text-gray-500 dark:text-gray-400">${reward.description}</div>`; this.rewardsContainer.appendChild(rewardEl); }); if(earnedCount === 0){ this.rewardsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start logging to earn badges!</p>'; } },
+            updatePhysioRewards() { const totalDaysLogged = Object.keys(this.data.physioData).length; const rewards = [ { name: 'First Session', threshold: 1, icon: '💪', description: 'Logged your first PT session!' }, { name: 'PT Week', threshold: 7, icon: '🗓️', description: 'Logged PT 7 days in a row!' }, { name: 'Month of Motion', threshold: 30, icon: '🤸', description: 'Logged PT for 30 days!'} ]; this.physioRewardsContainer.innerHTML = ''; let earnedCount = 0; rewards.forEach(reward => { const isEarned = totalDaysLogged >= reward.threshold; if(isEarned) earnedCount++; const rewardEl = document.createElement('div'); rewardEl.className = `text-center p-2 rounded-lg ${isEarned ? 'bg-yellow-100 dark:bg-gray-700' : 'bg-gray-100 dark:bg-gray-900'}`; rewardEl.innerHTML = `<div class="text-4xl ${isEarned ? '' : 'opacity-30'}">${reward.icon}</div><div class="font-semibold text-sm ${isEarned ? 'text-gold-600 dark:text-gold-400' : 'text-gray-500'}">${reward.name}</div><div class="text-xs text-gray-500 dark:text-gray-400">${reward.description}</div>`; this.physioRewardsContainer.appendChild(rewardEl); }); if(earnedCount === 0){ this.physioRewardsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start logging to earn badges!</p>'; } },
             
             // --- Growth Tracker Methods ---
             async handleGrowthSubmit(e) { e.preventDefault(); const date = this.growthDate.value; const height = parseFloat(this.growthHeight.value); const weight = parseFloat(this.growthWeight.value); if (!date || (isNaN(height) && isNaN(weight))) { return; } this.data.growthData[date] = { height: isNaN(height) ? null : height, weight: isNaN(weight) ? null : weight }; await this.saveDataToDrive(); this.updateGrowthChart(); this.growthForm.reset(); this.growthDate.valueAsDate = new Date(); },
