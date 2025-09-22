@@ -83,6 +83,16 @@
         .dark .bottom-nav-link.active {
             color: #fef08a; /* yellow-200 */
         }
+
+        /* Ensure iframe pages take full height */
+        .iframe-page {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .iframe-content {
+            flex-grow: 1;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
@@ -247,7 +257,7 @@
                     </div>
 
                     <!-- Infographic Link -->
-                    <a href="#" data-page="infographic" class="nav-link mt-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row items-center gap-4 hover:shadow-lg dark:hover:shadow-green-900 transition-shadow">
+                    <button data-page="infographic" class="nav-link w-full mt-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row items-center gap-4 hover:shadow-lg dark:hover:shadow-green-900 transition-shadow">
                         <div class="flex-shrink-0">
                             <!-- ICON: Infographic/Learn -->
                             <svg class="w-12 h-12 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -261,7 +271,7 @@
                                 View Infographic
                             </div>
                         </div>
-                    </a>
+                    </button>
 
                     <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div data-page="tracker" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
@@ -700,23 +710,76 @@
                         <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.5a1.5 1.5 0 013 0V12a1.5 1.5 0 01-3 0V9.5zM6.5 6a1.5 1.5 0 00-3 0V7a1.5 1.5 0 003 0V6zM21 9.5a1.5 1.5 0 00-3 0V12a1.5 1.5 0 003 0V9.5zM17.5 6a1.5 1.5 0 013 0V7a1.5 1.5 0 01-3 0V6zM12 14a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-3 0v-1.5A1.5 1.5 0 0112 14zM12 6.5a1.5 1.5 0 00-1.5 1.5v1.5a1.5 1.5 0 003 0V8A1.5 1.5 0 0012 6.5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 19.5a1.5 1.5 0 013 0v1a1.5 1.5 0 01-3 0v-1zM9.5 19.5a1.5 1.5 0 00-3 0v1a1.5 1.5 0 003 0v-1z"></g></svg>
                         <h2 class="text-3xl font-bold">Scoliosis Screener</h2>
                     </div>
-                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                        <h3 class="text-2xl font-bold text-gold-500 dark:text-gold-400 mb-4">AI Screener Coming Soon!</h3>
-                        <p class="text-lg text-gray-600 dark:text-gray-300">
-                            We're working on an AI-powered tool to help you visualize and track spinal asymmetry over time.
-                        </p>
-                        <p class="mt-2 text-gray-600 dark:text-gray-300">For now, please consult your doctor for any screening or diagnosis.</p>
+                    
+                    <div class="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 text-red-700 dark:text-red-200 p-4 rounded-lg shadow-md mb-6" role="alert">
+                        <strong class="font-bold">Medical Disclaimer:</strong>
+                        <span class="block">This is an informational guide, not a diagnostic tool. This test cannot replace a professional medical evaluation. Please consult a doctor or orthopedist for an accurate diagnosis.</span>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                        <h3 class="text-2xl font-bold text-green-800 dark:text-green-300 mb-4">How to Perform the Adam's Bend Test</h3>
+                        <p class="mb-6 text-gray-600 dark:text-gray-300">This simple test can help identify potential signs of scoliosis, such as an uneven spine or rib cage. It is best performed by a parent or observer while the person being screened follows the steps.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3">Instructions for the Observer (Parent)</h4>
+                                <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li>Stand behind your child in a well-lit room.</li>
+                                    <li>Look at their back while they are standing straight. Check if the shoulders or hips seem uneven.</li>
+                                    <li>Ask your child to bend forward slowly, as if touching their toes, with feet together and knees straight.</li>
+                                    <li>As they bend, keep your eyes at their back level.</li>
+                                    <li>Look for any asymmetry. Check if one side of the rib cage is higher than the other, or if one side of the lower back seems more prominent.</li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3">Instructions for the Person Being Screened</h4>
+                                <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li>Take off your shirt so your back is visible.</li>
+                                    <li>Stand straight with your feet together and your arms at your sides.</li>
+                                    <li>Slowly bend forward, letting your arms hang down loosely, as if you're going to touch your toes.</li>
+                                    <li>Keep your knees straight and your feet together.</li>
+                                    <li>Hold the bent position for a few seconds while your parent or observer looks at your back.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h4 class="text-2xl font-bold text-center mb-4">What to Look For</h4>
+                            <div class="flex flex-col md:flex-row justify-around items-center gap-6">
+                                <div class="text-center">
+                                    <svg class="w-48 h-48 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M40 20C40 14.4772 44.4772 10 50 10C55.5228 10 60 14.4772 60 20V25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                                        <path d="M30 45C30 36.7157 36.7157 30 45 30H55C63.2843 30 70 36.7157 70 45V75C70 83.2843 63.2843 90 55 90H45C36.7157 90 30 83.2843 30 75V45Z" stroke="currentColor" stroke-width="4"/>
+                                        <path d="M50 30V90" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                                        <path d.bind="M30 50H70" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                                    </svg>
+                                    <h5 class="text-lg font-semibold mt-2 text-green-600 dark:text-green-400">Normal Back</h5>
+                                    <p>Back is level and symmetrical.</p>
+                                </div>
+                                <div class="text-center">
+                                    <svg class="w-48 h-48 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M40 20C40 14.4772 44.4772 10 50 10C55.5228 10 60 14.4772 60 20V25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                                        <path d="M30 45C30 36.7157 36.7157 30 45 30H55C63.2843 30 70 36.7157 70 45V75C70 83.2843 63.2843 90 55 90H45C36.7157 90 30 83.2843 30 75V45Z" stroke="currentColor" stroke-width="4"/>
+                                        <path d="M50 30C50 30 48 60 50 90" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                                        <path d="M30 50C35.3333 55 64.6667 45 70 50" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                                    </svg>
+                                    <h5 class="text-lg font-semibold mt-2 text-red-600 dark:text-red-400">Possible Scoliosis</h5>
+                                    <p>One side of the back is higher.</p>
+                                </div>
+                            </div>
+                            <p class="mt-6 text-center font-semibold text-lg">If you notice any unevenness, such as a rib hump or an uneven lower back, please schedule an appointment with a medical professional.</p>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Infographic Page -->
-                <div id="infographic-page" class="page">
+                <div id="infographic-page" class="page iframe-page">
                     <div class="flex items-center justify-center gap-3 mb-6">
                         <!-- ICON: Infographic Header -->
                         <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <h2 class="text-3xl font-bold">Scoliosis Infographic</h2>
                     </div>
-                    <div class="w-full h-[80vh] bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="iframe-content w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
                         <iframe src="scoliosis_infographic.html" class="w-full h-full" title="Scoliosis Infographic"></iframe>
                     </div>
                 </div>
@@ -997,7 +1060,9 @@
             navigateTo(pageId) {
                 if (!pageId) pageId = 'home';
                 
+                // Fix: Deactivate all pages first
                 this.pages.forEach(page => page.classList.remove('active'));
+                
                 const targetPage = document.getElementById(`${pageId}-page`);
                 if (targetPage) {
                     targetPage.classList.add('active');
