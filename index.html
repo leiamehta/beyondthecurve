@@ -4,600 +4,303 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beyond the Curve</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        :root {
-            --primary-green: #4CAF50;
-            --light-green: #C8E6C9;
-            --accent-gold: #FFD700;
-            --light-yellow: #FFF9C4;
-            --white: #FFFFFF;
-            --dark-text: #333333;
-        }
-        .bg-primary-green { background-color: var(--primary-green); }
-        .bg-light-green { background-color: var(--light-green); }
-        .bg-accent-gold { background-color: var(--accent-gold); }
-        .bg-light-yellow { background-color: var(--light-yellow); }
-        .text-primary-green { color: var(--primary-green); }
-        .text-accent-gold { color: var(--accent-gold); }
-        .text-dark-text { color: var(--dark-text); }
-
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .main-content {
-            transition: margin-left 0.3s ease-in-out;
-        }
-
-        .sidebar-link {
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .sidebar-link:hover, .sidebar-link.active {
-            background-color: var(--accent-gold);
-            color: var(--dark-text);
-            border-radius: 8px;
-        }
-        .sidebar-link.active i {
-            color: var(--dark-text);
-        }
-        .card {
-            background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .resource-link {
-            display: block;
-            padding: 1rem;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-            color: var(--dark-text);
-        }
-        .resource-link:hover {
-            background-color: var(--light-yellow);
-        }
-        .journal-entry {
-             background-color: #f9f9f9;
-             border-left: 4px solid var(--primary-green);
-             padding: 1rem;
-             margin-bottom: 1rem;
-             border-radius: 4px;
-        }
-        .bottom-nav-link {
-            color: var(--dark-text);
-            transition: color 0.2s;
-        }
-        .bottom-nav-link.active, .bottom-nav-link:hover {
-            color: var(--primary-green);
-        }
-        .shadow-t-lg {
-            box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        .achievement-card {
-            filter: grayscale(100%);
-            opacity: 0.5;
-            transition: all 0.3s ease;
-        }
-        .achievement-card.unlocked {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s;
-        }
-        .modal-content {
-            animation: slideIn 0.3s;
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 </head>
-<body class="bg-light-green text-dark-text">
+<body>
 
-    <div class="md:flex h-screen">
-        <!-- Sidebar for Desktop -->
-        <aside id="sidebar" class="sidebar bg-primary-green text-white w-64 space-y-6 py-7 px-2 hidden md:flex md:flex-col">
-            <a href="#" class="text-white flex items-center space-x-2 px-4">
-                <i class="fas fa-child text-2xl text-accent-gold"></i>
-                <span class="text-2xl font-extrabold">Beyond the Curve</span>
-            </a>
+    <div id="login-screen" class="page active">
+        <div class="login-container">
+            <img src="httpslogo.png" alt="Beyond the Curve Logo" class="logo"> <h1>Beyond the Curve</h1>
+            <p>Your companion on the scoliosis journey[cite: 153].</p>
+            <button id="login-button">
+                <img src="httpsimg/google-logo.png" alt="Google G Logo" width="20" height="20">
+                Sign in with Google
+            </button>
+        </div>
+    </div>
 
-            <nav>
-                <a href="#home" class="sidebar-link active flex items-center space-x-3 py-3 px-4" onclick="showSection('home', this)">
-                    <i class="fas fa-home text-accent-gold"></i>
-                    <span>Home</span>
-                </a>
-                <a href="#trackers" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('trackers', this)">
-                    <i class="fas fa-chart-line text-accent-gold"></i>
-                    <span>Trackers</span>
-                </a>
-                <a href="#journal" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('journal', this)">
-                    <i class="fas fa-book-open text-accent-gold"></i>
-                    <span>Journal</span>
-                </a>
-                <a href="#community" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('community', this)">
-                    <i class="fas fa-users text-accent-gold"></i>
-                    <span>Community</span>
-                </a>
-                <a href="#resources" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('resources', this)">
-                    <i class="fas fa-folder-open text-accent-gold"></i>
-                    <span>Resources</span>
-                </a>
-            </nav>
-        </aside>
+    <div id="app-shell" class="page">
+        
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Beyond the Curve</h3>
+            </div>
+            <ul>
+                <li><a href="#home" class="nav-link active"><span class="material-icons-sharp">home</span> Home</a></li>
+                <li><a href="#trackers" class="nav-link"><span class="material-icons-sharp">check_circle</span> Trackers</a></li>
+                <li><a href="#resources" class="nav-link"><span class="material-icons-sharp">menu_book</span> Resources</a></li>
+                <li><a href="#community" class="nav-link"><span class="material-icons-sharp">groups</span> Community</a></li>
+                <li><a href="#journal" class="nav-link"><span class="material-icons-sharp">edit_note</span> Journal</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="theme-toggle">Toggle Mode</button>
+            </div>
+        </nav>
 
-        <!-- Main Content -->
-        <div id="main-content" class="main-content flex-1 flex flex-col overflow-hidden">
-            <header class="bg-white shadow-md p-4 flex justify-between items-center">
-                <div class="w-8 md:w-0"></div> <!-- Placeholder to balance title -->
-                <h1 id="section-title" class="text-2xl font-bold text-primary-green text-center flex-1">Home</h1>
-                <div>
-                    <!-- Placeholder for login/profile -->
-                     <button class="bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">
-                        Login with Google
-                    </button>
+        <main>
+            <header>
+                <h2 id="page-title">Home</h2>
+                <div class="gamification-widgets">
+                    <div id="streak-widget" class="widget">
+                        <span class="material-icons-sharp">local_fire_department</span>
+                        <span id="streak-count">0</span>
+                    </div>
+                    <div id="points-widget" class="widget">
+                        <span class="material-icons-sharp">diamond</span>
+                        <span id="points-count">0</span>
+                    </div>
                 </div>
             </header>
-            
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-light-green p-6 pb-24 md:pb-6">
-                <!-- Home Section -->
-                <section id="home" class="space-y-6">
-                     <div class="card p-6 text-center">
-                        <h2 class="text-3xl font-bold text-primary-green mb-2">Welcome to Beyond the Curve!</h2>
-                        <p class="text-lg">Your all-in-one digital companion for the scoliosis journey. We're here to empower you with tools, community, and resources to build confidence and resilience.</p>
-                    </div>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="card p-6 flex flex-col items-center text-center">
-                            <i class="fas fa-chart-line text-4xl text-accent-gold mb-4"></i>
-                            <h3 class="text-xl font-semibold mb-2 text-primary-green">Track Your Progress</h3>
-                            <p>Monitor brace wear, physiotherapy, and growth to stay on top of your treatment.</p>
-                        </div>
-                         <div class="card p-6 flex flex-col items-center text-center">
-                            <i class="fas fa-book-open text-4xl text-accent-gold mb-4"></i>
-                            <h3 class="text-xl font-semibold mb-2 text-primary-green">Your Personal Journal</h3>
-                            <p>A safe space to document your thoughts, feelings, and experiences along the way.</p>
-                        </div>
-                        <div class="card p-6 flex flex-col items-center text-center">
-                            <i class="fas fa-users text-4xl text-accent-gold mb-4"></i>
-                            <h3 class="text-xl font-semibold mb-2 text-primary-green">Connect with Community</h3>
-                            <p>You are not alone. Find support groups and forums to connect with others on a similar path.</p>
-                        </div>
-                    </div>
-                </section>
 
-                <!-- Trackers Section -->
-                <section id="trackers" class="hidden space-y-8">
-                    <!-- Brace Wear Tracker -->
-                    <div class="card p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-2xl font-bold text-primary-green">Brace Wear Tracker</h2>
-                            <div class="text-right">
-                                <p class="font-bold text-lg text-accent-gold">🔥 <span id="brace-streak">0</span> Day Streak</p>
-                            </div>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-6 items-center">
-                            <div>
-                                <label for="brace-hours" class="block text-sm font-medium text-gray-700">Hours worn today:</label>
-                                <div class="flex items-center mt-1">
-                                    <input type="number" id="brace-hours" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green" placeholder="e.g., 18">
-                                    <button onclick="addTrackerData('brace')" class="ml-3 bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">Log</button>
-                                </div>
-                            </div>
-                            <div class="w-full h-48 md:h-full">
-                                <canvas id="braceChart"></canvas>
-                            </div>
-                        </div>
+            <section id="home" class="app-page active">
+                <div class="card">
+                    <h3>Welcome Back!</h3>
+                    <p>You're on a roll! Keep up the great work.</p>
+                </div>
+                <div class="card" id="dynamic-content-area">
+                    <h3>Recently Used</h3>
+                    <p>Your most recently used feature will appear here[cite: 8].</p>
                     </div>
+                <div class="card">
+                    <h3>Daily Goal</h3>
+                    <p>Log your brace hours and PT session to complete your day.</p>
+                </div>
+            </section>
 
-                    <!-- Physiotherapy Tracker -->
-                     <div class="card p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-2xl font-bold text-primary-green">Physiotherapy Tracker</h2>
-                            <div class="text-right">
-                                <p class="font-bold text-lg text-accent-gold">🔥 <span id="physio-streak">0</span> Day Streak</p>
+            <section id="trackers" class="app-page">
+                <div class="tabs">
+                    <button class="tab-link active" data-tab="brace-tracker">Brace [cite: 15]</button>
+                    <button class="tab-link" data-tab="pt-tracker">Physiotherapy [cite: 19]</button>
+                    <button class="tab-link" data-tab="growth-tracker">Growth [cite: 27]</button>
+                </div>
+
+                <div id="brace-tracker" class="tab-content active">
+                    <div class="card">
+                        <h3>Daily Brace Tracker</h3>
+                        <p>Log your brace-wear hours for today. [cite: 15]</p>
+                        <input type="number" id="brace-hours" min="0" max="24" placeholder="Enter hours worn">
+                        <button id="log-brace-btn">Log Hours</button>
+                        <p class="reward-feedback"></p>
+                        <h4>Bracing Trends [cite: 17]</h4>
+                        <div class="chart-container">
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 80%;" title="Mon: 16hrs"></div>
+                                <div class="bar" style="height: 90%;" title="Tue: 18hrs"></div>
+                                <div class="bar" style="height: 75%;" title="Wed: 15hrs"></div>
+                                <div class="bar" style="height: 85%;" title="Thu: 17hrs"></div>
+                                <div class="bar" style="height: 100%;" title="Fri: 20hrs"></div>
+                                <div class="bar" style="height: 90%;" title="Sat: 18hrs"></div>
+                                <div class="bar" style="height: 80%;" title="Sun: 16hrs"></div>
                             </div>
                         </div>
-                         <div class="grid md:grid-cols-2 gap-6 items-center">
-                             <div>
-                                 <label for="physio-minutes" class="block text-sm font-medium text-gray-700">Minutes of exercise today:</label>
-                                 <div class="flex items-center mt-1">
-                                     <input type="number" id="physio-minutes" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green" placeholder="e.g., 30">
-                                     <button onclick="addTrackerData('physio')" class="ml-3 bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">Log</button>
-                                 </div>
-                             </div>
-                             <div class="w-full h-48 md:h-full">
-                                 <canvas id="physioChart"></canvas>
-                             </div>
-                         </div>
                     </div>
+                </div>
+
+                <div id="pt-tracker" class="tab-content">
+                    <div class="card">
+                        <h3>Daily Physiotherapy Tracker</h3>
+                        <p>Did you complete your physiotherapy session today? [cite: 19]</p>
+                        <button id="log-pt-btn">Yes, I completed my session!</button>
+                        <p class="reward-feedback"></p>
+                        <h4>Physiotherapy Trends [cite: 22]</h4>
+                        <div class="chart-container">
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 100%;"></div>
+                                <div class="bar" style="height: 0%;"></div>
+                                <div class="bar" style="height: 100%;"></div>
+                                <div class="bar" style="height: 100%;"></div>
+                                <div class="bar" style="height: 0%;"></div>
+                                <div class="bar" style="height: 100%;"></div>
+                                <div class="bar" style="height: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="growth-tracker" class="tab-content">
+                    <div class="card">
+                        <h3>Growth Tracker</h3>
+                        <p>Log your height and weight to track growth. [cite: 27]</p>
+                        <input type="number" placeholder="Height (cm)">
+                        <input type="number" placeholder="Weight (kg)">
+                        <button>Log Growth</button>
+                        <h4>Growth Projection [cite: 28]</h4>
+                        <div class="chart-container">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="resources" class="app-page">
+                
+                <div class="card">
+                    <h3>Find Specialists & Apparel</h3>
+                    <ul>
+                        <li><a href="https://www.srs.org/Patients/Find-a-Specialist#" target="_blank">Find a Surgeon (SRS) [cite: 48, 186]</a></li>
+                        <li><a href="#" target="_blank">Brace-Friendly Apparel Shops [cite: 49, 188]</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Video Library [cite: 51]</h3>
+                    <h4>Scoliosis Introduction [cite: 53]</h4>
+                    <ul>
+                        <li><a href="https://www.youtube.com/watch?v=JicoSIe2JQI" target="_blank">Spine Anatomy in under 1 minute [cite: 53, 75]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=Vqy1VB2CuaE" target="_blank">What is Scoliosis (In under 1 Minute) [cite: 53, 76]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=4blk8rrfJPw" target="_blank">How to Detect Scoliosis [cite: 53, 77]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=s3iKfogVUyM" target="_blank">General info on Scoliosis [cite: 94]</a></li>
+                    </ul>
+                    <h4>Physiotherapy [cite: 54]</h4>
+                    <ul>
+                        <li><a href="https://youtube.com/playlist?list=PLfyUArn76Mvi1yqoyEvJIEkMNf7OTG5eB&si=7hHnIFJ6klQnSDvN" target="_blank">Physiotherapy Videos for Scoliosis Playlist [cite: 54, 91]</a></li>
+                    </ul>
+                    <h4>Treatment Options [cite: 55]</h4>
+                    <ul>
+                        <li><a href="https://www.youtube.com/watch?v=_nLXf5jEn5k&t=101s" target="_blank">Bracing as a Scoliosis Treatment Option [cite: 55, 79]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=JCDEc2uYwxA&t=18s" target="_blank">Scoliosis Surgery as a treatment option [cite: 55, 80]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=OX1vhVSzMiI" target="_blank">Spinal Fusion v/s VBT [cite: 55, 82, 92]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=G1ynUYSqLsU" target="_blank">Hybrid Fusion (Fusion + VBT) [cite: 55, 83, 93]</a></li>
+                    </ul>
+                    <h4>Surgery Experience [cite: 56]</h4>
+                    <ul>
+                        <li><a href="https://www.youtube.com/watch?v=3gKel6MwW98&t=12s" target="_blank">What to Expect Before and After Surgery [cite: 56, 84]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=L8kHuCjqXyo" target="_blank">Checklist for Hospital Stay [cite: 56, 85]</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=YHKTELBwreo&t=21s" target="_blank">Life post Surgery [cite: 56, 86]</a></li>
+                    </ul>
+                    <h4>Surgeon Interviews [cite: 57]</h4>
+                    <ul>
+                        <li><a href="https://youtube.com/playlist?list=PLfyUArn76MviC3wiB67PdATXA3EJGfQlc&si=ZSU0NonH0itejvzV" target="_blank">Vertebral Tethering Interviews [cite: 57, 89]</a></li>
+                        <li><a href="https://youtu.be/WID1p_UJZIM?si=S-c6FJ525PfS6GU2" target="_blank">Spinal Fusion Interview [cite: 57, 90]</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Resource Directory [cite: 59]</h3>
                     
-                    <!-- Achievements Section -->
-                    <div class="card p-6">
-                        <h2 class="text-2xl font-bold text-primary-green mb-4">My Achievements</h2>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 text-center">
-                            <div id="ach-brace-7" class="achievement-card p-4 rounded-lg bg-light-yellow">
-                                <div class="text-4xl">🏆</div>
-                                <p class="font-semibold mt-2">7-Day Brace Streak</p>
-                            </div>
-                            <div id="ach-physio-7" class="achievement-card p-4 rounded-lg bg-light-yellow">
-                                <div class="text-4xl">💪</div>
-                                <p class="font-semibold mt-2">7-Day PT Streak</p>
-                            </div>
-                             <div id="ach-brace-30" class="achievement-card p-4 rounded-lg bg-light-yellow">
-                                <div class="text-4xl">🏅</div>
-                                <p class="font-semibold mt-2">30-Day Brace Streak</p>
-                            </div>
-                            <div id="ach-physio-30" class="achievement-card p-4 rounded-lg bg-light-yellow">
-                                <div class="text-4xl">🌟</div>
-                                <p class="font-semibold mt-2">30-Day PT Streak</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    <h4>Major Organizations [cite: 60]</h4>
+                    <ul>
+                        <li><a href="https://www.srs.org" target="_blank">Scoliosis Research Society (SRS) [cite: 60, 100]</a></li>
+                        <li><a href="https://www.scoliosis.org" target="_blank">National Scoliosis Foundation (NSF) [cite: 60, 66, 101]</a></li>
+                        <li><a href="https://www.settingscoliosisstraight.org" target="_blank">Setting Scoliosis Straight [cite: 60, 63, 103]</a></li>
+                        <li><a href="https://www.sosort.org" target="_blank">SOSORT [cite: 60, 104]</a></li>
+                        <li><a href="https://www.curvygirlsscoliosis.com" target="_blank">Curvy Girls Scoliosis Foundation [cite: 60, 106]</a></li>
+                        <li><a href="https://www.scoliosisandspineonlinelearning.com" target="_blank">Scoliosis and Spine Online Learning (SSOL) [cite: 102]</a></li>
+                        <li><a href="https://www.ssr.org.uk" target="_blank">Scoliosis Support and Research (SSR) [cite: 105]</a></li>
+                    </ul>
 
-                <!-- Journal Section -->
-                <section id="journal" class="hidden space-y-6">
-                    <div class="card p-6">
-                        <h2 class="text-2xl font-bold text-primary-green mb-4">My Scoliosis Journal</h2>
-                        <textarea class="w-full h-48 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green" placeholder="How are you feeling today? Write about your journey..."></textarea>
-                        <button class="mt-4 bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">Save Entry</button>
-                    </div>
-                     <div class="card p-6">
-                         <h3 class="text-xl font-semibold text-primary-green mb-4">Past Entries</h3>
-                         <div id="journal-entries">
-                            <div class="journal-entry">
-                                <p class="font-semibold">September 21, 2025</p>
-                                <p>Feeling a little sore today after PT, but also feeling stronger. The exercises are tough but I know they are helping.</p>
-                            </div>
-                            <div class="journal-entry">
-                                <p class="font-semibold">September 18, 2025</p>
-                                <p>Got my brace adjusted today. It feels a bit tight, but the doctor said that's normal. Trying to stay positive!</p>
-                            </div>
-                         </div>
-                    </div>
-                </section>
+                    <h4>Medical Institutions [cite: 60]</h4>
+                    <ul>
+                        <li><a href="https://www.mayoclinic.org/diseases-conditions/scoliosis" target="_blank">Mayo Clinic [cite: 60, 65, 108]</a></li>
+                        <li><a href="https://www.hopkinsmedicine.org/health/conditions-and-diseases/scoliosis" target="_blank">Johns Hopkins Medicine [cite: 60, 109]</a></li>
+                        <li><a href="https://www.childrenshospital.org/conditions/scoliosis" target="_blank">Boston Children's Hospital [cite: 60, 113]</a></li>
+                        <li><a href="https://www.hss.edu/condition-list_scoliosis.asp" target="_blank">Hospital for Special Surgery (HSS) [cite: 60, 116]</a></li>
+                        <li><a href="https://my.clevelandclinic.org/health/diseases/15837-scoliosis" target="_blank">Cleveland Clinic [cite: 60, 115]</a></li>
+                        <li><a href="https://www.cincinnatichildrens.org" target="_blank">Cincinnati Children's [cite: 60, 119]</a></li>
+                        <li><a href="https://www.shrinershospitalsforchildren.org" target="_blank">Shriners Hospitals for Children [cite: 60, 121]</a></li>
+                    </ul>
 
-                <!-- Community Section -->
-                <section id="community" class="hidden text-center">
-                     <div class="card p-6">
-                        <i class="fas fa-users text-6xl text-accent-gold mb-4"></i>
-                        <h2 class="text-3xl font-bold text-primary-green mb-4">Join the Community</h2>
-                        <p class="text-lg mb-6">Connecting with others who understand is powerful. Our community features are currently under development. Soon, you'll be able to access moderated forums and find links to amazing support groups.</p>
-                        <div class="bg-light-yellow p-4 rounded-lg">
-                            <p class="font-semibold">Coming Soon: Secure forums, Discord channels, and more!</p>
-                        </div>
-                    </div>
-                </section>
+                    <h4>Treatment Specific [cite: 60]</h4>
+                    <ul>
+                        <li><a href="https://www.schrothmethod.com" target="_blank">Schroth Method [cite: 60, 124]</a></li>
+                        <li><a href="https://www.scolios-us.org" target="_blank">Scolio-us [cite: 60, 125]</a></li>
+                        <li><a href="https://www.spinaltech.com/resources/scoliosis-awareness-resources" target="_blank">Spinal Technology [cite: 60, 126]</a></li>
+                        <li><a href="https://www.rarediseases.org" target="_blank">NORD [cite: 60, 127]</a></li>
+                        <li><a href="https://www.clear-institute.org" target="_blank">CLEAR Scoliosis Institute [cite: 148]</a></li>
+                    </ul>
 
-                <!-- Resources Section -->
-                <section id="resources" class="hidden space-y-8">
-                    <!-- Major Organizations -->
-                    <div>
-                        <h2 class="text-2xl font-bold text-primary-green mb-4">Major Organizations</h2>
-                        <div class="grid md:grid-cols-2 gap-4">
-                           <a href="https://www.srs.org/" target="_blank" class="resource-link card">
-                               <h3 class="font-semibold text-lg">Scoliosis Research Society (SRS)</h3>
-                               <p class="text-sm">A leading international society for spinal deformity research and education.</p>
-                           </a>
-                           <a href="https://www.scoliosis.org/" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">National Scoliosis Foundation (NSF)</h3>
-                                <p class="text-sm">Provides patient support, education, and advocacy.</p>
-                           </a>
-                           <a href="https://www.settingscoliosisstraight.org/" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">Setting Scoliosis Straight</h3>
-                                <p class="text-sm">Focuses on advancing techniques and discoveries in spinal deformity treatment.</p>
-                           </a>
-                           <a href="https://www.curvygirlsscoliosis.com/" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">Curvy Girls Scoliosis Foundation</h3>
-                                <p class="text-sm">An international, peer-led support group for girls with scoliosis.</p>
-                           </a>
-                        </div>
-                    </div>
-                     <!-- Medical Institutions -->
-                    <div>
-                        <h2 class="text-2xl font-bold text-primary-green mb-4">Top Medical Institutions</h2>
-                        <div class="grid md:grid-cols-2 gap-4">
-                           <a href="https://www.mayoclinic.org/diseases-conditions/scoliosis/symptoms-causes/syc-20350716" target="_blank" class="resource-link card">
-                               <h3 class="font-semibold text-lg">Mayo Clinic</h3>
-                               <p class="text-sm">Comprehensive information on symptoms, causes, and treatment.</p>
-                           </a>
-                           <a href="https://www.hopkinsmedicine.org/health/conditions-and-diseases/scoliosis" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">Johns Hopkins Medicine</h3>
-                                <p class="text-sm">Detailed resources on various types of scoliosis.</p>
-                           </a>
-                           <a href="https://www.childrenshospital.org/conditions/scoliosis" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">Boston Children's Hospital</h3>
-                                <p class="text-sm">Specialized pediatric care information for scoliosis.</p>
-                           </a>
-                            <a href="https://www.hss.edu/condition-list_scoliosis.asp" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">Hospital for Special Surgery (HSS)</h3>
-                                <p class="text-sm">Expert insights into surgical and non-surgical treatments.</p>
-                           </a>
-                        </div>
-                    </div>
-                    <!-- Support Groups -->
-                    <div>
-                         <h2 class="text-2xl font-bold text-primary-green mb-4">Support Groups & Forums</h2>
-                         <div class="grid md:grid-cols-2 gap-4">
-                            <a href="https://www.bracingforscoliosus.org/" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">Scolio-us</h3>
-                                <p class="text-sm">Community and resources with a focus on bracing and mental health.</p>
-                            </a>
-                             <a href="https://www.facebook.com/groups/scoliosissupportgroup/" target="_blank" class="resource-link card">
-                                <h3 class="font-semibold text-lg">Scoliosis Support & Education Group</h3>
-                                <p class="text-sm">A large and active Facebook community for patients and families.</p>
-                            </a>
-                         </div>
-                    </div>
-                </section>
-            </main>
-        </div>
+                    <h4>Support Groups & Forums [cite: 43, 60]</h4>
+                    <ul>
+                        <li><a href="https://www.curvygirlsscoliosis.com" target="_blank">Curvy Girls [cite: 43, 60, 70, 73]</a></li>
+                        <li><a href="https://www.bracingforscoliosus.org" target="_blank">Scolio-US [cite: 60, 71]</a></li>
+                        <li><a href="https://www.staging3.bracingforscoliosus.org/resources/#support-group" target="_blank">ScoliZooms [cite: 60, 72]</a></li>
+                        <li><a href="https://www.scoliosis.org/forum" target="_blank">Straight Talk Scoliosis Forum [cite: 60, 134]</a></li>
+                        <li><a href="https://www.facebook.com/groups/scoliosissupportgroup" target="_blank">Scoliosis Support & Education Group (Facebook) [cite: 60, 139]</a></li>
+                        <li><a href="#" target="_blank">ScoliBoys [cite: 43]</a></li>
+                    </ul>
+                    
+                    <h4>Financial/Practical Aid [cite: 60]</h4>
+                    <ul>
+                        <li><a href="https://www.childrensscoliosisfoundation.org" target="_blank">Children's Scoliosis Foundation [cite: 60, 141]</a></li>
+                        <li><a href="https://www.uhccf.org" target="_blank">UnitedHealthcare Children's Foundation (UHCCF) [cite: 60, 142]</a></li>
+                        <li><a href="https://www.mercymedicalangels.org" target="_blank">Mercy Medical Angels [cite: 60, 143]</a></li>
+                        <li><a href="https://www.hopescloset.net" target="_blank">Hope's Closet [cite: 60, 144]</a></li>
+                    </ul>
+
+                    <h4>General Education [cite: 60]</h4>
+                    <ul>
+                        <li><a href="https://www.medlineplus.gov/scoliosis.html" target="_blank">MedlinePlus [cite: 60, 110]</a></li>
+                        <li><a href="https://www.orthoinfo.aaos.org" target="_blank">AAOS [cite: 60, 111]</a></li>
+                        <li><a href="https://www.webmd.com/back-pain/scoliosis" target="_blank">WebMD [cite: 60, 129]</a></li>
+                        <li><a href="https://www.healthline.com/health/scoliosis" target="_blank">Healthline [cite: 60, 130]</a></li>
+                        <li><a href="https://www.kidshealth.org/en/parents/scoliosis.html" target="_blank">KidsHealth [cite: 60, 132]</a></li>
+                        <li><a href="https://www.navigatingscoliosis.com/self-nav" target="_blank">dr Derek Lee’s Navigating Scoliosis [cite: 67]</a></li>
+                        <li><a href="https://www.cde.ca.gov/ls/he/hn/documents/scoliosisscreening.pdf" target="_blank">California Screening Standards [cite: 68]</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="community" class="app-page">
+                <div class="card">
+                    <h3>Collaborative Hub (Forum) [cite: 40, 182]</h3>
+                    <p>Join our moderated, secure forum to share experiences and ask questions.</p>
+                    <button>Go to Kids Forum [cite: 41]</button>
+                    <button>Go to Parents Forum [cite: 41]</button>
+                </div>
+                <div class="card">
+                    <h3>Discord Channel [cite: 42, 183]</h3>
+                    <p>Join our dedicated Discord server for real-time chat and virtual events.</p>
+                    <button>Join Discord</button>
+                </div>
+                <div class="card">
+                    <h3>Support & Social Links [cite: 43, 184]</h3>
+                    <p>Find other communities on the web.</p>
+                    <ul>
+                        <li><a href="https://www.curvygirlsscoliosis.com" target="_blank">Curvy Girls [cite: 43]</a></li>
+                        <li><a href="#" target="_blank">ScoliBoys [cite: 43]</a></li>
+                        <li><a href="#" target="_blank">Facebook Communities [cite: 43]</a></li>
+                        <li><a href="#" target="_blank">Instagram Communities [cite: 43]</a></li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="journal" class="app-page">
+                <div class="card">
+                    <h3>Reflection Journal [cite: 34]</h3>
+                    <p>A private, secure digital diary to write about your feelings and track pain levels. [cite: 34, 177] (Data saves to your personal account, not our servers [cite: 8, 195]).</p>
+                    <textarea id="journal-entry" rows="15" placeholder="How are you feeling today?"></textarea>
+                    <button id="save-journal">Save Entry</button>
+                </div>
+            </section>
+            
+            <button id="spiney-fab" class="material-icons-sharp">smart_toy</button>
+            <div id="spiney-chat-modal" class="hidden">
+                <div class="chat-header">
+                    <h4>Chat with Spiney [cite: 180]</h4>
+                    <button id="close-chat" class="material-icons-sharp">close</button>
+                </div>
+                <div class="chat-body">
+                    <p class="chat-message spiney">Hi! I'm Spiney. Ask me any common questions about scoliosis or bracing! [cite: 37]</p>
+                    <p class="chat-message user">What is bracing?</p>
+                    <p class="chat-message spiney">Bracing is a common treatment to stop a spinal curve from getting worse. My info is medically reviewed! [cite: 37]</p>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Ask Spiney a question...">
+                    <button class="material-icons-sharp">send</button>
+                </div>
+            </div>
+
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="#home" class="nav-link active"><span class="material-icons-sharp">home</span></a>
+            <a href="#trackers" class="nav-link"><span class="material-icons-sharp">check_circle</span></a>
+            <a href="#resources" class="nav-link"><span class="material-icons-sharp">menu_book</span></a>
+            <a href="#community" class="nav-link"><span class="material-icons-sharp">groups</span></a>
+            <a href="#journal" class="nav-link"><span class="material-icons-sharp">edit_note</span></a>
+        </nav>
     </div>
 
-    <!-- Achievement Unlocked Modal -->
-    <div id="achievementModal" class="modal">
-        <div class="modal-content bg-white p-8 rounded-lg max-w-sm mx-auto mt-20 text-center relative shadow-xl">
-            <span class="absolute top-2 right-4 text-2xl cursor-pointer text-gray-500" onclick="closeModal()">&times;</span>
-            <div id="modal-icon" class="text-6xl mb-4"></div>
-            <h2 class="text-2xl font-bold text-primary-green mb-2">Achievement Unlocked!</h2>
-            <p id="modal-text" class="text-lg text-dark-text"></p>
-        </div>
-    </div>
-
-    <!-- Bottom Navigation Bar for Mobile -->
-    <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-t-lg z-30">
-        <div class="flex justify-around w-full">
-            <a href="#home" class="bottom-nav-link active flex-grow flex flex-col items-center text-center py-2 px-1" onclick="showSection('home', this)">
-                <i class="fas fa-home text-xl"></i>
-                <span class="text-xs mt-1">Home</span>
-            </a>
-            <a href="#trackers" class="bottom-nav-link flex-grow flex flex-col items-center text-center py-2 px-1" onclick="showSection('trackers', this)">
-                <i class="fas fa-chart-line text-xl"></i>
-                <span class="text-xs mt-1">Trackers</span>
-            </a>
-            <a href="#journal" class="bottom-nav-link flex-grow flex flex-col items-center text-center py-2 px-1" onclick="showSection('journal', this)">
-                <i class="fas fa-book-open text-xl"></i>
-                <span class="text-xs mt-1">Journal</span>
-            </a>
-            <a href="#community" class="bottom-nav-link flex-grow flex flex-col items-center text-center py-2 px-1" onclick="showSection('community', this)">
-                <i class="fas fa-users text-xl"></i>
-                <span class="text-xs mt-1">Community</span>
-            </a>
-            <a href="#resources" class="bottom-nav-link flex-grow flex flex-col items-center text-center py-2 px-1" onclick="showSection('resources', this)">
-                <i class="fas fa-folder-open text-xl"></i>
-                <span class="text-xs mt-1">Resources</span>
-            </a>
-        </div>
-    </nav>
-
-    <script>
-        // --- STATE MANAGEMENT ---
-        let trackerData = {
-            brace: [], // { date: 'YYYY-MM-DD', value: hours }
-            physio: [] // { date: 'YYYY-MM-DD', value: minutes }
-        };
-
-        let achievements = {
-            'brace-7': false,
-            'physio-7': false,
-            'brace-30': false,
-            'physio-30': false
-        };
-
-        let charts = {};
-
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            initializeCharts();
-            updateAllUI();
-        });
-
-        function loadData() {
-            const savedData = localStorage.getItem('beyondTheCurveTrackerData');
-            if (savedData) {
-                trackerData = JSON.parse(savedData);
-            }
-            const savedAchievements = localStorage.getItem('beyondTheCurveAchievements');
-            if (savedAchievements) {
-                achievements = JSON.parse(savedAchievements);
-            }
-        }
-
-        function saveData() {
-            localStorage.setItem('beyondTheCurveTrackerData', JSON.stringify(trackerData));
-            localStorage.setItem('beyondTheCurveAchievements', JSON.stringify(achievements));
-        }
-        
-        // --- UI & NAVIGATION ---
-        function showSection(sectionId, clickedElement) {
-// ... existing code ... -->
-            if (bottomNavLink) {
-                bottomNavLink.classList.add('active');
-            }
-
-
-            // Update header title
-            const title = clickedElement.querySelector('span').textContent;
-            document.getElementById('section-title').textContent = title;
-        }
-
-        function updateAllUI() {
-            updateStreaks();
-            updateCharts();
-            renderAchievements();
-        }
-
-        // --- TRACKER LOGIC ---
-        function addTrackerData(type) {
-            const input = document.getElementById(`${type}-hours`) || document.getElementById(`${type}-minutes`);
-            const value = parseFloat(input.value);
-
-            if (!value || value <= 0) {
-                alert("Please enter a valid positive number.");
-                return;
-            }
-
-            const today = new Date().toISOString().split('T')[0];
-            
-            // Check if there's already an entry for today and update it, otherwise add new
-            const todayEntryIndex = trackerData[type].findIndex(entry => entry.date === today);
-            if(todayEntryIndex > -1) {
-                trackerData[type][todayEntryIndex].value = value;
-            } else {
-                 trackerData[type].push({ date: today, value: value });
-            }
-
-            input.value = '';
-            saveData();
-            updateAllUI();
-            checkAchievements();
-        }
-
-        function calculateStreak(data) {
-            if (!data || data.length === 0) return 0;
-            
-            const dates = new Set(data.map(entry => entry.date));
-            let streak = 0;
-            let checkDate = new Date();
-
-            // Check for today
-            if (dates.has(checkDate.toISOString().split('T')[0])) {
-                streak++;
-                checkDate.setDate(checkDate.getDate() - 1);
-            } else {
-                // If no entry for today, check for yesterday to start the streak
-                 checkDate.setDate(checkDate.getDate() - 1);
-                 if(!dates.has(checkDate.toISOString().split('T')[0])) {
-                     return 0; // No entry today or yesterday
-                 }
-                 streak++;
-                 checkDate.setDate(checkDate.getDate() - 1);
-            }
-            
-            while (dates.has(checkDate.toISOString().split('T')[0])) {
-                streak++;
-                checkDate.setDate(checkDate.getDate() - 1);
-            }
-
-            return streak;
-        }
-
-        function updateStreaks() {
-            document.getElementById('brace-streak').textContent = calculateStreak(trackerData.brace);
-            document.getElementById('physio-streak').textContent = calculateStreak(trackerData.physio);
-        }
-
-        // --- ACHIEVEMENTS ---
-        const achievementMeta = {
-            'brace-7': { name: "7-Day Brace Streak", icon: "🏆"},
-            'physio-7': { name: "7-Day PT Streak", icon: "💪"},
-            'brace-30': { name: "30-Day Brace Streak", icon: "🏅"},
-            'physio-30': { name: "30-Day PT Streak", icon: "🌟"}
-        };
-
-        function checkAchievements() {
-            const braceStreak = calculateStreak(trackerData.brace);
-            const physioStreak = calculateStreak(trackerData.physio);
-
-            const milestones = {
-                'brace-7': braceStreak >= 7,
-                'physio-7': physioStreak >= 7,
-                'brace-30': braceStreak >= 30,
-                'physio-30': physioStreak >= 30
-            };
-
-            for (const key in milestones) {
-                if (milestones[key] && !achievements[key]) {
-                    achievements[key] = true;
-                    showAchievementModal(key);
-                }
-            }
-            saveData();
-            renderAchievements();
-        }
-        
-        function renderAchievements() {
-            for (const key in achievements) {
-                const element = document.getElementById(`ach-${key}`);
-                if (achievements[key] && element) {
-                    element.classList.add('unlocked');
-                }
-            }
-        }
-
-        function showAchievementModal(key) {
-            const modal = document.getElementById('achievementModal');
-            document.getElementById('modal-icon').textContent = achievementMeta[key].icon;
-            document.getElementById('modal-text').textContent = `You've unlocked the "${achievementMeta[key].name}" achievement! Keep up the great work!`;
-            modal.style.display = 'flex';
-            modal.style.alignItems = 'center';
-            modal.style.justifyContent = 'center';
-        }
-
-        function closeModal() {
-            document.getElementById('achievementModal').style.display = 'none';
-        }
-        
-        // --- CHARTS ---
-        function initializeCharts() {
-            const commonOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#e0e0e0' } },
-                    x: { grid: { display: false } }
-                },
-                plugins: { legend: { display: false } }
-            };
-
-            charts.brace = new Chart(document.getElementById('braceChart'), {
-                type: 'bar',
-                data: { labels: [], datasets: [{ label: 'Hours', data: [], backgroundColor: '#FFD700', borderRadius: 4 }] },
-                options: commonOptions
-            });
-
-            charts.physio = new Chart(document.getElementById('physioChart'), {
-                type: 'bar',
-                data: { labels: [], datasets: [{ label: 'Minutes', data: [], backgroundColor: '#4CAF50', borderRadius: 4 }] },
-                options: commonOptions
-            });
-        }
-        
-        function updateCharts() {
-            updateSingleChart('brace', charts.brace);
-            updateSingleChart('physio', charts.physio);
-        }
-
-        function updateSingleChart(type, chartInstance) {
-            const data = trackerData[type].slice(-7); // Get last 7 entries
-            const labels = data.map(d => new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-            const values = data.map(d => d.value);
-
-            chartInstance.data.labels = labels;
-            chartInstance.data.datasets[0].data = values;
-            chartInstance.update();
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
