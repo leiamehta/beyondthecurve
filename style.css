@@ -1,0 +1,414 @@
+/* CSS for Beyond the Curve
+   Implements:
+   - Colors: Green, white, light yellow, gold accents 
+   - Look/Feel: Duolingo-like (soft, cartoony, gamified) 
+   - Modes: Light/Dark 
+   - Responsive: Mobile-first, with bottom nav [cite: 204] and desktop sidebar [cite: 8, 203]
+*/
+
+/* --- 1. Root Variables (Colors & Themes) --- */
+:root {
+    /* Light Mode Palette  */
+    --color-primary: #28a745; /* Green */
+    --color-primary-light: #d4edda;
+    --color-secondary: #ffc107; /* Gold Accent */
+    --color-accent: #f8f9fa; /* Light Yellow/White */
+    --color-background: #ffffff; /* White */
+    --color-text: #212529;
+    --color-border: #dee2e6;
+    --shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+    /* Duolingo-style */
+    --font-family: 'Arial', sans-serif; /* A real app would use a friendlier font */
+    --border-radius: 12px;
+}
+
+.dark-mode {
+    /* Dark Mode Palette  */
+    --color-primary: #28a745;
+    --color-primary-light: #343a40;
+    --color-secondary: #ffc107;
+    --color-accent: #2c2c2c;
+    --color-background: #1a1a1a;
+    --color-text: #f8f9fa;
+    --color-border: #444;
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* --- 2. General Setup --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+button {
+    cursor: pointer;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: transform 0.2s, background-color 0.2s;
+}
+button:hover {
+    transform: scale(1.03);
+    background-color: #218838;
+}
+
+.card {
+    background-color: var(--color-accent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+.card h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+input[type="number"],
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+/* --- 3. Login Screen [cite: 8] --- */
+#login-screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+.login-container {
+    padding: 20px;
+}
+.login-container h1 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+#login-button {
+    background-color: #4285F4;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+#login-button:hover {
+    background-color: #357ae8;
+}
+
+/* --- 4. App Shell Layout (Mobile-first) --- */
+#app-shell.active {
+    display: grid;
+    /* Mobile: content on top, nav on bottom */
+    grid-template-rows: 1fr auto;
+    grid-template-areas: 
+        "main"
+        "bottom-nav";
+    height: 100vh;
+}
+main {
+    grid-area: main;
+    overflow-y: auto;
+    padding: 20px;
+    padding-bottom: 80px; /* Space for bottom nav */
+}
+.sidebar { display: none; } /* Hide sidebar on mobile */
+
+.bottom-nav {
+    grid-area: bottom-nav;
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--color-accent);
+    border-top: 1px solid var(--color-border);
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.bottom-nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    opacity: 0.7;
+}
+.bottom-nav a.active {
+    color: var(--color-primary);
+    opacity: 1;
+}
+
+/* --- 5. App Header & Gamification  --- */
+main header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.gamification-widgets {
+    display: flex;
+    gap: 10px;
+}
+.widget {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    background-color: var(--color-accent);
+    border: 1px solid var(--color-border);
+}
+#streak-widget {
+    color: #ff9800; /* Duolingo streak orange */
+}
+#points-widget {
+    color: var(--color-secondary); /* Gold accent [cite: 8] */
+}
+
+/* --- 6. App Pages --- */
+.app-page { display: none; }
+.app-page.active { display: block; }
+
+/* Trackers Page [cite: 12] */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.tab-link {
+    background-color: transparent;
+    color: var(--color-text);
+    opacity: 0.7;
+    padding: 10px;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+}
+.tab-link.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    opacity: 1;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.reward-feedback {
+    color: var(--color-primary);
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Tracker Visualizations [cite: 17, 22, 28, 202] */
+.chart-container {
+    width: 100%;
+    height: 150px;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin-top: 20px;
+}
+.bar-chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 100%;
+}
+.bar {
+    width: 10%;
+    background-color: var(--color-primary);
+    border-radius: 4px 4px 0 0;
+}
+
+/* Resources Page [cite: 45] */
+#resources ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+#resources li {
+    margin-bottom: 10px;
+}
+#resources a {
+    text-decoration: none;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+#resources h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 5px;
+}
+
+/* Journal Page [cite: 34] */
+#journal-entry {
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+/* --- 7. "Spiney" Chatbot FAB [cite: 36] --- */
+#spiney-fab {
+    position: fixed;
+    bottom: 80px; /* Above bottom nav */
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+    color: #333;
+    font-size: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+#spiney-chat-modal {
+    position: fixed;
+    bottom: 150px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: var(--color-accent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+}
+#spiney-chat-modal.hidden { display: none; }
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--color-primary-light);
+    border-bottom: 1px solid var(--color-border);
+}
+.chat-header h4 { color: var(--color-primary); }
+#close-chat {
+    background: none;
+    color: var(--color-text);
+    padding: 0;
+}
+.chat-body {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+.chat-message {
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    max-width: 80%;
+}
+.chat-message.spiney {
+    background-color: var(--color-background);
+    align-self: flex-start;
+}
+.chat-message.user {
+    background-color: var(--color-primary);
+    color: white;
+    align-self: flex-end;
+    margin-left: 20%;
+}
+.chat-input {
+    display: flex;
+    border-top: 1px solid var(--color-border);
+    padding: 10px;
+}
+.chat-input input {
+    flex-grow: 1;
+    margin: 0;
+}
+.chat-input button {
+    background: none;
+    color: var(--color-primary);
+    padding: 0 10px;
+}
+
+
+/* --- 8. Desktop Responsive (Sidebar) [cite: 8, 203] --- */
+@media (min-width: 769px) {
+    #app-shell.active {
+        /* Desktop: sidebar on left, content on right */
+        grid-template-rows: 1fr;
+        grid-template-columns: 240px 1fr;
+        grid-template-areas: "sidebar main";
+        height: 100vh;
+    }
+    
+    .sidebar {
+        grid-area: sidebar;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--color-accent);
+        border-right: 1px solid var(--color-border);
+        padding: 20px;
+    }
+    .sidebar-header {
+        margin-bottom: 30px;
+    }
+    .sidebar ul {
+        list-style-type: none;
+        flex-grow: 1;
+    }
+    .sidebar li {
+        margin-bottom: 10px;
+    }
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-decoration: none;
+        color: var(--color-text);
+        padding: 12px;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        opacity: 0.8;
+    }
+    .sidebar a:hover {
+        background-color: var(--color-primary-light);
+    }
+    .sidebar a.active {
+        background-color: var(--color-primary);
+        color: white;
+        opacity: 1;
+    }
+
+    .bottom-nav { display: none; } /* Hide bottom nav on desktop */
+
+    main {
+        padding: 30px;
+        padding-bottom: 30px;
+    }
+
+    #spiney-fab {
+        bottom: 30px;
+        right: 30px;
+    }
+    #spiney-chat-modal {
+        bottom: 100px;
+        right: 30px;
+    }
+}
