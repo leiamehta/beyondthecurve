@@ -149,12 +149,14 @@
                     </svg>
                     Journal
                 </button>
+                <button data-page="infographic" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <!-- ICON: Infographic -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Infographic
+                </button>
                 <button data-page="screener" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
                     <!-- ICON: Screener -->
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/>
-                        <path d="M20.9 21.5C20.9 17.9 16.9 15 12 15s-8.9 2.9-8.9 6.5"/>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.5a1.5 1.5 0 013 0V12a1.5 1.5 0 01-3 0V9.5zM6.5 6a1.5 1.5 0 00-3 0V7a1.5 1.5 0 003 0V6zM21 9.5a1.5 1.5 0 00-3 0V12a1.5 1.5 0 003 0V9.5zM17.5 6a1.5 1.5 0 013 0V7a1.5 1.5 0 01-3 0V6zM12 14a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-3 0v-1.5A1.5 1.5 0 0112 14zM12 6.5a1.5 1.5 0 00-1.5 1.5v1.5a1.5 1.5 0 003 0V8A1.5 1.5 0 0012 6.5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 19.5a1.5 1.5 0 013 0v1a1.5 1.5 0 01-3 0v-1zM9.5 19.5a1.5 1.5 0 00-3 0v1a1.5 1.5 0 003 0v-1z"></g></svg>
                     Screener
                 </button>
                  <button data-page="community" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -238,16 +240,28 @@
                         <div class="relative z-10">
                             <h2 class="text-3xl font-bold mb-2">Welcome to Your Scoliosis Journey Companion</h2>
                             <p class="text-lg">You're not alone. We're here to empower you with tools, community, and resources to build confidence and resilience. Let's navigate your Scoliosis journey together.</p>
-                            <button data-page="infographic" class="nav-link mt-4 inline-flex items-center gap-2 bg-green-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors">
-                                <!-- ICON: Infographic/Learn -->
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                Scoliosis Infographic
-                            </button>
                         </div>
                         <svg class="absolute -bottom-10 -right-10 text-green-200 dark:text-green-800 w-48 h-48 opacity-30" fill="currentColor" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 5C152.467 5 195 47.5329 195 100C195 152.467 152.467 195 100 195C47.5329 195 5 152.467 5 100C5 47.5329 47.5329 5 100 5Z" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" transform="rotate(30 100 100)"/>
                         </svg>
                     </div>
+
+                    <!-- Infographic Link -->
+                    <a href="#" data-page="infographic" class="nav-link mt-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row items-center gap-4 hover:shadow-lg dark:hover:shadow-green-900 transition-shadow">
+                        <div class="flex-shrink-0">
+                            <!-- ICON: Infographic/Learn -->
+                            <svg class="w-12 h-12 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <div class="flex-grow text-center md:text-left">
+                            <h3 class="text-xl font-bold text-green-700 dark:text-green-400">New to Scoliosis?</h3>
+                            <p class="mt-1">Check out this helpful infographic for a quick guide to understanding scoliosis.</p>
+                        </div>
+                        <div class="flex-shrink-0 mt-4 md:mt-0">
+                            <div class="inline-block bg-green-600 text-white px-5 py-3 rounded-lg font-semibold transition-colors">
+                                View Infographic
+                            </div>
+                        </div>
+                    </a>
 
                     <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div data-page="tracker" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
@@ -300,19 +314,6 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Reflection Journal</h3>
                             </div>
                             <p class="mt-4 flex-grow">A private space to write, with data saved securely to your Google Drive.</p>
-                        </div>
-                        <div data-page="screener" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
-                            <div class="flex items-center gap-4">
-                                <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <!-- ICON: Screener Card -->
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/>
-                                        <path d="M20.9 21.5C20.9 17.9 16.9 15 12 15s-8.9 2.9-8.9 6.5"/>
-                                    </svg>
-                                </div>
-                                <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Scoliosis Screener</h3>
-                            </div>
-                            <p class="mt-4 flex-grow">Use this guided tool to check for asymmetry. (Not a diagnosis)</p>
                         </div>
                         <div data-page="resources" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
@@ -376,6 +377,7 @@
                                         <li><a href="https://www.youtube.com/watch?v=JicoSIe2JQI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spine Anatomy in under 1 minute</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=Vqy1VB2CuaE" target="_blank" rel="noopener noreferrer" class="hover:underline">What is Scoliosis (In under 1 Minute)</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=4blk8rrfJPw" target="_blank" rel="noopener noreferrer" class="hover:underline">How to Detect Scoliosis</a></li>
+                                        <li><a href="https://www.youtube.com/watch?v=s3iKfogVUyM" target="_blank" rel="noopener noreferrer" class="hover:underline">General info on Scoliosis</a></li>
                                     </ul>
                                 </div>
                                 <div>
@@ -388,7 +390,7 @@
                                     <h4 class="text-lg font-semibold mb-2">Treatment Options</h4>
                                     <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
                                         <li><a href="https://www.youtube.com/watch?v=_nLXf5jEn5k&t=101s" target="_blank" rel="noopener noreferrer" class="hover:underline">About Bracing</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=JCDEc2uYwxA&t=18s" target="_blank" rel="noopener noreferrer" class="hover:underline">About Scoliosis Surgery</a></li>
+                                        <li><a href="https://www.youtube.com/watch?v=JCDEc2uYwxA&t=18s" target="_blank" rel="noopener noreferrer" class="hover:underline">Scoliosis Surgery as a treatment option</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=OX1vhVSzMiI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion v/s VBT</a></li>
                                         <li><a href="https://www.youtube.com/watch?v=G1ynUYSqLsU" target="_blank" rel="noopener noreferrer" class="hover:underline">Hybrid Fusion</a></li>
                                     </ul>
@@ -670,25 +672,6 @@
                     </div>
                 </div>
 
-                <!-- Screener Page -->
-                <div id="screener-page" class="page flex flex-col">
-                    <div class="flex items-center justify-center gap-3 mb-6">
-                        <!-- ICON: Screener Header -->
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/>
-                            <path d="M20.9 21.5C20.9 17.9 16.9 15 12 15s-8.9 2.9-8.9 6.5"/>
-                        </svg>
-                        <h2 class="text-3xl font-bold">Scoliosis Screener</h2>
-                    </div>
-                    
-                    <div class="bg-yellow-100 border-l-4 border-gold-500 text-yellow-800 dark:bg-gray-800 dark:text-yellow-100 dark:border-gold-500 p-4 rounded-lg shadow-md mb-6">
-                        <h3 class="font-bold text-lg">Medical Disclaimer</h3>
-                        <p class="mt-1">This tool is for informational purposes only and is **not a substitute for a medical diagnosis**. Please consult a qualified healthcare professional for any health concerns.</p>
-                    </div>
-
-                    <iframe class="flex-grow w-full h-full min-h-[70vh] border-0 rounded-lg shadow-lg" src="https://leiamehta.github.io/beyondthecurve/scolioscreen.html"></iframe>
-                </div>
-
                 <!-- Community Hub Page (Placeholder) -->
                 <div id="community-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
@@ -710,15 +693,31 @@
                     </div>
                 </div>
 
-                <!-- NEW INFOGRAPHIC PAGE -->
-                <div id="infographic-page" class="page flex flex-col">
+                <!-- Scoliosis Screener Page -->
+                <div id="screener-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
-                        <!-- ICON: Infographic/Learn -->
+                        <!-- ICON: Screener Header -->
+                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.5a1.5 1.5 0 013 0V12a1.5 1.5 0 01-3 0V9.5zM6.5 6a1.5 1.5 0 00-3 0V7a1.5 1.5 0 003 0V6zM21 9.5a1.5 1.5 0 00-3 0V12a1.5 1.5 0 003 0V9.5zM17.5 6a1.5 1.5 0 013 0V7a1.5 1.5 0 01-3 0V6zM12 14a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-3 0v-1.5A1.5 1.5 0 0112 14zM12 6.5a1.5 1.5 0 00-1.5 1.5v1.5a1.5 1.5 0 003 0V8A1.5 1.5 0 0012 6.5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 19.5a1.5 1.5 0 013 0v1a1.5 1.5 0 01-3 0v-1zM9.5 19.5a1.5 1.5 0 00-3 0v1a1.5 1.5 0 003 0v-1z"></g></svg>
+                        <h2 class="text-3xl font-bold">Scoliosis Screener</h2>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center">
+                        <h3 class="text-2xl font-bold text-gold-500 dark:text-gold-400 mb-4">AI Screener Coming Soon!</h3>
+                        <p class="text-lg text-gray-600 dark:text-gray-300">
+                            We're working on an AI-powered tool to help you visualize and track spinal asymmetry over time.
+                        </p>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">For now, please consult your doctor for any screening or diagnosis.</p>
+                    </div>
+                </div>
+                
+                <!-- Infographic Page -->
+                <div id="infographic-page" class="page">
+                    <div class="flex items-center justify-center gap-3 mb-6">
+                        <!-- ICON: Infographic Header -->
                         <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <h2 class="text-3xl font-bold">Scoliosis Infographic</h2>
                     </div>
-                    <div class="bg-white dark:bg-gray-800 p-2 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 flex-grow">
-                        <iframe class="w-full h-full min-h-[75vh] border-0 rounded-lg" src="https://leiamehta.github.io/beyondthecurve/scoliosis_infographic.html"></iframe>
+                    <div class="w-full h-[80vh] bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <iframe src="scoliosis_infographic.html" class="w-full h-full" title="Scoliosis Infographic"></iframe>
                     </div>
                 </div>
 
@@ -1178,15 +1177,6 @@
             updateGrowthChart() { const ctx = document.getElementById('growth-chart').getContext('2d'); const sortedDates = Object.keys(this.data.growthData).sort((a, b) => new Date(a) - new Date(b)); const labels = sortedDates.map(date => new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })); const heightData = sortedDates.map(date => this.data.growthData[date].height); const weightData = sortedDates.map(date => this.data.growthData[date].weight); if (this.growthChart) { this.growthChart.destroy(); } this.growthChart = new Chart(ctx, { type: 'line', data: { labels: labels, datasets: [ { label: 'Height (cm)', data: heightData, borderColor: 'rgba(22, 163, 74, 1)', backgroundColor: 'rgba(22, 163, 74, 0.1)', fill: true, yAxisID: 'yHeight', spanGaps: true, }, { label: 'Weight (kg)', data: weightData, borderColor: 'rgba(234, 179, 8, 1)', backgroundColor: 'rgba(234, 179, 8, 0.1)', fill: true, yAxisID: 'yWeight', spanGaps: true, } ] }, options: { scales: { yHeight: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Height (cm)' } }, yWeight: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Weight (kg)' }, grid: { drawOnChartArea: false, } } } } }); },
 
 
-            // --- Screener Methods ---
-            async handleScreenerSubmit(e) {
-                e.preventDefault();
-                // This function is no longer needed for data saving
-            },
-            loadScreenerData() {
-                // No data to load for iframe
-            },
-            
             // --- Journal Methods ---
             async handleJournalSubmit(e) { e.preventDefault(); const text = this.journalEntry.value.trim(); if (text === '') return; const newEntry = { id: Date.now(), date: new Date().toISOString(), text: text }; this.data.journalData.unshift(newEntry); await this.saveDataToDrive(); this.renderJournalEntries(); this.journalForm.reset(); },
             loadJournalData() { this.renderJournalEntries(); },
