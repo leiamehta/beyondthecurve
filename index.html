@@ -82,7 +82,34 @@
         .shadow-t-lg {
             box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
         }
+        .achievement-card {
+            filter: grayscale(100%);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        .achievement-card.unlocked {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            animation: slideIn 0.3s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-light-green text-dark-text">
 
@@ -158,29 +185,71 @@
                 </section>
 
                 <!-- Trackers Section -->
-                <section id="trackers" class="hidden space-y-6">
+                <section id="trackers" class="hidden space-y-8">
+                    <!-- Brace Wear Tracker -->
                     <div class="card p-6">
-                        <h2 class="text-2xl font-bold text-primary-green mb-4">Brace Wear Tracker</h2>
-                        <p class="text-center text-gray-500">Feature coming soon! This will help you log your daily brace hours.</p>
-                         <!-- Placeholder for graph -->
-                        <div class="bg-gray-200 h-64 rounded-lg mt-4 flex items-center justify-center">
-                            <i class="fas fa-chart-bar text-4xl text-gray-400"></i>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold text-primary-green">Brace Wear Tracker</h2>
+                            <div class="text-right">
+                                <p class="font-bold text-lg text-accent-gold">🔥 <span id="brace-streak">0</span> Day Streak</p>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6 items-center">
+                            <div>
+                                <label for="brace-hours" class="block text-sm font-medium text-gray-700">Hours worn today:</label>
+                                <div class="flex items-center mt-1">
+                                    <input type="number" id="brace-hours" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green" placeholder="e.g., 18">
+                                    <button onclick="addTrackerData('brace')" class="ml-3 bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">Log</button>
+                                </div>
+                            </div>
+                            <div class="w-full h-48 md:h-full">
+                                <canvas id="braceChart"></canvas>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Physiotherapy Tracker -->
                      <div class="card p-6">
-                        <h2 class="text-2xl font-bold text-primary-green mb-4">Physiotherapy Tracker</h2>
-                        <p class="text-center text-gray-500">Feature coming soon! Keep a log of your exercises and sessions.</p>
-                         <!-- Placeholder for graph -->
-                         <div class="bg-gray-200 h-64 rounded-lg mt-4 flex items-center justify-center">
-                             <i class="fas fa-running text-4xl text-gray-400"></i>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold text-primary-green">Physiotherapy Tracker</h2>
+                            <div class="text-right">
+                                <p class="font-bold text-lg text-accent-gold">🔥 <span id="physio-streak">0</span> Day Streak</p>
+                            </div>
                         </div>
+                         <div class="grid md:grid-cols-2 gap-6 items-center">
+                             <div>
+                                 <label for="physio-minutes" class="block text-sm font-medium text-gray-700">Minutes of exercise today:</label>
+                                 <div class="flex items-center mt-1">
+                                     <input type="number" id="physio-minutes" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green" placeholder="e.g., 30">
+                                     <button onclick="addTrackerData('physio')" class="ml-3 bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">Log</button>
+                                 </div>
+                             </div>
+                             <div class="w-full h-48 md:h-full">
+                                 <canvas id="physioChart"></canvas>
+                             </div>
+                         </div>
                     </div>
+                    
+                    <!-- Achievements Section -->
                     <div class="card p-6">
-                        <h2 class="text-2xl font-bold text-primary-green mb-4">Growth Tracker</h2>
-                        <p class="text-center text-gray-500">Feature coming soon! Monitor your height and growth spurts.</p>
-                         <!-- Placeholder for graph -->
-                        <div class="bg-gray-200 h-64 rounded-lg mt-4 flex items-center justify-center">
-                           <i class="fas fa-ruler-vertical text-4xl text-gray-400"></i>
+                        <h2 class="text-2xl font-bold text-primary-green mb-4">My Achievements</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 text-center">
+                            <div id="ach-brace-7" class="achievement-card p-4 rounded-lg bg-light-yellow">
+                                <div class="text-4xl">🏆</div>
+                                <p class="font-semibold mt-2">7-Day Brace Streak</p>
+                            </div>
+                            <div id="ach-physio-7" class="achievement-card p-4 rounded-lg bg-light-yellow">
+                                <div class="text-4xl">💪</div>
+                                <p class="font-semibold mt-2">7-Day PT Streak</p>
+                            </div>
+                             <div id="ach-brace-30" class="achievement-card p-4 rounded-lg bg-light-yellow">
+                                <div class="text-4xl">🏅</div>
+                                <p class="font-semibold mt-2">30-Day Brace Streak</p>
+                            </div>
+                            <div id="ach-physio-30" class="achievement-card p-4 rounded-lg bg-light-yellow">
+                                <div class="text-4xl">🌟</div>
+                                <p class="font-semibold mt-2">30-Day PT Streak</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -284,6 +353,16 @@
         </div>
     </div>
 
+    <!-- Achievement Unlocked Modal -->
+    <div id="achievementModal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-lg max-w-sm mx-auto mt-20 text-center relative shadow-xl">
+            <span class="absolute top-2 right-4 text-2xl cursor-pointer text-gray-500" onclick="closeModal()">&times;</span>
+            <div id="modal-icon" class="text-6xl mb-4"></div>
+            <h2 class="text-2xl font-bold text-primary-green mb-2">Achievement Unlocked!</h2>
+            <p id="modal-text" class="text-lg text-dark-text"></p>
+        </div>
+    </div>
+
     <!-- Bottom Navigation Bar for Mobile -->
     <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-t-lg z-30">
         <div class="flex justify-around w-full">
@@ -311,34 +390,47 @@
     </nav>
 
     <script>
+        // --- STATE MANAGEMENT ---
+        let trackerData = {
+            brace: [], // { date: 'YYYY-MM-DD', value: hours }
+            physio: [] // { date: 'YYYY-MM-DD', value: minutes }
+        };
+
+        let achievements = {
+            'brace-7': false,
+            'physio-7': false,
+            'brace-30': false,
+            'physio-30': false
+        };
+
+        let charts = {};
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            initializeCharts();
+            updateAllUI();
+        });
+
+        function loadData() {
+            const savedData = localStorage.getItem('beyondTheCurveTrackerData');
+            if (savedData) {
+                trackerData = JSON.parse(savedData);
+            }
+            const savedAchievements = localStorage.getItem('beyondTheCurveAchievements');
+            if (savedAchievements) {
+                achievements = JSON.parse(savedAchievements);
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('beyondTheCurveTrackerData', JSON.stringify(trackerData));
+            localStorage.setItem('beyondTheCurveAchievements', JSON.stringify(achievements));
+        }
+        
+        // --- UI & NAVIGATION ---
         function showSection(sectionId, clickedElement) {
-            // Hide all sections
-            document.querySelectorAll('main section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            // Show the selected section
-            const sectionToShow = document.getElementById(sectionId);
-            if(sectionToShow) {
-                sectionToShow.classList.remove('hidden');
-            }
-
-            // Define target href for syncing navs
-            const targetHref = `#${sectionId}`;
-
-            // Update active link in sidebar
-            document.querySelectorAll('.sidebar-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            const sidebarLink = document.querySelector(`.sidebar-link[href='${targetHref}']`);
-            if (sidebarLink) {
-                sidebarLink.classList.add('active');
-            }
-
-            // Update active link in bottom nav
-            document.querySelectorAll('.bottom-nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            const bottomNavLink = document.querySelector(`.bottom-nav-link[href='${targetHref}']`);
+// ... existing code ... -->
             if (bottomNavLink) {
                 bottomNavLink.classList.add('active');
             }
@@ -348,7 +440,163 @@
             const title = clickedElement.querySelector('span').textContent;
             document.getElementById('section-title').textContent = title;
         }
+
+        function updateAllUI() {
+            updateStreaks();
+            updateCharts();
+            renderAchievements();
+        }
+
+        // --- TRACKER LOGIC ---
+        function addTrackerData(type) {
+            const input = document.getElementById(`${type}-hours`) || document.getElementById(`${type}-minutes`);
+            const value = parseFloat(input.value);
+
+            if (!value || value <= 0) {
+                alert("Please enter a valid positive number.");
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Check if there's already an entry for today and update it, otherwise add new
+            const todayEntryIndex = trackerData[type].findIndex(entry => entry.date === today);
+            if(todayEntryIndex > -1) {
+                trackerData[type][todayEntryIndex].value = value;
+            } else {
+                 trackerData[type].push({ date: today, value: value });
+            }
+
+            input.value = '';
+            saveData();
+            updateAllUI();
+            checkAchievements();
+        }
+
+        function calculateStreak(data) {
+            if (!data || data.length === 0) return 0;
+            
+            const dates = new Set(data.map(entry => entry.date));
+            let streak = 0;
+            let checkDate = new Date();
+
+            // Check for today
+            if (dates.has(checkDate.toISOString().split('T')[0])) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+            } else {
+                // If no entry for today, check for yesterday to start the streak
+                 checkDate.setDate(checkDate.getDate() - 1);
+                 if(!dates.has(checkDate.toISOString().split('T')[0])) {
+                     return 0; // No entry today or yesterday
+                 }
+                 streak++;
+                 checkDate.setDate(checkDate.getDate() - 1);
+            }
+            
+            while (dates.has(checkDate.toISOString().split('T')[0])) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+            }
+
+            return streak;
+        }
+
+        function updateStreaks() {
+            document.getElementById('brace-streak').textContent = calculateStreak(trackerData.brace);
+            document.getElementById('physio-streak').textContent = calculateStreak(trackerData.physio);
+        }
+
+        // --- ACHIEVEMENTS ---
+        const achievementMeta = {
+            'brace-7': { name: "7-Day Brace Streak", icon: "🏆"},
+            'physio-7': { name: "7-Day PT Streak", icon: "💪"},
+            'brace-30': { name: "30-Day Brace Streak", icon: "🏅"},
+            'physio-30': { name: "30-Day PT Streak", icon: "🌟"}
+        };
+
+        function checkAchievements() {
+            const braceStreak = calculateStreak(trackerData.brace);
+            const physioStreak = calculateStreak(trackerData.physio);
+
+            const milestones = {
+                'brace-7': braceStreak >= 7,
+                'physio-7': physioStreak >= 7,
+                'brace-30': braceStreak >= 30,
+                'physio-30': physioStreak >= 30
+            };
+
+            for (const key in milestones) {
+                if (milestones[key] && !achievements[key]) {
+                    achievements[key] = true;
+                    showAchievementModal(key);
+                }
+            }
+            saveData();
+            renderAchievements();
+        }
         
+        function renderAchievements() {
+            for (const key in achievements) {
+                const element = document.getElementById(`ach-${key}`);
+                if (achievements[key] && element) {
+                    element.classList.add('unlocked');
+                }
+            }
+        }
+
+        function showAchievementModal(key) {
+            const modal = document.getElementById('achievementModal');
+            document.getElementById('modal-icon').textContent = achievementMeta[key].icon;
+            document.getElementById('modal-text').textContent = `You've unlocked the "${achievementMeta[key].name}" achievement! Keep up the great work!`;
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+        }
+
+        function closeModal() {
+            document.getElementById('achievementModal').style.display = 'none';
+        }
+        
+        // --- CHARTS ---
+        function initializeCharts() {
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#e0e0e0' } },
+                    x: { grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            };
+
+            charts.brace = new Chart(document.getElementById('braceChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ label: 'Hours', data: [], backgroundColor: '#FFD700', borderRadius: 4 }] },
+                options: commonOptions
+            });
+
+            charts.physio = new Chart(document.getElementById('physioChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ label: 'Minutes', data: [], backgroundColor: '#4CAF50', borderRadius: 4 }] },
+                options: commonOptions
+            });
+        }
+        
+        function updateCharts() {
+            updateSingleChart('brace', charts.brace);
+            updateSingleChart('physio', charts.physio);
+        }
+
+        function updateSingleChart(type, chartInstance) {
+            const data = trackerData[type].slice(-7); // Get last 7 entries
+            const labels = data.map(d => new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            const values = data.map(d => d.value);
+
+            chartInstance.data.labels = labels;
+            chartInstance.data.datasets[0].data = values;
+            chartInstance.update();
+        }
     </script>
 </body>
 </html>
