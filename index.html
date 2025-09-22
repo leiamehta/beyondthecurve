@@ -1,469 +1,317 @@
-import React, { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, doc, addDoc, onSnapshot, query, serverTimestamp } from 'firebase/firestore';
-
-// --- Firebase Configuration & Initialization ---
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-// The main App component
-const App = () => {
-  // State for Firebase and authentication
-  const [db, setDb] = useState(null);
-  const [auth, setAuth] = useState(null);
-  const [userId, setUserId] = useState(null);
-
-  // State for app UI and data
-  const [currentPage, setCurrentPage] = useState('Home');
-  const [braceData, setBraceData] = useState([]);
-  const [physioData, setPhysioData] = useState([]);
-  const [journalEntries, setJournalEntries] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [messageInput, setMessageInput] = useState('');
-  const [journalInput, setJournalInput] = useState('');
-  const [braceTime, setBraceTime] = useState('');
-  const [physioTime, setPhysioTime] = useState('');
-  const [streakCount, setStreakCount] = useState(0);
-
-  // --- Initialize Firebase & Auth ---
-  useEffect(() => {
-    try {
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-      setDb(db);
-      setAuth(auth);
-
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          setUserId(user.uid);
-          // Load data for the user
-          loadData(user.uid, db);
-        } else {
-          // Sign in with custom token if available, otherwise anonymously
-          if (initialAuthToken) {
-            await signInWithCustomToken(auth, initialAuthToken);
-          } else {
-            await signInAnonymously(auth);
-            setUserId(auth.currentUser?.uid || crypto.randomUUID());
-            loadData(auth.currentUser?.uid, db);
-          }
-        }
-      });
-    } catch (e) {
-      console.error("Error initializing Firebase:", e);
-    }
-  }, []);
-
-  // --- Load Data from Firestore ---
-  const loadData = (uid, firestoreDb) => {
-    if (!uid || !firestoreDb) return;
-
-    // Brace Tracker
-    const braceQuery = query(collection(firestoreDb, `/artifacts/${appId}/users/${uid}/brace_data`));
-    onSnapshot(braceQuery, (snapshot) => {
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setBraceData(data);
-      // Simple streak logic: check if there's an entry today
-      const today = new Date().toISOString().slice(0, 10);
-      const streak = data.some(entry => entry.date === today) ? 1 : 0;
-      setStreakCount(streak);
-    });
-
-    // Physio Tracker
-    const physioQuery = query(collection(firestoreDb, `/artifacts/${appId}/users/${uid}/physio_data`));
-    onSnapshot(physioQuery, (snapshot) => {
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setPhysioData(data);
-    });
-
-    // Journal
-    const journalQuery = query(collection(firestoreDb, `/artifacts/${appId}/users/${uid}/journal_entries`));
-    onSnapshot(journalQuery, (snapshot) => {
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setJournalEntries(data.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis()));
-    });
-
-    // Community Chat
-    const chatQuery = query(collection(firestoreDb, `/artifacts/${appId}/public/data/community_chat`));
-    onSnapshot(chatQuery, (snapshot) => {
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setMessages(data.sort((a, b) => a.timestamp.toMillis() - b.timestamp.toMillis()));
-    });
-  };
-
-  // --- Data Management Functions ---
-  const addBraceEntry = async () => {
-    if (!db || !userId || !braceTime) return;
-    await addDoc(collection(db, `/artifacts/${appId}/users/${userId}/brace_data`), {
-      date: new Date().toISOString().slice(0, 10),
-      duration: parseInt(braceTime, 10),
-      timestamp: serverTimestamp(),
-    });
-    setBraceTime('');
-  };
-
-  const addPhysioEntry = async () => {
-    if (!db || !userId || !physioTime) return;
-    await addDoc(collection(db, `/artifacts/${appId}/users/${userId}/physio_data`), {
-      date: new Date().toISOString().slice(0, 10),
-      duration: parseInt(physioTime, 10),
-      timestamp: serverTimestamp(),
-    });
-    setPhysioTime('');
-  };
-
-  const addJournalEntry = async () => {
-    if (!db || !userId || !journalInput) return;
-    await addDoc(collection(db, `/artifacts/${appId}/users/${userId}/journal_entries`), {
-      text: journalInput,
-      timestamp: serverTimestamp(),
-    });
-    setJournalInput('');
-  };
-
-  const sendMessage = async () => {
-    if (!db || !userId || !messageInput) return;
-    await addDoc(collection(db, `/artifacts/${appId}/public/data/community_chat`), {
-      userId: userId,
-      text: messageInput,
-      timestamp: serverTimestamp(),
-    });
-    setMessageInput('');
-  };
-
-  // --- UI Components ---
-  const Sidebar = () => (
-    <div className="bg-green-700 text-white w-64 p-4 space-y-4 rounded-lg shadow-lg">
-      <div className="flex flex-col items-center p-4">
-        <h2 className="text-xl font-bold">Beyond the Curve</h2>
-        <div className="mt-2 text-sm text-center">User ID: <span className="font-mono break-words">{userId}</span></div>
-      </div>
-      <nav className="space-y-2">
-        {['Home', 'Brace Tracker', 'Physio Tracker', 'Journal', 'Resources', 'Community'].map(item => (
-          <button
-            key={item}
-            onClick={() => setCurrentPage(item)}
-            className={`w-full text-left px-4 py-2 rounded-lg transition-colors duration-200 ${currentPage === item ? 'bg-green-900' : 'hover:bg-green-600'}`}
-          >
-            {item}
-          </button>
-        ))}
-      </nav>
-      {/* Duolingo-like streak bar */}
-      <div className="bg-green-800 p-2 rounded-lg text-center mt-4">
-        <div className="flex items-center justify-center">
-          <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-          </svg>
-          <span className="font-bold">Daily Streak: {streakCount} 🔥</span>
-        </div>
-      </div>
-    </div>
-  );
-
-  const Home = () => (
-    <div className="p-8 bg-white rounded-lg shadow-xl">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome to Beyond the Curve</h1>
-      <p className="text-lg text-gray-600 mb-6">Your all-in-one digital companion for the scoliosis journey. </p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {/* Simple visual for trackers */}
-        <div className="bg-yellow-50 p-6 rounded-lg shadow-sm">
-          <h2 className="text-xl font-semibold text-yellow-800 mb-2">Brace Tracker Summary</h2>
-          <p className="text-sm text-yellow-600">Last entry: {braceData[0]?.duration || 0} hours</p>
-          <div className="h-4 bg-gray-200 rounded-full mt-2">
-            <div className="bg-yellow-500 h-4 rounded-full" style={{ width: `${Math.min(100, (braceData[0]?.duration / 20) * 100)}%` }}></div>
-          </div>
-          <p className="text-xs text-right text-gray-500 mt-1">Goal: 20 hours/day</p>
-        </div>
-
-        <div className="bg-green-50 p-6 rounded-lg shadow-sm">
-          <h2 className="text-xl font-semibold text-green-800 mb-2">Physio Tracker Summary</h2>
-          <p className="text-sm text-green-600">Total sessions: {physioData.length}</p>
-        </div>
-      </div>
-
-      <div className="mt-8 space-y-4">
-        <h2 className="text-2xl font-bold text-gray-800">Your Journey, Your Way</h2>
-        <p className="text-gray-600">This platform is designed to help you with every step of your journey. Use the sidebar to explore features like:</p>
-        <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Personalized trackers for your bracing and physiotherapy</li>
-          <li>A private journal to document your feelings and progress</li>
-          <li>A supportive community to connect with others</li>
-          <li>A curated library of resources and information</li>
-        </ul>
-        <div className="bg-gray-100 p-6 rounded-lg shadow-inner mt-6 text-center">
-            <h3 className="text-xl font-semibold mb-2 text-gray-700">AI Features (Coming Soon)</h3>
-            <p className="text-gray-600">We're working on an AI-powered screening app and a friendly AI companion named "Spiney" to provide real-time guidance and support. Stay tuned!</p>
-        </div>
-      </div>
-    </div>
-  );
-
-  const BraceTracker = () => (
-    <div className="p-8 bg-white rounded-lg shadow-xl">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">Brace Tracker</h1>
-      <p className="text-lg text-gray-600 mb-6">Log your brace wearing time to stay on track with your treatment. </p>
-      
-      <div className="space-y-4 mb-8">
-        <input
-          type="number"
-          placeholder="Hours worn today"
-          value={braceTime}
-          onChange={(e) => setBraceTime(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <button
-          onClick={addBraceEntry}
-          className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200"
-        >
-          Add Entry
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-gray-800">My Bracing Log</h2>
-        {braceData.length === 0 ? (
-          <p className="text-gray-500">No brace data logged yet. Add your first entry!</p>
-        ) : (
-          <ul className="space-y-2">
-            {braceData.map((entry) => (
-              <li key={entry.id} className="bg-gray-100 p-4 rounded-lg shadow-sm flex justify-between items-center">
-                <span>{entry.date}</span>
-                <span className="font-semibold">{entry.duration} hours</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
-  );
-
-  const PhysioTracker = () => (
-    <div className="p-8 bg-white rounded-lg shadow-xl">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">Physiotherapy Tracker</h1>
-      <p className="text-lg text-gray-600 mb-6">Keep a record of your physiotherapy sessions. </p>
-      
-      <div className="space-y-4 mb-8">
-        <input
-          type="number"
-          placeholder="Minutes of exercise today"
-          value={physioTime}
-          onChange={(e) => setPhysioTime(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <button
-          onClick={addPhysioEntry}
-          className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200"
-        >
-          Log Session
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-gray-800">My Physio Log</h2>
-        {physioData.length === 0 ? (
-          <p className="text-gray-500">No physiotherapy data logged yet. Log your first session!</p>
-        ) : (
-          <ul className="space-y-2">
-            {physioData.map((entry) => (
-              <li key={entry.id} className="bg-gray-100 p-4 rounded-lg shadow-sm flex justify-between items-center">
-                <span>{entry.date}</span>
-                <span className="font-semibold">{entry.duration} minutes</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
-  );
-
-  const Journal = () => (
-    <div className="p-8 bg-white rounded-lg shadow-xl">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">My Journal</h1>
-      <p className="text-lg text-gray-600 mb-6">A private space to reflect on your journey, thoughts, and feelings. </p>
-
-      <div className="space-y-4 mb-8">
-        <textarea
-          placeholder="What's on your mind today?"
-          value={journalInput}
-          onChange={(e) => setJournalInput(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg h-32 focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
-        />
-        <button
-          onClick={addJournalEntry}
-          className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200"
-        >
-          Save Entry
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-gray-800">Past Entries</h2>
-        {journalEntries.length === 0 ? (
-          <p className="text-gray-500">Your journal is empty. Write your first entry!</p>
-        ) : (
-          <div className="space-y-4">
-            {journalEntries.map((entry) => (
-              <div key={entry.id} className="bg-gray-100 p-4 rounded-lg shadow-sm">
-                <p className="text-xs text-gray-500 mb-2">{entry.timestamp?.toDate().toLocaleString()}</p>
-                <p className="text-gray-700">{entry.text}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  const Resources = () => {
-    // Curated list of resources based on provided docs and search results
-    const resources = {
-      'Major Organizations': [
-        { name: 'Scoliosis Research Society (SRS)', url: 'https://www.srs.org' },
-        { name: 'National Scoliosis Foundation (NSF)', url: 'https://www.scoliosis.org' },
-        { name: 'Setting Scoliosis Straight', url: 'https://www.settingscoliosisstraight.org' },
-        { name: 'International Society on Scoliosis Orthopaedic and Rehabilitation Treatment (SOSORT)', url: 'http://www.sosort.org' },
-        { name: 'Curvy Girls Scoliosis Foundation', url: 'https://www.curvygirlsscoliosis.com' },
-      ],
-      'Medical Institutions': [
-        { name: 'Mayo Clinic', url: 'https://www.mayoclinic.org/diseases-conditions/scoliosis/diagnosis-treatment/drc-20350721' },
-        { name: 'Children\'s Hospital of Philadelphia', url: 'https://www.chop.edu/news/scoliosis-adolescents-best-chance-avoid-surgery-best-treatment-first-time' },
-        { name: 'Lurie Children\'s Hospital of Chicago', url: 'https://www.luriechildrens.org/en/specialties-conditions/scoliosis-program/' },
-      ],
-      'Specific Treatments & Methods': [
-        { name: 'Schroth Method', url: 'https://schrothmethod.com' },
-        { name: 'ScoliSMART', url: 'https://treatingscoliosis.com/blog/explore-emerging-scoliosis-treatments-now/' },
-        { name: 'Spinal Technology', url: 'https://spinaltech.com/resources/a-parents-guide-to-understanding-scoliosis' },
-        { name: 'Scolio-us', url: 'https://www.bracingforscoliosus.org' },
-        { name: 'Vertebral Body Tethering (VBT)', url: 'https://www.chop.edu/news/scoliosis-adolescents-best-chance-avoid-surgery-best-treatment-first-time' },
-      ],
-      'Support Groups & Communities': [
-        { name: 'Curvy Girls', url: 'https://www.curvygirlsscoliosis.com' },
-        { name: 'ScoliZooms', url: 'https://www.staging3.bracingforscoliosus.org/resources/#support-group' },
-        { name: 'Straight Talk Scoliosis Forum', url: 'https://scoliosis.org/forum' },
-        { name: 'ScoliConnect', url: 'https://scolibrace.com/support-group/' },
-        { name: 'ScoliBoys (Facebook Group)', url: 'https://www.facebook.com/groups/scoliboys' },
-        { name: 'Scoliosis Support & Education Group (Facebook)', url: 'https://facebook.com/groups/scoliosissupportgroup' },
-      ],
-      'General & Educational Videos': [
-        { name: 'What is Scoliosis (in under 1 Minute)', url: 'https://www.youtube.com/watch?v=Vqy1VB2CuaE' },
-        { name: 'Spine Anatomy in under 1 minute', url: 'https://www.youtube.com/watch?v=JicoSIe2JQI' },
-        { name: 'How to Detect Scoliosis', url: 'https://www.youtube.com/watch?v=4blk8rrfJPw' },
-        { name: '5 Scoliosis Rehab Exercises', url: 'https://www.youtube.com/watch?v=D-KM-WohSoU' },
-      ],
-    };
-
-    return (
-      <div className="p-8 bg-white rounded-lg shadow-xl">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">Resources</h1>
-        <p className="text-lg text-gray-600 mb-6">A curated list of reliable resources and information. </p>
-
-        {Object.keys(resources).map(category => (
-          <div key={category} className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">{category}</h2>
-            <ul className="space-y-2">
-              {resources[category].map(resource => (
-                <li key={resource.name} className="bg-gray-100 p-4 rounded-lg shadow-sm hover:bg-gray-200 transition-colors duration-200">
-                  <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-green-600 font-semibold hover:underline">
-                    {resource.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-        
-        {/* Placeholder for Surgeon Finder from SRS */}
-        <div className="mt-8 bg-green-50 p-6 rounded-lg shadow-inner">
-          <h2 className="text-2xl font-bold text-green-800 mb-2">Find a Surgeon</h2>
-          <p className="text-green-700">A direct link to the Scoliosis Research Society's specialist finder.</p>
-          <a href="https://www.srs.org/Patients/Find-a-Specialist" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200">
-            Search Now
-          </a>
-        </div>
-      </div>
-    );
-  };
-
-  const Community = () => (
-    <div className="p-8 bg-white rounded-lg shadow-xl flex flex-col h-full">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">Community Hub</h1>
-      <p className="text-lg text-gray-600 mb-6">Connect with others who understand your journey. </p>
-
-      <div className="flex-1 overflow-y-auto p-4 mb-4 bg-gray-50 rounded-lg shadow-inner space-y-4">
-        {messages.length === 0 ? (
-          <p className="text-center text-gray-500">Be the first to say something!</p>
-        ) : (
-          messages.map((msg, index) => (
-            <div key={index} className={`flex ${msg.userId === userId ? 'justify-end' : 'justify-start'}`}>
-              <div className={`p-3 rounded-lg max-w-xs ${msg.userId === userId ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}>
-                <div className="text-xs text-gray-700 mb-1 font-semibold">{msg.userId === userId ? 'You' : `User: ${msg.userId.substring(0, 8)}...`}</div>
-                <p>{msg.text}</p>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      <div className="flex space-x-2">
-        <input
-          type="text"
-          placeholder="Type your message..."
-          value={messageInput}
-          onChange={(e) => setMessageInput(e.target.value)}
-          onKeyPress={(e) => { if (e.key === 'Enter') sendMessage(); }}
-          className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <button
-          onClick={sendMessage}
-          className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200"
-        >
-          Send
-        </button>
-      </div>
-    </div>
-  );
-
-  // --- Main Render Function ---
-  const renderContent = () => {
-    switch (currentPage) {
-      case 'Home':
-        return <Home />;
-      case 'Brace Tracker':
-        return <BraceTracker />;
-      case 'Physio Tracker':
-        return <PhysioTracker />;
-      case 'Journal':
-        return <Journal />;
-      case 'Resources':
-        return <Resources />;
-      case 'Community':
-        return <Community />;
-      default:
-        return <Home />;
-    }
-  };
-
-  return (
-    <div className="bg-gray-50 font-sans flex min-h-screen p-8 antialiased">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond the Curve</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
         body {
-          font-family: 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-      `}</style>
-      <div className="flex-none">
-        <Sidebar />
-      </div>
-      <div className="flex-grow ml-8">
-        {renderContent()}
-      </div>
-    </div>
-  );
-};
+        :root {
+            --primary-green: #4CAF50;
+            --light-green: #C8E6C9;
+            --accent-gold: #FFD700;
+            --light-yellow: #FFF9C4;
+            --white: #FFFFFF;
+            --dark-text: #333333;
+        }
+        .bg-primary-green { background-color: var(--primary-green); }
+        .bg-light-green { background-color: var(--light-green); }
+        .bg-accent-gold { background-color: var(--accent-gold); }
+        .bg-light-yellow { background-color: var(--light-yellow); }
+        .text-primary-green { color: var(--primary-green); }
+        .text-accent-gold { color: var(--accent-gold); }
+        .text-dark-text { color: var(--dark-text); }
 
-export default App;
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .main-content {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .sidebar-link {
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: var(--accent-gold);
+            color: var(--dark-text);
+            border-radius: 8px;
+        }
+        .sidebar-link.active i {
+            color: var(--dark-text);
+        }
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .resource-link {
+            display: block;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            color: var(--dark-text);
+        }
+        .resource-link:hover {
+            background-color: var(--light-yellow);
+        }
+        .journal-entry {
+             background-color: #f9f9f9;
+             border-left: 4px solid var(--primary-green);
+             padding: 1rem;
+             margin-bottom: 1rem;
+             border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-light-green text-dark-text">
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-primary-green text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-20">
+            <a href="#" class="text-white flex items-center space-x-2 px-4">
+                <i class="fas fa-child text-2xl text-accent-gold"></i>
+                <span class="text-2xl font-extrabold">Beyond the Curve</span>
+            </a>
+
+            <nav>
+                <a href="#home" class="sidebar-link active flex items-center space-x-3 py-3 px-4" onclick="showSection('home', this)">
+                    <i class="fas fa-home text-accent-gold"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#trackers" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('trackers', this)">
+                    <i class="fas fa-chart-line text-accent-gold"></i>
+                    <span>Trackers</span>
+                </a>
+                <a href="#journal" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('journal', this)">
+                    <i class="fas fa-book-open text-accent-gold"></i>
+                    <span>Journal</span>
+                </a>
+                <a href="#community" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('community', this)">
+                    <i class="fas fa-users text-accent-gold"></i>
+                    <span>Community</span>
+                </a>
+                <a href="#resources" class="sidebar-link flex items-center space-x-3 py-3 px-4" onclick="showSection('resources', this)">
+                    <i class="fas fa-folder-open text-accent-gold"></i>
+                    <span>Resources</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div id="main-content" class="main-content flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow-md p-4 flex justify-between items-center">
+                 <button id="menu-button" class="md:hidden text-primary-green">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                <h1 id="section-title" class="text-2xl font-bold text-primary-green">Home</h1>
+                <div>
+                    <!-- Placeholder for login/profile -->
+                     <button class="bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">
+                        Login with Google
+                    </button>
+                </div>
+            </header>
+            
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-light-green p-6">
+                <!-- Home Section -->
+                <section id="home" class="space-y-6">
+                     <div class="card p-6 text-center">
+                        <h2 class="text-3xl font-bold text-primary-green mb-2">Welcome to Beyond the Curve!</h2>
+                        <p class="text-lg">Your all-in-one digital companion for the scoliosis journey. We're here to empower you with tools, community, and resources to build confidence and resilience.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card p-6 flex flex-col items-center text-center">
+                            <i class="fas fa-chart-line text-4xl text-accent-gold mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2 text-primary-green">Track Your Progress</h3>
+                            <p>Monitor brace wear, physiotherapy, and growth to stay on top of your treatment.</p>
+                        </div>
+                         <div class="card p-6 flex flex-col items-center text-center">
+                            <i class="fas fa-book-open text-4xl text-accent-gold mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2 text-primary-green">Your Personal Journal</h3>
+                            <p>A safe space to document your thoughts, feelings, and experiences along the way.</p>
+                        </div>
+                        <div class="card p-6 flex flex-col items-center text-center">
+                            <i class="fas fa-users text-4xl text-accent-gold mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2 text-primary-green">Connect with Community</h3>
+                            <p>You are not alone. Find support groups and forums to connect with others on a similar path.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Trackers Section -->
+                <section id="trackers" class="hidden space-y-6">
+                    <div class="card p-6">
+                        <h2 class="text-2xl font-bold text-primary-green mb-4">Brace Wear Tracker</h2>
+                        <p class="text-center text-gray-500">Feature coming soon! This will help you log your daily brace hours.</p>
+                         <!-- Placeholder for graph -->
+                        <div class="bg-gray-200 h-64 rounded-lg mt-4 flex items-center justify-center">
+                            <i class="fas fa-chart-bar text-4xl text-gray-400"></i>
+                        </div>
+                    </div>
+                     <div class="card p-6">
+                        <h2 class="text-2xl font-bold text-primary-green mb-4">Physiotherapy Tracker</h2>
+                        <p class="text-center text-gray-500">Feature coming soon! Keep a log of your exercises and sessions.</p>
+                         <!-- Placeholder for graph -->
+                         <div class="bg-gray-200 h-64 rounded-lg mt-4 flex items-center justify-center">
+                             <i class="fas fa-running text-4xl text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h2 class="text-2xl font-bold text-primary-green mb-4">Growth Tracker</h2>
+                        <p class="text-center text-gray-500">Feature coming soon! Monitor your height and growth spurts.</p>
+                         <!-- Placeholder for graph -->
+                        <div class="bg-gray-200 h-64 rounded-lg mt-4 flex items-center justify-center">
+                           <i class="fas fa-ruler-vertical text-4xl text-gray-400"></i>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Journal Section -->
+                <section id="journal" class="hidden space-y-6">
+                    <div class="card p-6">
+                        <h2 class="text-2xl font-bold text-primary-green mb-4">My Scoliosis Journal</h2>
+                        <textarea class="w-full h-48 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green" placeholder="How are you feeling today? Write about your journey..."></textarea>
+                        <button class="mt-4 bg-primary-green text-white font-bold py-2 px-4 rounded-lg hover:bg-accent-gold hover:text-dark-text transition">Save Entry</button>
+                    </div>
+                     <div class="card p-6">
+                         <h3 class="text-xl font-semibold text-primary-green mb-4">Past Entries</h3>
+                         <div id="journal-entries">
+                            <div class="journal-entry">
+                                <p class="font-semibold">September 21, 2025</p>
+                                <p>Feeling a little sore today after PT, but also feeling stronger. The exercises are tough but I know they are helping.</p>
+                            </div>
+                            <div class="journal-entry">
+                                <p class="font-semibold">September 18, 2025</p>
+                                <p>Got my brace adjusted today. It feels a bit tight, but the doctor said that's normal. Trying to stay positive!</p>
+                            </div>
+                         </div>
+                    </div>
+                </section>
+
+                <!-- Community Section -->
+                <section id="community" class="hidden text-center">
+                     <div class="card p-6">
+                        <i class="fas fa-users text-6xl text-accent-gold mb-4"></i>
+                        <h2 class="text-3xl font-bold text-primary-green mb-4">Join the Community</h2>
+                        <p class="text-lg mb-6">Connecting with others who understand is powerful. Our community features are currently under development. Soon, you'll be able to access moderated forums and find links to amazing support groups.</p>
+                        <div class="bg-light-yellow p-4 rounded-lg">
+                            <p class="font-semibold">Coming Soon: Secure forums, Discord channels, and more!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Resources Section -->
+                <section id="resources" class="hidden space-y-8">
+                    <!-- Major Organizations -->
+                    <div>
+                        <h2 class="text-2xl font-bold text-primary-green mb-4">Major Organizations</h2>
+                        <div class="grid md:grid-cols-2 gap-4">
+                           <a href="https://www.srs.org/" target="_blank" class="resource-link card">
+                               <h3 class="font-semibold text-lg">Scoliosis Research Society (SRS)</h3>
+                               <p class="text-sm">A leading international society for spinal deformity research and education.</p>
+                           </a>
+                           <a href="https://www.scoliosis.org/" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">National Scoliosis Foundation (NSF)</h3>
+                                <p class="text-sm">Provides patient support, education, and advocacy.</p>
+                           </a>
+                           <a href="https://www.settingscoliosisstraight.org/" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">Setting Scoliosis Straight</h3>
+                                <p class="text-sm">Focuses on advancing techniques and discoveries in spinal deformity treatment.</p>
+                           </a>
+                           <a href="https://www.curvygirlsscoliosis.com/" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">Curvy Girls Scoliosis Foundation</h3>
+                                <p class="text-sm">An international, peer-led support group for girls with scoliosis.</p>
+                           </a>
+                        </div>
+                    </div>
+                     <!-- Medical Institutions -->
+                    <div>
+                        <h2 class="text-2xl font-bold text-primary-green mb-4">Top Medical Institutions</h2>
+                        <div class="grid md:grid-cols-2 gap-4">
+                           <a href="https://www.mayoclinic.org/diseases-conditions/scoliosis/symptoms-causes/syc-20350716" target="_blank" class="resource-link card">
+                               <h3 class="font-semibold text-lg">Mayo Clinic</h3>
+                               <p class="text-sm">Comprehensive information on symptoms, causes, and treatment.</p>
+                           </a>
+                           <a href="https://www.hopkinsmedicine.org/health/conditions-and-diseases/scoliosis" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">Johns Hopkins Medicine</h3>
+                                <p class="text-sm">Detailed resources on various types of scoliosis.</p>
+                           </a>
+                           <a href="https://www.childrenshospital.org/conditions/scoliosis" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">Boston Children's Hospital</h3>
+                                <p class="text-sm">Specialized pediatric care information for scoliosis.</p>
+                           </a>
+                            <a href="https://www.hss.edu/condition-list_scoliosis.asp" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">Hospital for Special Surgery (HSS)</h3>
+                                <p class="text-sm">Expert insights into surgical and non-surgical treatments.</p>
+                           </a>
+                        </div>
+                    </div>
+                    <!-- Support Groups -->
+                    <div>
+                         <h2 class="text-2xl font-bold text-primary-green mb-4">Support Groups & Forums</h2>
+                         <div class="grid md:grid-cols-2 gap-4">
+                            <a href="https://www.bracingforscoliosus.org/" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">Scolio-us</h3>
+                                <p class="text-sm">Community and resources with a focus on bracing and mental health.</p>
+                            </a>
+                             <a href="https://www.facebook.com/groups/scoliosissupportgroup/" target="_blank" class="resource-link card">
+                                <h3 class="font-semibold text-lg">Scoliosis Support & Education Group</h3>
+                                <p class="text-sm">A large and active Facebook community for patients and families.</p>
+                            </a>
+                         </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId, element) {
+            // Hide all sections
+            document.querySelectorAll('main section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            // Show the selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            // Update active link
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // Update header title
+            const title = element.querySelector('span').textContent;
+            document.getElementById('section-title').textContent = title;
+
+            // Close sidebar on mobile after click
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('translate-x-0')) {
+                 sidebar.classList.remove('translate-x-0');
+                 sidebar.classList.add('-translate-x-full');
+            }
+        }
+        
+        // Mobile sidebar toggle
+        const menuButton = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar');
+
+        menuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebar.classList.toggle('translate-x-0');
+        });
+
+    </script>
+</body>
+</html>
