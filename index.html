@@ -200,7 +200,7 @@
                     </div>
 
                     <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col">
+                        <div data-page="tracker" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
                                     <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -208,9 +208,8 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Daily Brace Tracker</h3>
                             </div>
                             <p class="mt-4 flex-grow">Log your brace hours, watch your progress, and earn rewards.</p>
-                            <button data-page="tracker" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors self-start">Go to Tracker</button>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col">
+                        <div data-page="physio" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
                                     <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
@@ -218,9 +217,8 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Physiotherapy Tracker</h3>
                             </div>
                             <p class="mt-4 flex-grow">Track your daily PT sessions and stay consistent with your exercises.</p>
-                            <button data-page="physio" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors self-start">Go to PT Tracker</button>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col">
+                        <div data-page="growth" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
                                     <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
@@ -228,9 +226,8 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Growth Tracker</h3>
                             </div>
                             <p class="mt-4 flex-grow">Log your height and weight to visualize growth trends over time.</p>
-                            <button data-page="growth" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors self-start">Log Growth</button>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col">
+                        <div data-page="journal" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
                                     <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
@@ -238,9 +235,8 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Reflection Journal</h3>
                             </div>
                             <p class="mt-4 flex-grow">A private space to write, with data saved securely to your Google Drive.</p>
-                            <button data-page="journal" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors self-start">Open Journal</button>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col">
+                        <div data-page="resources" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
                                     <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
@@ -248,9 +244,8 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Vetted Resources</h3>
                             </div>
                             <p class="mt-4 flex-grow">Find surgeons, apparel, support groups, and helpful videos all in one place.</p>
-                            <button data-page="resources" class="nav-link mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors self-start">Explore Resources</button>
                         </div>
-                         <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col">
+                         <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition-shadow flex flex-col opacity-70 cursor-not-allowed">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
                                     <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-2.121l-3.37.843L11 15.111l2.52-2.52a3 3 0 00-4.14-4.14L7 10.828 3.37 8.307.247 11.677a3 3 0 002.121 5.356h5l2.828-2.828 5.657 5.657z"></path></svg>
@@ -258,7 +253,6 @@
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Community Hub</h3>
                             </div>
                             <p class="mt-4 flex-grow">Connect with peers in our safe, moderated forums. (Coming Soon)</p>
-                            <button data-page="community" class="nav-link mt-4 bg-gray-400 text-white px-4 py-2 rounded-lg font-semibold cursor-not-allowed" disabled>Coming Soon</button>
                         </div>
                     </div>
                 </div>
@@ -347,7 +341,7 @@
                             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
                                 <h3 class="text-xl font-bold mb-4 text-green-800 dark:text-green-300">Brace-Friendly Apparel</h3>
                                 <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
-                                    <li><a href="https://www.hopescloset.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Hope's Closet</a></li>
+                                    <li><a href="https://www.hopescloset.co/" target="_blank" rel="noopener noreferrer" class="hover:underline">Hope's Closet</a></li>
                                     <li><a href="https://www.brace-tee.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Brace-Tee</a></li>
                                     <li><a href="https://embracedincomfort.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Embraced in Comfort</a></li>
                                 </ul>
