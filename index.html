@@ -100,6 +100,28 @@
         .resource-tab-panel.active {
             display: block;
         }
+        
+        /* --- New CSS for Circular Progress Meter --- */
+        .progress-circle {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* Creates a square container */
+        }
+        .progress-circle svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg); /* Start the circle at the top */
+        }
+        .progress-circle .circle-bg, .progress-circle .circle-progress {
+            fill: none;
+            stroke-width: 8; /* Thickness of the ring */
+        }
+        .progress-circle .circle-progress {
+            transition: stroke-dasharray 0.5s linear;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
