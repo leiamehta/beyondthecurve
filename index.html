@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class=""> <!-- Add 'dark' class here to toggle dark mode -->
-<head>
+<html lang="en" class=""> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beyond the Curve - Your Scoliosis Companion</title>
@@ -22,12 +21,12 @@
                             400: '#86efac',
                             500: '#4ade80',
                             600: '#22c55e',
-                            700: '#16a34a',
+                            700: '#16a34a', // Primary Dark Green
                             800: '#15803d',
                             900: '#166534'
                         },
                         gold: {
-                            500: '#eab308',
+                            500: '#eab308', // Accent Gold
                             600: '#ca8a04'
                         },
                         yellow: {
@@ -83,13 +82,30 @@
         .dark .bottom-nav-link.active {
             color: #fef08a; /* yellow-200 */
         }
+
+        /* --- New Style for Tabs on Resources Page --- */
+        .resource-tab-button.active {
+            border-bottom-width: 3px;
+            border-color: #eab308; /* gold-500 */
+            color: #16a34a; /* green-700 */
+            font-weight: 600;
+        }
+        .dark .resource-tab-button.active {
+            border-color: #fef08a; /* yellow-200 */
+            color: #fef08a; /* yellow-200 */
+        }
+        .resource-tab-panel {
+            display: none;
+        }
+        .resource-tab-panel.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
     <div id="app" class="max-w-full min-h-screen flex">
         
-        <!-- Persistent Sidebar (Desktop) -->
         <nav class="hidden md:flex flex-col w-64 bg-white dark:bg-gray-800 shadow-lg fixed h-full z-10">
             <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
                 <svg class="w-10 h-10 text-green-700 dark:text-green-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,11 +113,10 @@
                     <path d="M40 80C45 75 50 70 50 60C50 50 45 45 40 40C35 35 30 30 30 20" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8" opacity="0.3"/>
                 </svg>
-                <h1 class="text-xl font-bold text-green-800 dark:text-green-400">Beyond the Curve</h1>
+                <h1 class="text-xl font-bold text-green-700 dark:text-green-400">Beyond the Curve</h1>
             </div>
             
             <div class="flex-grow p-4 space-y-2">
-                <!-- Nav Links -->
                 <button data-page="home" class="nav-link sidebar-link w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6-4h.01M12 12h.01M15 12h.01M9 12h.01M9 15h.01M12 15h.01M15 15h.01M9 18h.01M12 18h.01M15 18h.01"></path></svg>
                     Home
@@ -140,16 +155,14 @@
                 </button>
             </div>
 
-            <!-- Streak Counter -->
             <div class="p-4 border-t dark:border-gray-700">
                 <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 flex items-center justify-center gap-3">
-                    <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343m11.314 11.314a8 8 0 00-11.314-11.314m11.314 11.314L15 21M6.343 7.343L9 3m-3.293 8.293a1 1 0 011.414 0l.001.001c.19.19.303.44.303.707v3.293a1 1 0 01-.293.707l-.001.001a1 1 0 01-1.414 0l-3.293-3.293a1 1 0 01-.293-.707V12a1 1 0 01.293-.707l.001-.001z"></path></svg>
+                    <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343m11.314 11.314a8 8 0 00-11.314-11.314m11.314 11.314L15 21M6.343 7.343L9 3m-3.293 8.293a1 1 0 011.414 0l.001.001c.19.19.303.44.303.707v3.293a1 1 0 01-.293.707l-.001.001a1 1 0 01-1.414 0l-3.293-3.293a1 1 0 01-.293-.707V12a1 1 0 01.293-.707l.001-.001z"></path></svg>
                     <span id="streak-count" class="text-2xl font-bold text-gray-700 dark:text-gray-200">0</span>
                     <span class="font-semibold text-gray-600 dark:text-gray-300">Day Streak</span>
                 </div>
             </div>
 
-            <!-- Login/Profile & Dark Mode Toggle -->
             <div class="p-4 border-t dark:border-gray-700 space-y-3">
                 <button id="dark-mode-toggle" class="w-full flex items-center justify-center gap-2 bg-gray-200 dark:bg-gray-700 p-2 rounded-lg font-semibold">
                     <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -172,10 +185,8 @@
             </div>
         </nav>
 
-        <!-- Main Content Area -->
         <div class="flex-1 md:ml-64 pb-16 md:pb-0">
             
-            <!-- Mobile Header (placeholder for spacing) -->
             <header class="md:hidden bg-green-700 text-white p-4 flex justify-between items-center sticky top-0 z-10">
                 <div class="flex items-center gap-3">
                     <svg class="w-10 h-10 text-white" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -197,7 +208,6 @@
             </header>
             
             <main class="p-4 md:p-8 flex-grow">
-                <!-- Home Page -->
                 <div id="home-page" class="page active">
                     <div class="bg-yellow-100 border-l-4 border-gold-500 text-gray-800 dark:bg-gray-800 dark:text-yellow-100 dark:border-gold-500 p-6 rounded-lg shadow-md relative overflow-hidden">
                         <div class="relative z-10">
@@ -209,10 +219,9 @@
                         </svg>
                     </div>
 
-                    <!-- Infographic Card -->
                     <div data-page="infographic" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col md:flex-row items-center gap-4 mt-8 cursor-pointer">
                         <div class="flex-shrink-0 bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                            <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <svg class="w-8 h-8 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
                         <div class="flex-grow text-center md:text-left">
                             <h3 class="text-xl font-bold text-green-700 dark:text-green-400">What is Scoliosis?</h3>
@@ -225,7 +234,7 @@
                         <div data-page="tracker" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <svg class="w-8 h-8 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Daily Brace Tracker</h3>
                             </div>
@@ -234,7 +243,7 @@
                         <div data-page="physio" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
+                                    <svg class="w-8 h-8 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Physiotherapy Tracker</h3>
                             </div>
@@ -243,7 +252,7 @@
                         <div data-page="growth" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
+                                    <svg class="w-8 h-8 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Growth Tracker</h3>
                             </div>
@@ -252,7 +261,7 @@
                         <div data-page="journal" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
+                                    <svg class="w-8 h-8 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Reflection Journal</h3>
                             </div>
@@ -261,7 +270,7 @@
                         <div data-page="resources" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
+                                    <svg class="w-8 h-8 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Vetted Resources</h3>
                             </div>
@@ -270,7 +279,7 @@
                          <div data-page="screener" class="nav-link bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-green-200 dark:hover:shadow-green-900 transition-shadow flex flex-col cursor-pointer">
                             <div class="flex items-center gap-4">
                                 <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                    <svg class="w-8 h-8 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                 </div>
                                 <h3 class="text-xl font-bold text-green-700 dark:text-green-400">Scoliosis Screener</h3>
                             </div>
@@ -279,127 +288,142 @@
                     </div>
                 </div>
 
-                <!-- Vetted Resources Page -->
                 <div id="resources-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
+                        <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
                         <h2 class="text-3xl font-bold">Vetted Resources</h2>
                     </div>
+
+                    <div role="tablist" class="flex flex-wrap border-b border-gray-200 dark:border-gray-700 mb-6">
+                        <button role="tab" data-tab-target="tab-specialists" class="resource-tab-button active text-gray-500 dark:text-gray-400 py-2 px-4 hover:text-green-700 dark:hover:text-yellow-200 transition-colors">Specialists & Orgs</button>
+                        <button role="tab" data-tab-target="tab-videos" class="resource-tab-button text-gray-500 dark:text-gray-400 py-2 px-4 hover:text-green-700 dark:hover:text-yellow-200 transition-colors">Video Library</button>
+                        <button role="tab" data-tab-target="tab-support" class="resource-tab-button text-gray-500 dark:text-gray-400 py-2 px-4 hover:text-green-700 dark:hover:text-yellow-200 transition-colors">Support & Apparel</button>
+                        <button role="tab" data-tab-target="tab-aid" class="resource-tab-button text-gray-500 dark:text-gray-400 py-2 px-4 hover:text-green-700 dark:hover:text-yellow-200 transition-colors">Financial & General Aid</button>
+                    </div>
+
                     <div class="space-y-8">
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                            <h3 class="text-2xl font-bold mb-4 text-green-800 dark:text-green-300">Scoliosis Specialists</h3>
-                            <p class="mb-4 text-gray-600 dark:text-gray-300">
-                                For the most comprehensive directory, we recommend the official Scoliosis Research Society (SRS) physician locator.
-                            </p>
-                            <a href="https://www.srs.org/Patients/Find-a-Specialist#" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                                Visit SRS Find a Specialist &rarr;
-                            </a>
-                        </div>
-                        
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                            <h3 class="text-2xl font-bold mb-4 text-green-800 dark:text-green-300">Video Library</h3>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <h4 class="text-lg font-semibold mb-2">3D Rendered Videos</h4>
-                                    <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
-                                        <li><a href="https://www.youtube.com/watch?v=JicoSIe2JQI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spine Anatomy in under 1 minute</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=Vqy1VB2CuaE" target="_blank" rel="noopener noreferrer" class="hover:underline">What is Scoliosis (In under 1 Minute)</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=4blk8rrfJPw" target="_blank" rel="noopener noreferrer" class="hover:underline">How to Detect Scoliosis</a></li>
+                        <div id="tab-specialists" class="resource-tab-panel active space-y-8">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                <h3 class="text-2xl font-bold mb-4 text-green-700 dark:text-green-300">Scoliosis Specialists</h3>
+                                <p class="mb-4 text-gray-600 dark:text-gray-300">
+                                    For the most comprehensive directory, we recommend the official Scoliosis Research Society (SRS) physician locator.
+                                </p>
+                                <a href="https://www.srs.org/Patients/Find-a-Specialist#" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-700 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-800 transition-colors">
+                                    Visit SRS Find a Specialist &rarr;
+                                </a>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                    <h3 class="text-xl font-bold mb-4 text-green-700 dark:text-green-300">Major Organizations</h3>
+                                    <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
+                                        <li><a href="https://www.srs.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Scoliosis Research Society (SRS)</a></li>
+                                        <li><a href="https://www.scoliosis.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">National Scoliosis Foundation (NSF)</a></li>
+                                        <li><a href="https://www.settingscoliosisstraight.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Setting Scoliosis Straight</a></li>
+                                        <li><a href="http://www.sosort.mobi/" target="_blank" rel="noopener noreferrer" class="hover:underline">SOSORT</a></li>
                                     </ul>
                                 </div>
-                                <div>
-                                    <h4 class="text-lg font-semibold mb-2">Physiotherapy</h4>
-                                    <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
-                                        <li><a href="https://youtube.com/playlist?list=PLfyUArn76Mvi1yqoyEvJIEkMNf7OTG5eB&si=7hHnIFJ6klQnSDvN" target="_blank" rel="noopener noreferrer" class="hover:underline">Physiotherapy Videos for Scoliosis</a></li>
+                                 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                    <h3 class="text-xl font-bold mb-4 text-green-700 dark:text-green-300">Medical Institutions</h3>
+                                    <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
+                                        <li><a href="https://www.mayoclinic.org/diseases-conditions/scoliosis/symptoms-causes/syc-20350716" target="_blank" rel="noopener noreferrer" class="hover:underline">Mayo Clinic</a></li>
+                                        <li><a href="https://www.hopkinsmedicine.org/health/conditions-and-diseases/scoliosis" target="_blank" rel="noopener noreferrer" class="hover:underline">Johns Hopkins Medicine</a></li>
+                                        <li><a href="https://www.childrenshospital.org/conditions/scoliosis" target="_blank" rel="noopener noreferrer" class="hover:underline">Boston Children's Hospital</a></li>
+                                        <li><a href="https://www.hss.edu/condition-list_scoliosis.asp" target="_blank" rel="noopener noreferrer" class="hover:underline">Hospital for Special Surgery (HSS)</a></li>
+                                        <li><a href="https://www.shrinerschildrens.org/en/conditions/scoliosis" target="_blank" rel="noopener noreferrer" class="hover:underline">Shriners Hospitals for Children</a></li>
                                     </ul>
                                 </div>
-                                <div>
-                                    <h4 class="text-lg font-semibold mb-2">Understanding Treatment Options</h4>
-                                    <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
-                                        <li><a href="https://www.youtube.com/watch?v=_nLXf5jEn5k&t=101s" target="_blank" rel="noopener noreferrer" class="hover:underline">Bracing as a Scoliosis Treatment Option</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=JCDEc2uYwxA&t=18s" target="_blank" rel="noopener noreferrer" class="hover:underline">Scoliosis Surgery as a treatment option</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=OX1vhVSzMiI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion v/s VBT</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=G1ynUYSqLsU" target="_blank" rel="noopener noreferrer" class="hover:underline">Hybrid Fusion (Fusion + VBT)</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=s3iKfogVUyM" target="_blank" rel="noopener noreferrer" class="hover:underline">General info on Scoliosis</a></li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-semibold mb-2">Surgery Experience</h4>
-                                    <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
-                                        <li><a href="https://www.youtube.com/watch?v=3gKel6MwW98&t=12s" target="_blank" rel="noopener noreferrer" class="hover:underline">What to Expect Before and After Surgery</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=L8kHuCjqXyo" target="_blank" rel="noopener noreferrer" class="hover:underline">Hospital Stay Checklist</a></li>
-                                        <li><a href="https://www.youtube.com/watch?v=YHKTELBwreo&t=21s" target="_blank" rel="noopener noreferrer" class="hover:underline">Life Post-Surgery</a></li>
-                                    </ul>
-                                </div>
-                                 <div>
-                                    <h4 class="text-lg font-semibold mb-2">Surgeon Interviews</h4>
-                                    <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
-                                        <li><a href="https://youtube.com/playlist?list=PLfyUArn76MviC3wiB67PdATXA3EJGfQlc&si=ZSU0NonH0itejvzV" target="_blank" rel="noopener noreferrer" class="hover:underline">Vertebral Body Tethering (VBT)</a></li>
-                                        <li><a href="https://youtu.be/WID1p_UJZIM?si=S-c6FJ525PfS6GU2" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion Details</a></li>
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                    <h3 class="text-xl font-bold mb-4 text-green-700 dark:text-green-300">General Education</h3>
+                                    <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
+                                        <li><a href="https://medlineplus.gov/scoliosis.html" target="_blank" rel="noopener noreferrer" class="hover:underline">MedlinePlus</a></li>
+                                        <li><a href="https://orthoinfo.aaos.org/en/diseases--conditions/scoliosis-in-children-and-adolescents/" target="_blank" rel="noopener noreferrer" class="hover:underline">AAOS</a></li>
+                                        <li><a href="https://kidshealth.org/en/parents/scoliosis.html" target="_blank" rel="noopener noreferrer" class="hover:underline">KidsHealth</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                                <h3 class="text-xl font-bold mb-4 text-green-800 dark:text-green-300">Major Organizations</h3>
-                                <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
-                                    <li><a href="https://www.srs.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Scoliosis Research Society (SRS)</a></li>
-                                    <li><a href="https://www.scoliosis.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">National Scoliosis Foundation (NSF)</a></li>
-                                    <li><a href="https://www.settingscoliosisstraight.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Setting Scoliosis Straight</a></li>
-                                    <li><a href="http://www.sosort.mobi/" target="_blank" rel="noopener noreferrer" class="hover:underline">SOSORT</a></li>
-                                </ul>
-                            </div>
+                        <div id="tab-videos" class="resource-tab-panel space-y-8">
                              <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                                <h3 class="text-xl font-bold mb-4 text-green-800 dark:text-green-300">Medical Institutions</h3>
-                                <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
-                                    <li><a href="https://www.mayoclinic.org/diseases-conditions/scoliosis/symptoms-causes/syc-20350716" target="_blank" rel="noopener noreferrer" class="hover:underline">Mayo Clinic</a></li>
-                                    <li><a href="https://www.hopkinsmedicine.org/health/conditions-and-diseases/scoliosis" target="_blank" rel="noopener noreferrer" class="hover:underline">Johns Hopkins Medicine</a></li>
-                                    <li><a href="https://www.childrenshospital.org/conditions/scoliosis" target="_blank" rel="noopener noreferrer" class="hover:underline">Boston Children's Hospital</a></li>
-                                    <li><a href="https://www.hss.edu/condition-list_scoliosis.asp" target="_blank" rel="noopener noreferrer" class="hover:underline">Hospital for Special Surgery (HSS)</a></li>
-                                    <li><a href="https://www.shrinerschildrens.org/en/conditions/scoliosis" target="_blank" rel="noopener noreferrer" class="hover:underline">Shriners Hospitals for Children</a></li>
-                                </ul>
+                                <h3 class="text-2xl font-bold mb-4 text-green-700 dark:text-green-300">Video Library</h3>
+                                <p class="mb-6 text-gray-600 dark:text-gray-300">Vetted videos covering anatomy, treatment options, and patient experiences.</p>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <h4 class="text-lg font-semibold mb-2">3D Rendered Videos & Basics</h4>
+                                        <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
+                                            <li><a href="https://www.youtube.com/watch?v=JicoSIe2JQI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spine Anatomy in under 1 minute</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=Vqy1VB2CuaE" target="_blank" rel="noopener noreferrer" class="hover:underline">What is Scoliosis (In under 1 Minute)</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=4blk8rrfJPw" target="_blank" rel="noopener noreferrer" class="hover:underline">How to Detect Scoliosis</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold mb-2">Physiotherapy & Exercises</h4>
+                                        <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
+                                            <li><a href="https://youtube.com/playlist?list=PLfyUArn76Mvi1yqoyEvJIEkMNf7OTG5eB&si=7hHnIFJ6klQnSDvN" target="_blank" rel="noopener noreferrer" class="hover:underline">Physiotherapy Videos for Scoliosis</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold mb-2">Understanding Treatment Options</h4>
+                                        <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
+                                            <li><a href="https://www.youtube.com/watch?v=_nLXf5jEn5k&t=101s" target="_blank" rel="noopener noreferrer" class="hover:underline">Bracing as a Scoliosis Treatment Option</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=JCDEc2uYwxA&t=18s" target="_blank" rel="noopener noreferrer" class="hover:underline">Scoliosis Surgery as a treatment option</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=OX1vhVSzMiI" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion v/s VBT</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=G1ynUYSqLsU" target="_blank" rel="noopener noreferrer" class="hover:underline">Hybrid Fusion (Fusion + VBT)</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=s3iKfogVUyM" target="_blank" rel="noopener noreferrer" class="hover:underline">General info on Scoliosis</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold mb-2">Surgery Experience & Interviews</h4>
+                                        <ul class="space-y-2 list-disc list-inside text-green-700 dark:text-green-400">
+                                            <li><a href="https://youtube.com/playlist?list=PLfyUArn76MviC3wiB67PdATXA3EJGfQlc&si=ZSU0NonH0itejvzV" target="_blank" rel="noopener noreferrer" class="hover:underline">Vertebral Body Tethering (VBT)</a></li>
+                                            <li><a href="https://youtu.be/WID1p_UJZIM?si=S-c6FJ525PfS6GU2" target="_blank" rel="noopener noreferrer" class="hover:underline">Spinal Fusion Details</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=3gKel6MwW98&t=12s" target="_blank" rel="noopener noreferrer" class="hover:underline">What to Expect Before and After Surgery</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=L8kHuCjqXyo" target="_blank" rel="noopener noreferrer" class="hover:underline">Hospital Stay Checklist</a></li>
+                                            <li><a href="https://www.youtube.com/watch?v=YHKTELBwreo&t=21s" target="_blank" rel="noopener noreferrer" class="hover:underline">Life Post-Surgery</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                                <h3 class="text-xl font-bold mb-4 text-green-800 dark:text-green-300">Brace-Friendly Apparel</h3>
-                                <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
-                                    <li><a href="https://www.hopescloset.co/" target="_blank" rel="noopener noreferrer" class="hover:underline">Hope's Closet</a></li>
-                                    <li><a href="https://www.brace-tee.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Brace-Tee</a></li>
-                                    <li><a href="https://embracedincomfort.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Embraced in Comfort</a></li>
-                                </ul>
+                        </div>
+
+                        <div id="tab-support" class="resource-tab-panel space-y-8">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                    <h3 class="text-xl font-bold mb-4 text-green-700 dark:text-green-300">Support Groups & Forums</h3>
+                                    <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
+                                        <li><a href="https://www.curvygirlsscoliosis.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Curvy Girls International</a></li>
+                                        <li><a href="https://www.scoliboys.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">ScoliBoys Support</a></li>
+                                        <li><a href="https://scolios-us.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Scolio-US</a></li>
+                                        <li><a href="https://www.higgybears.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Higgy Bears</a></li>
+                                        <li><a href="https://www.facebook.com/groups/ScoliosisParents/" target="_blank" rel="noopener noreferrer" class="hover:underline">Facebook Support Group</a></li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                    <h3 class="text-xl font-bold mb-4 text-green-700 dark:text-green-300">Brace-Friendly Apparel</h3>
+                                    <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
+                                        <li><a href="https://www.hopescloset.co/" target="_blank" rel="noopener noreferrer" class="hover:underline">Hope's Closet</a></li>
+                                        <li><a href="https://www.brace-tee.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Brace-Tee</a></li>
+                                        <li><a href="https://embracedincomfort.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Embraced in Comfort</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                                <h3 class="text-xl font-bold mb-4 text-green-800 dark:text-green-300">Support Groups & Forums</h3>
-                                <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
-                                    <li><a href="https://www.curvygirlsscoliosis.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Curvy Girls International</a></li>
-                                    <li><a href="https://www.scoliboys.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">ScoliBoys Support</a></li>
-                                    <li><a href="https://scolios-us.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Scolio-US</a></li>
-                                    <li><a href="https://www.higgybears.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Higgy Bears</a></li>
-                                    <li><a href="https://www.facebook.com/groups/ScoliosisParents/" target="_blank" rel="noopener noreferrer" class="hover:underline">Facebook Support Group</a></li>
-                                </ul>
-                            </div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                                <h3 class="text-xl font-bold mb-4 text-green-800 dark:text-green-300">Financial/Practical Aid</h3>
+                        </div>
+
+                        <div id="tab-aid" class="resource-tab-panel space-y-8">
+                             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                                <h3 class="text-xl font-bold mb-4 text-green-700 dark:text-green-300">Financial/Practical Aid</h3>
+                                <p class="mb-4 text-gray-600 dark:text-gray-300">Resources to help with medical costs and transportation for care.</p>
                                 <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
                                     <li><a href="https://www.childrensscoliosisfoundation.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Children's Scoliosis Foundation</a></li>
                                     <li><a href="https://www.uhccf.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">UnitedHealthcare Children's Foundation</a></li>
                                     <li><a href="https://www.mercymedicalangels.org/" target="_blank" rel="noopener noreferrer" class="hover:underline">Mercy Medical Angels</a></li>
                                 </ul>
                             </div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-                                <h3 class="text-xl font-bold mb-4 text-green-800 dark:text-green-300">General Education</h3>
-                                <ul class="space-y-3 list-disc list-inside text-green-700 dark:text-green-400">
-                                    <li><a href="https://medlineplus.gov/scoliosis.html" target="_blank" rel="noopener noreferrer" class="hover:underline">MedlinePlus</a></li>
-                                    <li><a href="https://orthoinfo.aaos.org/en/diseases--conditions/scoliosis-in-children-and-adolescents/" target="_blank" rel="noopener noreferrer" class="hover:underline">AAOS</a></li>
-                                    <li><a href="https://kidshealth.org/en/parents/scoliosis.html" target="_blank" rel="noopener noreferrer" class="hover:underline">KidsHealth</a></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Brace Tracker Page -->
                 <div id="tracker-page" class="page">
                     <div class="login-prompt text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         <h3 class="text-2xl font-bold mb-4">Login to Track Your Progress</h3>
@@ -408,7 +432,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <h2 class="text-3xl font-bold text-center">My Brace Tracker</h2>
                         </div>
                         <div class="grid md:grid-cols-2 gap-8">
@@ -434,7 +458,7 @@
                                 <h3 class="text-xl font-bold mb-4">Today's Progress</h3>
                                 <div>
                                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-8">
-                                        <div id="progress-bar" class="progress-bar-fill bg-green-600 h-8 text-white text-center font-bold leading-8 rounded-full" style="width: 0%;">0%</div>
+                                        <div id="progress-bar" class="progress-bar-fill bg-green-700 h-8 text-white text-center font-bold leading-8 rounded-full" style="width: 0%;">0%</div>
                                     </div>
                                     <p id="progress-text" class="text-center mt-2 font-semibold">Log your hours to see your progress!</p>
                                 </div>
@@ -453,7 +477,6 @@
                     </div>
                 </div>
 
-                <!-- Physiotherapy Tracker Page -->
                 <div id="physio-page" class="page">
                     <div class="login-prompt text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         <h3 class="text-2xl font-bold mb-4">Login to Track Your Physiotherapy</h3>
@@ -462,7 +485,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
+                            <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 6v6h.01"></path></svg>
                             <h2 class="text-3xl font-bold text-center">My Physiotherapy Tracker</h2>
                         </div>
                         <div class="grid md:grid-cols-2 gap-8">
@@ -488,7 +511,7 @@
                                 <h3 class="text-xl font-bold mb-4">Today's Progress</h3>
                                 <div>
                                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-8">
-                                        <div id="physio-progress-bar" class="progress-bar-fill bg-green-600 h-8 text-white text-center font-bold leading-8 rounded-full" style="width: 0%;">0%</div>
+                                        <div id="physio-progress-bar" class="progress-bar-fill bg-green-700 h-8 text-white text-center font-bold leading-8 rounded-full" style="width: 0%;">0%</div>
                                     </div>
                                     <p id="physio-progress-text" class="text-center mt-2 font-semibold">Log your session to see your progress!</p>
                                 </div>
@@ -507,7 +530,6 @@
                     </div>
                 </div>
                 
-                <!-- Growth Tracker Page -->
                 <div id="growth-page" class="page">
                     <div class="login-prompt text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         <h3 class="text-2xl font-bold mb-4">Login to Track Your Growth</h3>
@@ -516,7 +538,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
+                            <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path></svg>
                             <h2 class="text-3xl font-bold text-center">My Growth Tracker</h2>
                         </div>
                         <div class="grid md:grid-cols-2 gap-8">
@@ -554,7 +576,6 @@
                     </div>
                 </div>
 
-                <!-- Journal Page -->
                 <div id="journal-page" class="page">
                     <div class="login-prompt text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         <h3 class="text-2xl font-bold mb-4">Login to Use Your Journal</h3>
@@ -563,7 +584,7 @@
                     </div>
                     <div class="protected-content">
                         <div class="flex items-center justify-center gap-3 mb-6">
-                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
+                            <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247l10.494 4.498-10.494 3.749zM3.75 6.253L14.244 1.75l-3.749 10.494L3.75 6.253z"></path></svg>
                             <h2 class="text-3xl font-bold">My Reflection Journal</h2>
                         </div>
                         <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
@@ -585,10 +606,9 @@
                     </div>
                 </div>
 
-                <!-- Community Hub Page (Placeholder) -->
                 <div id="community-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-2.121l-3.37.843L11 15.111l2.52-2.52a3 3 0 00-4.14-4.14L7 10.828 3.37 8.307.247 11.677a3 3 0 002.121 5.356h5l2.828-2.828 5.657 5.657z"></path></svg>
+                        <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-2.121l-3.37.843L11 15.111l2.52-2.52a3 3 0 00-4.14-4.14L7 10.828 3.37 8.307.247 11.677a3 3 0 002.121 5.356h5l2.828-2.828 5.657 5.657z"></path></svg>
                         <h2 class="text-3xl font-bold">Community Hub</h2>
                     </div>
                     <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center">
@@ -600,10 +620,9 @@
                     </div>
                 </div>
 
-                <!-- Infographic Page -->
                 <div id="infographic-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
-                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         <h2 class="text-3xl font-bold">What is Scoliosis?</h2>
                     </div>
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -611,10 +630,9 @@
                     </div>
                 </div>
 
-                <!-- Screener Page -->
                 <div id="screener-page" class="page">
                     <div class="flex items-center justify-center gap-3 mb-6">
-                         <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                         <svg class="w-10 h-10 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <h2 class="text-3xl font-bold">Scoliosis Screener</h2>
                     </div>
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -625,7 +643,6 @@
             </main>
         </div>
 
-        <!-- Bottom Navigation (Mobile) -->
         <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white dark:bg-gray-800 shadow-inner z-10 flex justify-around items-center border-t dark:border-gray-700">
             <button data-page="home" class="nav-link bottom-nav-link flex flex-col items-center justify-center text-gray-600 dark:text-gray-300">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"></path></svg>
@@ -695,6 +712,9 @@
 
             // Journal
             journalForm: null, journalEntry: null, journalEntriesContainer: null,
+
+            // Resources Tabs
+            resourceTabButtons: null,
             
             // --- INITIALIZATION ---
             async init() {
@@ -763,6 +783,9 @@
                 this.journalForm = document.getElementById('journal-form');
                 this.journalEntry = document.getElementById('journal-entry');
                 this.journalEntriesContainer = document.getElementById('journal-entries-container');
+                
+                // Resources Tabs
+                this.resourceTabButtons = document.querySelectorAll('.resource-tab-button');
 
                 // Event Listeners
                 this.setupEventListeners();
@@ -824,6 +847,34 @@
                 this.physioForm?.addEventListener('submit', (e) => this.handlePhysioSubmit(e));
                 this.growthForm?.addEventListener('submit', (e) => this.handleGrowthSubmit(e));
                 this.journalForm?.addEventListener('submit', (e) => this.handleJournalSubmit(e));
+                
+                // Resources Tabs
+                this.resourceTabButtons.forEach(button => {
+                    button.addEventListener('click', (e) => this.handleResourceTabClick(e.currentTarget.dataset.tabTarget));
+                });
+            },
+            
+            handleResourceTabClick(targetId) {
+                // Deactivate all buttons and panels
+                this.resourceTabButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.resource-tab-panel').forEach(panel => panel.classList.remove('active'));
+
+                // Activate the clicked button and corresponding panel
+                document.querySelector(`[data-tab-target="${targetId}"]`).classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                localStorage.setItem('resourcesActiveTab', targetId);
+            },
+            
+            setupResourceTabs() {
+                const defaultTab = 'tab-specialists';
+                const activeTab = localStorage.getItem('resourcesActiveTab') || defaultTab;
+                
+                // Ensure the active tab exists, otherwise fall back to default
+                if (!document.getElementById(activeTab)) {
+                     this.handleResourceTabClick(defaultTab);
+                } else {
+                     this.handleResourceTabClick(activeTab);
+                }
             },
 
             handleVisitorCounter() {
@@ -883,6 +934,9 @@
                 const targetPage = document.getElementById(`${pageId}-page`);
                 if (targetPage) {
                     targetPage.classList.add('active');
+                    if (pageId === 'resources') {
+                        this.setupResourceTabs();
+                    }
                 }
                 
                 localStorage.setItem('lastPage', pageId);
@@ -978,7 +1032,7 @@
                         }
                     }
                 } catch (e) {
-                    console.log("Could not parse JSON from Drive, file may be new.", e);
+                    console.log("Could not parse JSON from Drive, file may be new or empty.", e);
                 } finally {
                     this.loadAllData();
                 }
@@ -1120,4 +1174,3 @@
     </script>
 </body>
 </html>
-
