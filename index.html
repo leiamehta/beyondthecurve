@@ -1166,9 +1166,100 @@
             },
 
             // --- Brace Tracker Methods ---
-            async handleBraceSubmit(e) { e.preventDefault(); const date = this.braceDate.value; const hours = parseFloat(this.braceHours.value); const goal = parseFloat(this.dailyGoal.value); if (!date || isNaN(hours) || isNaN(goal)) { return; } this.data.braceData[date] = { hours, goal }; await this.logActivity(); await this.saveDataToDrive(); this.updateProgressUI(date); this.updateChart(); this.updateRewards(); this.braceForm.reset(); this.braceDate.valueAsDate = new Date(); },
-            loadBraceData() { const today = new Date().toISOString().split('T')[0]; this.updateProgressUI(today); this.updateChart(); this.updateRewards(); },
-            updateProgressUI(date) { const data = this.data.braceData[date]; if (data) { const percentage = Math.min(100, Math.round((data.hours / data.goal) * 100)); this.progressBar.style.width = `${percentage}%`; this.progressBar.textContent = `${percentage}%`; this.progressText.textContent = `You've logged ${data.hours} of ${data.goal} hours today. Keep it up!`; } else { this.progressBar.style.width = '0%'; this.progressBar.textContent = '0%'; this.progressText.textContent = 'Log your hours to see your progress!'; } },
+            async handleBraceSubmit(e) { 
+                e.preventDefault(); 
+                const date = this.braceDate.value; 
+                const hours = parseFloat(this.braceHours.value); 
+                const goal = parseFloat(this.dailyGoal.value); 
+                
+                if (!date || isNaN(hours) || isNaN(goal)) { return; } 
+                
+                this.data.braceData[date] = { hours, goal }; 
+                await this.logActivity(); 
+                await this.saveDataToDrive(); 
+                
+                this.updateProgressUI(date); 
+                this.updateChart(); 
+                this.updateRewards(); 
+                
+                this.braceForm.reset(); 
+                this.braceDate.valueAsDate = new Date(); 
+            },
+            
+            loadBraceData() { 
+                const today = new Date().toISOString().split('T')[0]; 
+                this.updateProgressUI(today); 
+                this.updateChart(); 
+                this.updateRewards();
+                // Placeholder for new rings
+                this.updateTightnessUI();
+                this.updateActivityUI(); 
+            },
+            
+            updateProgressUI(date) { 
+                const data = this.data.braceData[date]; 
+                const hoursElement = document.getElementById('meter-hours');
+                const goalElement = document.getElementById('meter-goal');
+                const progressCircle = document.getElementById('circle-progress');
+                
+                let currentHours = 0;
+                let dailyGoal = parseFloat(this.dailyGoal.value); // Use form value as default
+                
+                if (data) {
+                    currentHours = data.hours;
+                    dailyGoal = data.goal;
+                }
+                
+                const percentage = Math.min(100, (currentHours / dailyGoal) * 100);
+                
+                // Update text elements
+                hoursElement.textContent = `${currentHours.toFixed(1)} hrs`;
+                goalElement.textContent = `Goal: ${dailyGoal.toFixed(1)} hrs`;
+
+                // Update the circular meter
+                const radius = 15.9155;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (percentage / 100) * circumference;
+                
+                progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+                progressCircle.style.strokeDashoffset = offset;
+                progressCircle.style.stroke = percentage >= 100 ? '#eab308' : '#10B981'; // Gold for completion
+            },
+            
+            updateTightnessUI() {
+                // Placeholder Logic for Tightness Goal (95% adherence mockup)
+                const tightnessText = document.getElementById('tightness-text');
+                const tightnessProgress = document.getElementById('tightness-progress');
+                
+                const percentage = 95; // Mock adherence percentage
+                
+                tightnessText.textContent = `${percentage}%`;
+                
+                const radius = 15.9155;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (percentage / 100) * circumference;
+                
+                tightnessProgress.style.strokeDasharray = `${circumference} ${circumference}`;
+                tightnessProgress.style.strokeDashoffset = offset;
+            },
+
+            updateActivityUI() {
+                 // Placeholder Logic for Activity Level (Medium - 65% mockup)
+                const activityText = document.getElementById('activity-text');
+                const activityProgress = document.getElementById('activity-progress');
+                
+                const percentage = 65; 
+                
+                activityText.textContent = "Med"; 
+                
+                const radius = 15.9155;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (percentage / 100) * circumference;
+                
+                activityProgress.style.strokeDasharray = `${circumference} ${circumference}`;
+                activityProgress.style.strokeDashoffset = offset;
+            },
+            
             updateChart() { const ctx = document.getElementById('brace-chart').getContext('2d'); const labels = []; const hoursData = []; const goalData = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateString = d.toISOString().split('T')[0]; labels.push(d.toLocaleDateString('en-US', { weekday: 'short' })); const data = this.data.braceData[dateString]; hoursData.push(data ? data.hours : 0); goalData.push(data ? data.goal : parseFloat(this.dailyGoal.value)); } if (this.braceChart) { this.braceChart.destroy(); } this.braceChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Hours Worn', data: hoursData, backgroundColor: 'rgba(22, 163, 74, 0.6)' }, { label: 'Goal', data: goalData, type: 'line', fill: false, borderColor: 'rgba(239, 68, 68, 1)' }] }, options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Hours' } } } } }); },
             updateRewards() { 
                 const totalDaysLogged = Object.keys(this.data.braceData).length; 
