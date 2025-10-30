@@ -1,0 +1,24 @@
+{
+  "name": "curva_app",
+  "version": "1.0.0",
+  "description": "Scoliosis Journey Companion",
+  "homepage": "https://github.com/leiamehta/curva#readme",
+  "bugs": {
+    "url": "https://github.com/leiamehta/curva/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leiamehta/curva.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1"
+  }
+}
